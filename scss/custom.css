@@ -1,0 +1,10 @@
+/* Custom.scss */
+
+$theme-colors: (
+  "primary": #0074d9,
+  "danger": #ff4136,
+  "dark": #0074d9
+);
+
+@import "../css/bootstrap";
+
