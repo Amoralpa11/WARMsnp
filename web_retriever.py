@@ -1,5 +1,6 @@
 import urllib.request, urllib.parse
 
+
 def snp_parser(snp_file):
 	"""this function splits a file containing a list of SNP ids into chunks of 100K SNP"""
 	
