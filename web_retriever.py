@@ -17,3 +17,6 @@ url = 'http://snp-nexus.org'
 data = bytes( urllib.parse.urlencode( data ).encode() )
 handler = urllib.request.urlopen( url, data );
 print( handler.read().decode( 'utf-8' ) );
+
+
+#Imagine this works?
