@@ -1,6 +1,7 @@
 import urllib.request, urllib.parse
 
 data = {
+'email' = 'ramonmassoni@gmail.com'
 'batch_text' : '',
 'refseq' : 'on',
 'ensembl' : 'on',
