@@ -69,11 +69,14 @@
 		<?php
 		#start Session to hold input data
 		session_start();
-		# Check if input comes from an uploaded file
 
+		# Check if input comes from an uploaded file
+		# If the data comes from a file get the content from the file
 		if ($_FILES['uploadFile']['name']) {
 		    $_REQUEST['query']=  file_get_contents($_FILES['uploadFile']['tmp_name']);
 		}
+
+		# if the query is empty show an error saying that there is no request
 		if (!$_REQUEST['query']) { ?>
 		<html>
 		    <head>
@@ -87,26 +90,16 @@
 		} else {
 		# Process input
 		    # Check if this is an ensembl or snp id
-		    if (!isFasta($_REQUEST['query'])) { # Not fasta: take as list of ids
-		        # Parsing list
-		        $idList = explode("\n", $_REQUEST['query']);
-		        $fasta = '';
-		        foreach ($idList as $id) {
-		            if (!$id)
-		                continue;
-		            # Clean id spaces and lines
-		            $id = preg_replace("/[ \r]/","",$id);
-		            # get Uniprot Fasta
-		            $thisFasta = file_get_contents("http://www.uniprot.org/uniprot/$id.fasta");
-		            if (!isFasta($thisFasta)) {
-		                print "<p>Error: $id not found</p>";
-		            } else {
-		                $fasta .= $thisFasta;
-		            }
-		        }
+				# if we are working with SNPs.
+		    if (substr($_REQUEST['query'],0,2) === "rs") {
+		        # To be writen
+						print "<h2>we are working with a snp</h2>";
 
+				# if we are working with genes.
 		    } else {
-		        $fasta = $_REQUEST['fasta'];
+						# To be writen
+						print "<h2>we are working with a gene!</h2>";
+
 		    }
 		    $_SESSION['data'] = parse_Fasta($fasta);
 		}
