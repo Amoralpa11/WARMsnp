@@ -4,6 +4,31 @@ include "navbar.html";
 
 // include globals.inc.php
 
+// define variables and set to empty values
+$nameErr = $emailErr = $genderErr = $websiteErr = "";
+$name = $email = $gender = $comment = $website = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+  if (empty($_POST["query"])) {
+    $nameErr = "Input is required for the search";
+  } else {
+    $name = test_input($_POST["query"]);
+    if (substr($name,0,3) === "ENS" || substr($name,0,2) === "rs") {
+
+    }else{
+      $nameErr = "Only Ensembl id or SNP id are allowed";
+    }
+
+  }
+  substr( $string_n, 0, 4 ) === "http"
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
 ?>
 		<!-- Page Content -->
     <html>
@@ -15,9 +40,10 @@ include "navbar.html";
             <h2>WARMsnp</h2>
             <p>WARMsnp is a web app designed by and for researchers. It is aimed to ease the SNP information search, it allows you to get SNP related information consolidated from several other web sties.</p>
 
-            <form action="parseSNP.php" id="input" name="input" method="POST" enctype="multipart/form-data">
+            <form action="parseSNP.php" id="input" name="input" method="GET" enctype="multipart/form-data">
                 <p><em>Enter gene ensembl id or snp id:</em></p>
                 <textarea name="query" cols="40" rows="3" placeholder="ensemble id or snp id"></textarea><br>
+                <span class="error"><?php echo $nameErr?></span>
 
                 <input name="uploadFile" type="file"><br>
                 <br>
