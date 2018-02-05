@@ -52,7 +52,8 @@ include "navbar.html";
                 <div class="form-group">
                     <label>p value</label>
                     <p>
-                        Lower than: <input type="text" name="maxpval" value="<?php print $_SESSION['queryData']['maxpval'] ?>" size="5">
+                        <!-- Lower than: <input type="text" name="maxpval" value="<*?php print $_SESSION['queryData']['maxpval'] ?>" size="5"> -->
+                        Lower than: <input type="text" name="maxpval" value="1" size="5">
                     </p>
                 </div>
             </div>
@@ -60,8 +61,11 @@ include "navbar.html";
                 <div class="form-group">
                     <label>variant frequency</label>
                     <p>
-                        from: <input type="text" name="minfreq" value="<?php print $_SESSION['queryData']['minfreq'] ?>" size="5">
-                        to: <input type="text" name="maxfreq" value="<?php print $_SESSION['queryData']['maxfreq'] ?>" size="5" >
+                      <!-- from: <input type="text" name="minfreq" value="<*?php print $_SESSION['queryData']['minfreq'] ?>" size="5">
+                      to: <input type="text" name="maxfreq" value="<*?php print $_SESSION['queryData']['maxfreq'] ?>" size="5" > -->
+                      from: <input type="text" name="minfreq" value="0" size="5">
+                      to: <input type="text" name="maxfreq" value="1" size="5" >
+
                     </p>
                 </div>
             </div>
