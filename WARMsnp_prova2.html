@@ -144,46 +144,57 @@ body, html {
     <h2>WARMsnp</h2>
             <p>WARMsnp is a web app designed by and for researchers. It is aimed to ease the SNP information search, it allows you to get SNP related information consolidated from several other web sties.</p>
 
-            <form action="parseSNP.php" id="input" name="input" method="POST" enctype="multipart/form-data">
-                <p><em>Enter gene ensembl id or snp id:</em></p>
-                <textarea name="query" cols="40" rows="3" placeholder="ensemble id or snp id"></textarea><br>
+        <form action="psnp.php" id="input" name="input" method="GET" enctype="multipart/form-data">
+            <p><em>Enter gene ensembl id or snp id:</em></p>
+            <textarea name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;"></textarea><br>
+            <span class="error"><?php echo $nameErr?></span>
 
-                <input name="uploadFile" type="file"><br>
-                <br>
-                <input type="submit" value="Send data"> <input type="reset" value="Clear data">
+            <input name="uploadFile" type="file" style="margin-left: 1%;"><br>
+            <br>
+            <!-- <input type="submit" value="Send data"> <input type="reset" value="Clear data"> -->
 
-            </form>
+        <!-- </form> -->
 
-            <h3>Advanced search</h3>
-            <p>Select the parameters to further filter the search:</p>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>beta</label>
-                        <p>
-                            Higher than: <input type="text" name="minbeta" value="<?php print $_SESSION['queryData']['minbeta'] ?>" size="5">
-                            <!-- to <input type="text" name="maxRes" value="<*?php print $_SESSION['queryData']['maxRes'] ?>" size="5" > -->
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>p value</label>
-                        <p>
-                            Lower than: <input type="text" name="maxpval" value="<?php print $_SESSION['queryData']['maxpval'] ?>" size="5">
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>variant frequency</label>
-                        <p>
-                            from: <input type="text" name="minfreq" value="<?php print $_SESSION['queryData']['minfreq'] ?>" size="5">
-                            to: <input type="text" name="maxfreq" value="<?php print $_SESSION['queryData']['maxfreq'] ?>" size="5" >
-                        </p>
-                    </div>
+    <!-- </body>
+    <head>
+      <body> -->
+        <h3>Advanced search</h3>
+        <p>Select the parameters to further filter the search:</p>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>beta</label>
+                    <p>
+                        Higher than: <input type="text" name="minbeta" value="<?php print $_SESSION['queryData']['minbeta'] ?>" size="5">
+                        <!-- to <input type="text" name="maxRes" value="<*?php print $_SESSION['queryData']['maxRes'] ?>" size="5" > -->
+                    </p>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>p value</label>
+                    <p>
+                        <!-- Lower than: <input type="text" name="maxpval" value="<*?php print $_SESSION['queryData']['maxpval'] ?>" size="5"> -->
+                        Lower than: <input type="text" name="maxpval" value="1" size="5">
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>variant frequency</label>
+                    <p>
+                      <!-- from: <input type="text" name="minfreq" value="<*?php print $_SESSION['queryData']['minfreq'] ?>" size="5">
+                      to: <input type="text" name="maxfreq" value="<*?php print $_SESSION['queryData']['maxfreq'] ?>" size="5" > -->
+                      from: <input type="text" name="minfreq" value="0" size="5">
+                      to: <input type="text" name="maxfreq" value="1" size="5" >
+
+                    </p>
+                </div>
+            </div>
+                <input type="submit" value="Send data" style="margin-left: 2%; margin-bottom: 2%"> <input type="reset" value="Clear data" style="margin-bottom: 2%"><br>
+                <br>
+        </div>
+      </form>
 </div>
 
 
