@@ -11,9 +11,9 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
         'minfreq' => '0'];
 }
 
-if (isset($_POST['query'])) {
-    $_SESSION['queryData']['query'] = $_POST['query'];
-}
+// if (isset($_POST['query'])) {
+//     $_SESSION['queryData']['query'] = $_POST['query'];
+// }
 
 ?>
 
@@ -28,10 +28,9 @@ if (isset($_POST['query'])) {
     <h2>WARMsnp</h2>
     <p>WARMsnp is a web app designed by and for researchers. It is aimed to deliver SNP enriched information, it allows you to get SNP related information consolidated from several other web sties.</p>
 
-    <form action="SNP_out.php" id="input" name="input" method="GET" enctype="multipart/form-data">
-      <fieldset class="advanced search">
+    <form action="SNP_out.php" id="input" name="input" method="POST" enctype="multipart/form-data">
         <p><em>Enter gene ensembl id or snp id:</em></p>
-        <textarea name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;"></textarea><br>
+        <textarea name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;" value= '<?print $_SESSION["queryData"]["query"]?>' ></textarea><br>
         <span class="error"><?php echo $nameErr?></span>
 
         <input name="uploadFile" type="file" style="margin-left: 1%;"><br>
@@ -43,6 +42,7 @@ if (isset($_POST['query'])) {
         <!-- </body>
         <head>
           <body> -->
+        <fieldset class="advanced search">
         <h3>Advanced search</h3>
         <div>
             <p>Select the parameters to further filter the search:</p>
