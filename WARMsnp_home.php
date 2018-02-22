@@ -51,7 +51,7 @@ if ($_SESSION['queryData']['freq_error'] = "1") {
 
     <form id="input_form" name="input" action="SNP_out.php" method="post" enctype="multipart/form-data">
         <p><em>Enter gene ensembl id or snp id:</em></p>
-        <textarea id="text_in" name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;"><?php print $_SESSION["queryData"]["query"]?></textarea><span id="query_not_type_message" class="error" style="color:#ff0000; display:none; margin-left: 2%; margin-bottom:30px;">Input text must be a gene ensembl id "ens000001" or a snp id "rs000001"</span>
+        <textarea id="text_in" name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;"><?php print $_SESSION["queryData"]["query"]?></textarea><span id="query_not_type_message" class="error" style="color:#ff0000; display:none; margin-left: 2%; margin-bottom:30px;">Input text must be a gene ensembl id (ej:"ens000001") or a snp id (ej:"rs000001")</span>
         <br><input id="file_in"name="uploadFile" type="file" style="margin-left: 1%;">
           <span class="error" style="color:#ff0000;">*</span>
           <span id="query_err_message" class="error" style="color:#ff0000; display:none;">Input text or file are required</span><br>
@@ -157,11 +157,11 @@ function check() {
     } else {
       $("#query_err_message").hide();
     }
-    if (!$("#text_in").val().toUpperCase().match("RS") || !$("#text_in").val().toUpperCase().match("ENS") ) {
+    if ($("#text_in").val().toUpperCase().match("RS") || $("#text_in").val().toUpperCase().match("ENS") ) {
+      $("#query_not_type_message").hide();
+    } else {
       $("#query_not_type_message").show();
       okay = 1;
-    } else {
-      $("#query_not_type_message").hide();
     }
     if (okay == 0) {
       $("#input_form").submit();
