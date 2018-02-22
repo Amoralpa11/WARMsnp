@@ -1,6 +1,7 @@
 <?php
 
 include "navbar.html";
+session_start();
 //setting default values
 if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
     $_SESSION['queryData'] = [
@@ -8,13 +9,33 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
         'minbeta' => '0',
         'maxpval' => '0.05',
         'maxfreq' => '1',
-        'minfreq' => '0'];
+        'minfreq' => '0',
+        'p_error' => '0',
+        'freq_error' => '0',
+        'query_error' => '0'];
 }
 
-// if (isset($_POST['query'])) {
-//     $_SESSION['queryData']['query'] = $_POST['query'];
-// }
 
+
+if ($_SESSION['queryData']['query_error'] = "1") {
+  $query_err = "Input text or file are required,";
+} else {
+  $query_err = '';
+}
+
+if ($_SESSION['queryData']['p_error'] = "1") {
+  $p_err = "* P value is out of range, please set it between 0 and 1.";
+} else {
+  $p_err = '';
+
+}
+
+if ($_SESSION['queryData']['freq_error'] = "1") {
+  $freq_err = "* Frequencies are set out of range, please set them between 0 and 1.";
+} else {
+  $freq_err = '';
+
+}
 ?>
 
 <!-- Page Content -->
@@ -28,20 +49,14 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
     <h2>WARMsnp</h2>
     <p>WARMsnp is a web app designed by and for researchers. It is aimed to deliver SNP enriched information, it allows you to get SNP related information consolidated from several other web sties.</p>
 
-    <form action="SNP_out.php" id="input" name="input" method="POST" enctype="multipart/form-data">
+    <form id="input_form" name="input" action="SNP_out.php" method="post" enctype="multipart/form-data">
         <p><em>Enter gene ensembl id or snp id:</em></p>
-        <textarea name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;" value= '<?print $_SESSION["queryData"]["query"]?>' ></textarea><br>
-        <span class="error"><?php echo $nameErr?></span>
+        <textarea id="text_in" name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;"><?php print $_SESSION["queryData"]["query"]?></textarea><span id="query_not_type_message" class="error" style="color:#ff0000; display:none; margin-left: 2%; margin-bottom:30px;">Input text must be a gene ensembl id "ens000001" or a snp id "rs000001"</span>
+        <br><input id="file_in"name="uploadFile" type="file" style="margin-left: 1%;">
+          <span class="error" style="color:#ff0000;">*</span>
+          <span id="query_err_message" class="error" style="color:#ff0000; display:none;">Input text or file are required</span><br>
 
-        <input name="uploadFile" type="file" style="margin-left: 1%;"><br>
         <br>
-        <!-- <input type="submit" value="Send data"> <input type="reset" value="Clear data"> -->
-
-        <!-- </form> -->
-
-        <!-- </body>
-        <head>
-          <body> -->
         <fieldset class="advanced search">
         <h3>Advanced search</h3>
         <div>
@@ -52,7 +67,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
                         <label>beta</label>
                         <p>
                             Higher than:
-                            <input type="text" name="minbeta" value= <?php print $_SESSION['queryData']['minbeta'] ?> size="5">
+                            <input type="text" name="minbeta"id="minbeta" value= <?php print $_SESSION['queryData']['minbeta'] ?> size="5">
 
                         </p>
                     </div>
@@ -61,7 +76,8 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
                     <div class="form-group">
                         <label>p value</label>
                         <p>
-                            Lower than: <input type="text" name="maxpval" value= <?php print $_SESSION['queryData']['maxpval'] ?> size="5">
+                            Lower than: <input type="text" id="maxpval" name="maxpval" value= '<?php print $_SESSION['queryData']['maxpval'] ?>' size="5">
+                            <span id="pval_err" class="error" style="color:#ff0000; display:none;">* Pvalue is out of range, please set it between 0 and 1.</span>
                         </p>
                     </div>
                 </div>
@@ -69,20 +85,27 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
                     <div class="form-group">
                         <label>variant frequency</label>
                         <p>
-                            from: <input type="text" name="minfreq" value=" <?php print $_SESSION['queryData']['minfreq'] ?>" size="5">
-                            to: <input type="text" name="maxfreq" value= <?php print $_SESSION['queryData']['maxfreq'] ?> size="5" >
+                            from: <input type="text" id="minfreq" name="minfreq" value='<?php print $_SESSION['queryData']['minfreq'] ?>' size="5">
+                            to: <input type="text" id="maxfreq" name="maxfreq" value= '<?php print $_SESSION['queryData']['maxfreq'] ?>' size="5" >
+                            <span id="freq_error" class="error" style="color:#ff0000; display:none;">* Frequencies are set out of range, please set them between 0 and 1.</span>
+                            <span id="freq_inv" class="error" style="color:#ff0000; display:none;">* Minimum frequency is bigger than maximum frequency.</span>
 
                         </p>
                     </div>
                 </div>
-                <input type="submit" value="Send data" style="margin-left: 2%; margin-bottom: 2%"> <input type="reset" value="Clear data" style="margin-bottom: 2%"><br>
                 <br>
             </div>
           </div>
         </fieldset>
     </form>
+
+    <button onclick="check()">Submit</button>
+    <button onclick="reset()">Reset</button><br><br>
+
+
+
   </div>
-  </body>
+</body>
 </html>
 
 
@@ -93,6 +116,62 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+<script>
+function reset() {
+    $("#minfreq").val('0');
+    $("#maxfreq").val('1');
+    $("#minbeta").val('0');
+    $("#maxpval").val('0.05');
+    $("#text_in").val('');
+
+}
+
+</script>
+
+<script>
+
+function check() {
+    var okay = 0;
+
+    if ($("#minfreq").val() < 0 || $("#minfreq").val() > 1 || $("#maxfreq").val() > 1 || $("#maxfreq").val() < 0) {
+      $("#freq_error").show();
+      okay = 1;
+    } else {
+      $("#freq_error").hide();
+    }
+    if ($("#minfreq").val() > $("#maxfreq").val()) {
+      $("#freq_inv").show();
+      okay = 1;
+    } else {
+      $("#freq_inv").hide();
+    }
+    if ($("#maxpval").val() < 0 || $("#maxpval").val() > 1) {
+      $("#pval_err").show();
+      okay = 1;
+    } else {
+      $("#pval_err").hide();
+    }
+    if ($("#text_in").val() == '' && $("#file_in").val() == '') {
+      $("#query_err_message").show();
+      okay = 1;
+    } else {
+      $("#query_err_message").hide();
+    }
+    if (!$("#text_in").val().toUpperCase().match("RS") || !$("#text_in").val().toUpperCase().match("ENS") ) {
+      $("#query_not_type_message").show();
+      okay = 1;
+    } else {
+      $("#query_not_type_message").hide();
+    }
+    if (okay == 0) {
+      $("#input_form").submit();
+    }
+}
+</script>
+
+
+
 <?php include "footer.html"?>
+
 </body>
 </html>
