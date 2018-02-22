@@ -5,54 +5,39 @@ session_start();
 $_SESSION['queryData'] = $_REQUEST;
 
 if (!isset($_SESSION['queryData']))
-    header('Location: blast_index.php');
+    header('Location: WARMsnp_home.php');
 
 
 include "navbar.html";
-?>
 
-<?php
 # Check if input comes from an uploaded file
 # If the data comes from a file get the content from the file
 if ($_FILES['uploadFile']['name']) {
     $_REQUEST['query']=  file_get_contents($_FILES['uploadFile']['tmp_name']);
 }
 
-if ($_REQUEST['maxpval'] > 1 || $_REQUEST['maxpval'] <= 0) {
-?>
-<title>Error: P value out of range</title>
-<h2>Error: The P value set is out of range, please set it between 0 and 1.</h2>
-
-<?php
+if ($_SESSION['queryData']['maxpval'] > 1 || $_SESSION['queryData']['maxpval'] <= 0) {
+  $_SESSION['queryData']['p_error'] = 1;
+  header('Location: WARMsnp_home.php');
 }
 
-if ($_REQUEST['$minfreq'] < 0 || $_REQUEST['maxfreq'] > 1) { ?>
-    <html>
-    <head>
-        <title>Error: frequency value out of range</title>
-    </head>
-    <body>
-    <h2>Error: The frequency range set is out of range, please set it between 0 and 1.</h2>
-    </body>
-    </html>
+// if ($_SESSION['queryData']['minfreq'] < 0 || $_SESSION['queryData']['maxfreq'] > 1) {
+//   $_SESSION['queryData']['freq_error'] = 1;
+//   header('Location: WARMsnp_home.php');
+//
+// }
 
-    <?php
+if (!isset($_SESSION['queryData']['query'])) {
+  $_SESSION['queryData']['query_error'] = 1;
+  header('Location: WARMsnp_home.php');
 }
 
 
 # if the query is empty show an error saying that there is no request
 
-if (!$_REQUEST['query']) { ?>
-    <html>
-    <head>
-        <title>Error: No request</title>
-    </head>
-    <body>
-    <h2>Error: Received request was empty, please input data for the query.</h2>
-    </body>
-    </html>
-    <?php
+if (!$_REQUEST['query']) {
 } else {
+
 # Process input
 # Check if this is an ensembl or snp id
 # if we are working with SNPs.
@@ -76,6 +61,7 @@ if (substr($_REQUEST['query'],0,2) === "rs") {
 <table border="0" cellspacing="2" cellpadding="4" id="blastTable">
     <thead>
         <tr>
+          <th>SNP id</th>
           <th>Chromosome</th>
           <th>Gene</th>
           <th>Position</th>
@@ -106,10 +92,10 @@ if (substr($_REQUEST['query'],0,2) === "rs") {
           $polyphen_score = "buff2";
 
           ?>
-          <tr>
+            <td> <?php print $rr ?> </td>
+            <td> <?php print $chromosome ?> </td>
             <td> <?php print $gene ?> </td>
             <td> <?php print $position ?> </td>
-            <td> <?php print $chromosome ?> </td>
             <td> <?php print $frequency ?> </td>
             <td> <?php print $beta ?> </td>
             <td> <?php print $pval ?> </td>
