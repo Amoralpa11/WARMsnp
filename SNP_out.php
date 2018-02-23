@@ -23,9 +23,6 @@ if ($_FILES['uploadFile']['name']) {
 snp ids to process them in a different way*/
 $query_array = preg_split("/\s+/", $_REQUEST['query']);
 
-$SNP_array = [];
-$Gene_array = [];
-
 foreach ($query_array as $ref){
   if (strtoupper(substr( $ref, 0, 2 )) === "RS"){
     $SNP_array[] = $ref;
@@ -63,13 +60,25 @@ if ($_REQUEST['maxfreq'] != 1 and $_REQUEST['maxfreq'] != "") {
 ## trieve all the ids that the user has provided. 
 
 
-if ($_REQUEST['query']) {
+if ($SNP_array) {
     $ORconds = [];
     foreach (array_values($SNP_array) as $ref) {
         $ORconds[] = "s.idSNP like '".$ref."'";
     }
     $ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
 }
+
+if ($Gene_array) {
+
+      $ORconds = [];
+    foreach (array_values($Gene_array) as $ref) {
+        $ORconds[] = "g.Gene_id like '".$ref."'";
+    }
+    $ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
+
+}
+
+
 
 $sql = "select   s.chr, g.Chromosome, s.pos,
                   v.Frequency, v.beta, v.p_value,
@@ -81,6 +90,8 @@ $sql = "select   s.chr, g.Chromosome, s.pos,
                   v.idSNP = s.idSNP
                   and
                   ". join(" AND ", $ANDconds);
+
+// print $sql."<br>";
 
 $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 
@@ -149,16 +160,15 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 </table>
 </div>
 <?php
-# if we are working with genes.
-
-
 #############################################################
 #############################################################
 ################                                  ###########
-################        Trabajar con genes        ###########
+################        Processing genes          ###########
 ################                                  ###########
 #############################################################
 #############################################################
+
+
 
 ?>
 
