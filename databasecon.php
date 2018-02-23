@@ -14,6 +14,6 @@ $password = "";
 /*También guardamos en una variable la string del inicio de las querys para mysql, donde nos conectamos a la base de datosl*/
 ($mysqli = mysqli_connect($host, $user, $password)) or die(mysqli_error());
 /*También nos conectamos con el servidor y seleccionamos la base de datos que queremos utilizar*/
-mysqli_select_db($mysqli, $dbname) or die(mysql_error($mysqli));
+mysqli_select_db($mysqli, $dbname) or die(mysqli_error($mysqli));
 
 ?>
