@@ -134,7 +134,7 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
             <?php  print "<td><a href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
             <td> <?php print $chromosome ?> </td>
             <td> <?php print $position ?> </td>
-            <?php  print "<td><a href='SNP_page.php?ref=$gene'>$gene</a></td>" ?>
+            <?php  print "<td><a href='Gene_page.php?ref=$gene'>$gene</a></td>" ?>
             <td> <?php print $Main_allele ?> </td>
             <td> <?php print $variant_allele ?> </td>
             <td> <?php print $frequency ?> </td>
