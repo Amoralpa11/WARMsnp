@@ -38,17 +38,19 @@ foreach ($query_array as $ref){
 ### Here we are going to build the conditionals for the 
 ### mysql query from the user input. 
 
+if ($_REQUEST['minbeta'] != "" ) {
 $ANDconds[] = "v.beta > ".$_REQUEST['minbeta'];
+}
 
-if ($_REQUEST['maxpval'] != 1) {
+if ($_REQUEST['maxpval'] != 1 and $_REQUEST['maxpval'] != "" ) {
   $ANDconds[] = "v.p_value < ".$_REQUEST['maxpval'];
 }
 
-if ($_REQUEST['minfreq'] != 0) {
+if ($_REQUEST['minfreq'] != 0 and $_REQUEST['minfreq'] != "") {
   $ANDconds[] = "v.Frequency > ".$_REQUEST['minfreq'];
 }
 
-if ($_REQUEST['maxfreq'] != 1) {
+if ($_REQUEST['maxfreq'] != 1 and $_REQUEST['maxfreq'] != "") {
   $ANDconds[] = "v.Frequency < ".$_REQUEST['maxfreq'];
 }
 #########################################################
@@ -129,10 +131,10 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 
           ?>
           <tr>
-            <td> <?php print $SNP_id ?> </td>
+            <?php  print "<td><a href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
             <td> <?php print $chromosome ?> </td>
             <td> <?php print $position ?> </td>
-            <td> <?php print $gene ?> </td>
+            <?php  print "<td><a href='SNP_page.php?ref=$gene'>$gene</a></td>" ?>
             <td> <?php print $Main_allele ?> </td>
             <td> <?php print $variant_allele ?> </td>
             <td> <?php print $frequency ?> </td>
