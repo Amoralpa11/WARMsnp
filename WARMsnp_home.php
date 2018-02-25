@@ -67,7 +67,7 @@ if ($_SESSION['queryData']['freq_error'] = "1") {
                         <label>beta</label>
                         <p>
                             Higher than:
-                            <input type="text" name="minbeta"id="minbeta" value= '<?php print $_SESSION['queryData']['minbeta'] ?>' size="5">
+                            <input type="text" name="minbeta"id="minbeta" value= "<?php print $_SESSION['queryData']['minbeta'] ?>" size="5">
                             <span id="beta_num" class="error" style="color:#ff0000; display:none;">* Beta must be a number.</span>
 
                         </p>
@@ -77,7 +77,7 @@ if ($_SESSION['queryData']['freq_error'] = "1") {
                     <div class="form-group">
                         <label>p value</label>
                         <p>
-                            Lower than: <input type="text" id="maxpval" name="maxpval" value= '<?php print $_SESSION['queryData']['maxpval'] ?>' size="5">
+                            Lower than: <input type="text" id="maxpval" name="maxpval" value= "<?php print $_SESSION['queryData']['maxpval'] ?>" size="5">
                             <span id="pval_err" class="error" style="color:#ff0000; display:none;">* Pvalue is out of range, please set it between 0 and 1.</span>
                             <span id="pval_num" class="error" style="color:#ff0000; display:none;">* Pvalue must be a number.</span>
                         </p>
@@ -147,29 +147,12 @@ function check() {
       okay = 1;
     } else {
       $("#freq_inv").hide();
-    if ($("#minfreq").val().isNumeric() && $("#maxfreq").val().isNumeric()) {
-      $("#freq_num").hide();
-    } else {
-      $("#freq_num").show();
-      okay = 1;
     }
     if ($("#maxpval").val() < 0 || $("#maxpval").val() > 1) {
       $("#pval_err").show();
       okay = 1;
     } else {
       $("#pval_err").hide();
-    }
-    if ($("#maxpval").val().isNumeric()) {
-      $("#pval_num").hide();
-    } else {
-      $("#pval_num").show();
-      okay = 1;
-    }
-    if ($("#minbeta").val().isNumeric()) {
-      $("#beta_num").hide();
-    } else {
-      $("#beta_num").show();
-      okay = 1;
     }
     if ($("#text_in").val() == '' && $("#file_in").val() == '') {
       $("#query_err_message").show();

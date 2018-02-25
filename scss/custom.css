@@ -17,3 +17,8 @@ $theme-colors: (
    color: white;
    text-align: center;
 }
+
+.panel span.summary-subhead {
+    color: #555;
+    font-size: .7em;
+}
