@@ -24,19 +24,19 @@ body, html {
 
 /* First image (Logo. Full height) */
 .bgimg-1 {
-    background-image: url('vendrell.jpg');
+    background-image: url('images/vendrell.jpg');
     min-height: 100%;
 }
 
 /* Second image (Meet the team) */
 .bgimg-2 {
-    background-image: url('white.jpg');
+    background-image: url('images/white.jpg');
     min-height: 400px;
 }
 
 /* Third image (Contact) */
 .bgimg-3 {
-    background-image: url('white.jpg');
+    background-image: url('images/white.jpg');
     min-height: 400px;
 }
 
@@ -106,7 +106,7 @@ body, html {
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
-  <div class="w3-bar" id="myNavbar">
+  <div class="w3-bar navbar navbar-dark bg-dark" id="myNavbar">
     <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right bg-dark" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
       <i class="fa fa-bars"></i>
     </a>
@@ -114,96 +114,102 @@ body, html {
       <img src="Home_images/flame.svg" width="30" height="30" class="d-inline-block align-top" alt="">
       WARMsnp
     </a>
-    <a href="#search" class="w3-bar-item w3-button">SEARCH</a>
-     <a href="#meet" class="w3-bar-item w3-button">MEET THE TEAM</a>
+    <a href="#search" class="w3-bar-item w3-button"><i class="fa fa-search"></i>SEARCH</a>
+     <a href="#meet" class="w3-bar-item w3-button"><i class="fa fa-group"></i>MEET THE TEAM</a>
     <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
-      <i class="fa fa-search"></i>
-    </a>
   </div>
 
   <!-- Navbar on small screens -->
-  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+  <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium">
     <a class="navbar-brand" href="#home">
       <img src="Home_images/flame.svg" width="30" height="30" class="d-inline-block align-top" alt="">
       WARMsnp
     </a>
-  	<a href="#meet" class="w3-bar-item w3-button" onclick="toggleFunction()">MEET THE TEAM</a>
-    <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
-    <a href="#" class="w3-bar-item w3-button">SEARCH</a>
+     <a href="#search" class="w3-bar-item w3-button"><i class="fa fa-search"></i>SEARCH</a>
+  	<a href="#meet" class="w3-bar-item w3-button" onclick="toggleFunction()"><i class="fa fa-group"></i>MEET THE TEAM</a>
+    <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()"><i class="fa fa-envelope"></i>CONTACT</a>
   </div>
 </div>
 
 <!-- First Parallax Image with Logo Text -->
-<div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
-  <div class="w3-display-middle" style="white-space:nowrap;">
-    <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity">WARM <span class="w3-hide-small">snp</span></span>
+<div class="w3-display-container w3-animate-opacity">
+  <img src="images/bcn.jpg" alt="dna" style="width:100%;min-height:350px;max-height:600px;">
+ <div class="w3-display-middle" style="white-space:nowrap;">
+    <span class="w3-center w3-padding-large w3-black w3-xlarge w3-wide w3-animate-opacity"><span class="w3-hide-small">WARM</span>snp</span>
   </div>
 </div>
-  <div class="w3-content w3-container w3-padding-64"  id="search">
-    <h2>WARMsnp</h2>
-            <p>WARMsnp is a web app designed by and for researchers. It is aimed to ease the SNP information search, it allows you to get SNP related information consolidated from several other web sties.</p>
 
-        <form action="SNP_out.php" id="input" name="input" method="GET" enctype="multipart/form-data">
-            <p><em>Enter gene ensembl id or snp id:</em></p>
-            <textarea name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;"></textarea><br>
-            <span class="error"><?php echo $nameErr?></span>
+<header class="w3-container" style="padding-top:22px">
+    <h3><b><i class="fa fa-file-archive-o"></i> Available Info</b></h3>
+  </header>
 
-            <input name="uploadFile" type="file" style="margin-left: 1%;"><br>
-            <br>
-            <!-- <input type="submit" value="Send data"> <input type="reset" value="Clear data"> -->
-
-        <!-- </form> -->
-
-    <!-- </body>
-    <head>
-      <body> -->
-        <h3>Advanced search</h3>
-        <p>Select the parameters to further filter the search:</p>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>beta</label>
-                    <p>
-                        Higher than: <input type="text" name="minbeta" value="<?php print $_SESSION['queryData']['minbeta'] ?>" size="5">
-                        <!-- to <input type="text" name="maxRes" value="<*?php print $_SESSION['queryData']['maxRes'] ?>" size="5" > -->
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>p value</label>
-                    <p>
-                        <!-- Lower than: <input type="text" name="maxpval" value="<*?php print $_SESSION['queryData']['maxpval'] ?>" size="5"> -->
-                        Lower than: <input type="text" name="maxpval" value="1" size="5">
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>variant frequency</label>
-                    <p>
-                      <!-- from: <input type="text" name="minfreq" value="<*?php print $_SESSION['queryData']['minfreq'] ?>" size="5">
-                      to: <input type="text" name="maxfreq" value="<*?php print $_SESSION['queryData']['maxfreq'] ?>" size="5" > -->
-                      from: <input type="text" name="minfreq" value="0" size="5">
-                      to: <input type="text" name="maxfreq" value="1" size="5" >
-
-                    </p>
-                </div>
-            </div>
-                <input type="submit" value="Send data" style="margin-left: 2%; margin-bottom: 2%"> <input type="reset" value="Clear data" style="margin-bottom: 2%"><br>
-                <br>
+  <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-quarter">
+      <div class="w3-container w3-red w3-padding-16">
+        <div class="w3-left"><i class="fa fa-fire w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3>>2.5M</h3>
         </div>
-      </form>
-</div>
+        <div class="w3-clear"></div>
+        <h4>SNPs</h4>
+      </div>
+    </div>
+
+<div class="w3-quarter">
+      <div class="w3-container w3-blue w3-padding-16">
+        <div class="w3-left"><i class="fa fa-heartbeat w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3>1934</h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Diseases</h4>
+      </div>
+    </div>
+
+<div class="w3-quarter">
+      <div class="w3-container w3-teal w3-padding-16">
+        <div class="w3-left"><i class="fa fa-bar-chart-o w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3> ~21,000</h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Genes</h4>
+      </div>
+    </div>
+
+<div class="w3-quarter">
+      <div class="w3-container w3-orange w3-text-white w3-padding-16">
+        <div class="w3-left"><i class="fa fa-globe w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3>50</h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4>Databases</h4>
+      </div>
+    </div>
+  </div>
+
+<header class="w3-container" style="padding-top:22px">
+    <h3><b><i class="fa fa-bar-chart"></i> HIGHLIGHTS</b></h3>
+  </header>
+
+<div class="w3-panel">
+    <div class="w3-row-padding" style="margin:0 -16px">
+      <div class="w3-half">
+        <img src="images/Snps_disease2.png" style="width:100%" alt="Top SNPs - Disease ratio">
+      </div>
 
 
 <!-- Container (MEET THE TEAM section) -->
 <div class="bgimg-2 w3-content w3-container w3-padding-64" id="meet">
+  <header class="w3-container" style="padding-top:22px">
+    <br><br><br><br>
+    <h3><b><i class="fa fa-group"></i> MEET THE TEAM</b></h3>
+  </header>
 <div class="row">
   <div class="column">
     <div class="card">
-      <img src="marc.jpeg" alt="Marc" style="width:100%">
+      <img src="images/marc.jpeg" alt="Marc" style="width:100%">
       <div class="container">
         <h2>Marc Elosua</h2>
         <p class="title">CEO &amp; Founder</p>
@@ -216,7 +222,7 @@ body, html {
 
   <div class="column">
     <div class="card">
-      <img src="adri.jpeg" alt="Adri" style="width:100%">
+      <img src="images/adri.jpeg" alt="Adri" style="width:100%">
       <div class="container">
         <h2>Adrian Morales</h2>
         <p class="title">The Brain</p>
@@ -229,7 +235,7 @@ body, html {
 
   <div class="column">
     <div class="card">
-      <img src="ramon.jpg" alt="Ramon" style="width:100%">
+      <img src="images/ramon.jpg" alt="Ramon" style="width:100%">
       <div class="container">
         <h2>Ramon Massoni</h2>
         <p class="title">Specialist in snps</p>
@@ -242,7 +248,7 @@ body, html {
 
   <div class="column">
     <div class="card">
-      <img src="winona.jpg" alt="Wini" style="width:100%">
+      <img src="images/winona.jpg" alt="Wini" style="width:100%">
       <div class="container">
         <h2>Winona Oliveros</h2>
         <p class="title">Designer</p>
@@ -325,9 +331,9 @@ window.onscroll = function() {myFunction()};
 function myFunction() {
     var navbar = document.getElementById("myNavbar");
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
+        navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-black";
     } else {
-        navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
+        navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-black", "");
     }
 }
 

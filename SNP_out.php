@@ -1,155 +1,100 @@
-<!doctype html>
-		<!-- Page Content -->
-		<?php
-		#start Session to hold input data
-		// session_start();
-		include "navbar.html";
+<!-- Page Content -->
+<?php
+#start Session to hold input data
+session_start();
+$_SESSION['queryData'] = $_REQUEST;
+
+if (!isset($_SESSION['queryData']))
+    header('Location: WARMsnp_home.php');
 
 
-		# Check if input comes from an uploaded file
-		# If the data comes from a file get the content from the file
-		if ($_FILES['uploadFile']['name']) {
-		    $_REQUEST['query']=  file_get_contents($_FILES['uploadFile']['tmp_name']);
-		}
+include "navbar.html";
 
-		if ($_REQUEST['maxpval'] > 1 || $_REQUEST['maxpval'] <= 0) { ?>
-			<html>
-					<head>
-							<title>Error: P value out of range</title>
-					</head>
-					<body>
-							<h2>Error: The P value set is out of range, please set it between 0 and 1.</h2>
-					</body>
-			</html>
+# Check if input comes from an uploaded file
+# If the data comes from a file get the content from the file
+if ($_FILES['uploadFile']['name']) {
+    $_REQUEST['query']=  file_get_contents($_FILES['uploadFile']['tmp_name']);
+}
 
-		<?php
-		}
+# Process input
+# Check if this is an ensembl or snp id
+# if we are working with SNPs.
+if (substr($_REQUEST['query'],0,2) === "rs") {
+  include 'databasecon.php';
+# To be writen
+// print "<h2>we are working with a snp</h2>";
+// print var_dump($_REQUEST['query']);
+?>
+<html>
+<head>
 
-		if ($_REQUEST['$minfreq'] < 0 || $_REQUEST['maxfreq'] > 1) { ?>
-			<html>
-					<head>
-							<title>Error: frequency value out of range</title>
-					</head>
-					<body>
-							<h2>Error: The frequency range set is out of range, please set it between 0 and 1.</h2>
-					</body>
-			</html>
-
-		<?php
-		}
+    <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+</head>
+</html>
 
 
-		# if the query is empty show an error saying that there is no request
+<div class="container">
+<h1>RESULTS:</h1>
+<table border="0" cellspacing="2" cellpadding="4" id="blastTable">
+    <thead>
+        <tr>
+          <th>SNP id</th>
+          <th>Chromosome</th>
+          <th>Gene</th>
+          <th>Position</th>
+          <th>Variant frequency</th>
+          <th>Beta</th>
+          <th>p value</th>
+          <th>Disease</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $result_arr = preg_split("/\s+/", $_REQUEST['query']);
+        foreach (array_values($result_arr) as $rr) {
+          $chromosome = "probably 1";
+          $gene = "hehe";
+          $position = "don't know";
+          $frequency = "not too high";
+          $beta = "positive";
+          $pval = "so low";
+          $disease = "you fucked";
 
-		if (!$_REQUEST['query']) { ?>
-		<html>
-		    <head>
-		        <title>Error: No request</title>
-		    </head>
-		    <body>
-		        <h2>Error: Received request was empty, please input data for the query.</h2>
-		    </body>
-		</html>
-		<?php
-		} else {
-		# Process input
-		    # Check if this is an ensembl or snp id
-				# if we are working with SNPs.
-		    if (substr($_REQUEST['query'],0,2) === "rs") {
-		        # To be writen
-						print "<h2>we are working with a snp</h2>";
-						?>
-						<html>
-								<head>
-										<style type="text/css">
-												thead {background-color: #cccccc;color:#ffffff}
-												tbody {background-color: #ffffff};
-										</style>
-										<link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
-										<script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
-										<script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
-										<head>
-											<body>
-												<h1><?php print $_REQUEST['query']?></h1>
-												<table style="width:100%">
-													<tr>
-														<th>Gene</th>
-														<th>Position</th>
-														<th>Variant frequency</th>
-														<th>Beta</th>
-														<th>p value</th>
-														<th>Disease</th>
-													</tr>
-													<tr>
-														<td>SELECT Gene_id FROM GENE WHERE Gene_id = (SELECT ID FROM SNP WHERE idSNP = $_REQUEST['query'])</td>
-														<td>SELECT position FROM SNP WHEN idSNP = $_REQUEST['query']"</td>
-														<td>SELECT Frequency FROM Variants WHEN idSNP = $_REQUEST['query']"</td>
-														<td>SELECT beta FROM Variants WHEN idSNP = $_REQUEST['query']"</td>
-														<td>SELECT p-value FROM Variants WHEN idSNP = $_REQUEST['query']"</td>
-														<td>SELECT Name FROM Disease WHEN SNP.idSNP = $_REQUEST['query']"</td>
-														<td>SELECT Name FROM Disease WHERE idDisease = (SELECT idDisease FROM SNP-disease WHERE idSNP = $_REQUEST['query'])</td>
-													</tr>
-													<!-- <tr>
-														<td>Eve</td>
-														<td>Jackson</td>
-														<td>94</td>
-													</tr> -->
-												</table>
-											</body>
-										</head>
-				<?php
-				# if we are working with genes.
-		    } else {
-						# To be writen
-						print "<h2>we are working with a gene!</h2>";
-		    }
-		    $_SESSION['data'] = parse_Fasta($fasta);
-		}
-		?>
+          ?>
+            <td> <?php print $rr ?> </td>
+            <td> <?php print $chromosome ?> </td>
+            <td> <?php print $gene ?> </td>
+            <td> <?php print $position ?> </td>
+            <td> <?php print $frequency ?> </td>
+            <td> <?php print $beta ?> </td>
+            <td> <?php print $pval ?> </td>
+            <td> <?php print $disease ?> </td>
+          </tr>
+          <?php
+        }
 
+        ?>
+    </tbody>
+</table>
+</div>
+<?php
+# if we are working with genes.
+} else {
+    # To be writen
+    print "<h2>we are working with a gene!</h2>";
+}
+?>
 
-		<script type="text/javascript">
-		    $(document).ready(function () {
-		        $('#dataTable').DataTable();
-		    });
-		</script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#blastTable').DataTable();
+});
+</script>
 
-		<?php
-		function isFasta($f) {
-		    return (substr($f,0,1) == ">");
-		}
+<?php
+include "footer.html";
+?>
 
-		function parse_Fasta ($f) {
-		    $sqs = explode(">", $f);
-		    $data=Array();
-		    foreach ($sqs as $s) {
-		        if ($s) {
-		            $lines = explode("\n",$s,2);
-		            list($db,$id,$info) = explode("|",$lines[0]);
-		            list ($swp,$info) = explode(" ",$info,2);
-		            $data[$id] = array('db'=> $db, 'id'=> $id, 'swpid' => $swp, 'info' => $info, 'sequence' => $lines[1]);
-		        }
-		    }
-		    return $data;
-		}
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		echo "<br>";
-		include "footer.html";
-
-		?>
-
-  	<!-- Optional JavaScript -->
-  	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-  <!-- </body> -->
-  </html>
+</html>
