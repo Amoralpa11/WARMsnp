@@ -47,7 +47,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
                         <label>beta</label>
                         <p>
                             Higher than:
-                            <input type="text" name="minbeta"id="minbeta" value= '<?php print $_SESSION['queryData']['minbeta'] ?>' size="5">
+                            <input type="text" name="minbeta"id="minbeta" value= "<?php print $_SESSION['queryData']['minbeta'] ?>" size="5">
                             <span id="beta_num" class="error" style="color:#ff0000; display:none;">* Beta must be a number.</span>
 
                         </p>
@@ -57,7 +57,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
                     <div class="form-group">
                         <label>p value</label>
                         <p>
-                            Lower than: <input type="text" id="maxpval" name="maxpval" value= '<?php print $_SESSION['queryData']['maxpval'] ?>' size="5">
+                            Lower than: <input type="text" id="maxpval" name="maxpval" value= "<?php print $_SESSION['queryData']['maxpval'] ?>" size="5">
                             <span id="pval_err" class="error" style="color:#ff0000; display:none;">* Pvalue is out of range, please set it between 0 and 1.</span>
                             <span id="pval_num" class="error" style="color:#ff0000; display:none;">* Pvalue must be a number.</span>
                         </p>
