@@ -89,7 +89,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
    </div>
    <div class="col-md-4", style="border: 1px solid black; margin-bottom: 25px; overflow:scroll; height: 450px;">
      <h3>Interesting facts</h3>
-     <p style=" margin-right: 5px;">
+     <p>
        <ul>
         <li>
           Here is a side column where we can write interesting facts:
@@ -150,6 +150,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
     <li>Tea</li>
     <hr>
     <li>Milk</li>
+    <img src="images/cat.png", style="max-width:100%;max-height:100%;">
       </ul>
    </p>
    </div>
