@@ -86,8 +86,8 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
                           Variant Frequency
                         </label>
                         <p>
-                            from: <input type="text" id="minfreq" name="minfreq" value='<?php print $_SESSION['queryData']['minfreq'] ?>' size="5">
-                            to: <input type="text" id="maxfreq" name="maxfreq" value= '<?php print $_SESSION['queryData']['maxfreq'] ?>' size="5" >
+                            From: <input type="text" id="minfreq" name="minfreq" value='<?php print $_SESSION['queryData']['minfreq'] ?>' size="5">
+                            To: <input type="text" id="maxfreq" name="maxfreq" value= '<?php print $_SESSION['queryData']['maxfreq'] ?>' size="5" >
                             <span id="freq_error" class="error" style="color:#ff0000; display:none;">
                               * Frequencies are set out of range, please set them between 0 and 1.
                             </span>
