@@ -102,7 +102,6 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
     <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
 </head>
 <body>
-<div class="se-pre-con"></div>
 
 <div class="container">
 <h1>RESULTS:</h1>
