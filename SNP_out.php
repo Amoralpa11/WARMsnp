@@ -10,16 +10,14 @@ if (!isset($_SESSION['queryData']))
 
 
 include "navbar.html";
-?>
 
-<?php
 # Check if input comes from an uploaded file
 # If the data comes from a file get the content from the file
 if ($_FILES['uploadFile']['name']) {
     $_REQUEST['query']=  file_get_contents($_FILES['uploadFile']['tmp_name']);
 }
 
-/*We are going to segregate the user's query in gene ids and 
+/*We are going to segregate the user's query in gene ids and
 snp ids to process them in a different way*/
 $query_array = preg_split("/\s+/", $_REQUEST['query']);
 
@@ -32,8 +30,8 @@ foreach ($query_array as $ref){
 }
   include 'databasecon.php';
 
-### Here we are going to build the conditionals for the 
-### mysql query from the user input. 
+### Here we are going to build the conditionals for the
+### mysql query from the user input.
 
 if ($_REQUEST['minbeta'] != "" ) {
 $ANDconds[] = "v.beta > ".$_REQUEST['minbeta'];
@@ -57,7 +55,7 @@ if ($_REQUEST['maxfreq'] != 1 and $_REQUEST['maxfreq'] != "") {
 #########################################################
 ##
 ## Here we are going to concatenate the conditions to re-
-## trieve all the ids that the user has provided. 
+## trieve all the ids that the user has provided.
 
 
 if ($SNP_array) {
@@ -84,7 +82,7 @@ $sql = "select   s.chr, g.Chromosome, s.pos,
                   v.Frequency, v.beta, v.p_value,
                   s.Main_allele, s.idSNP, g.Gene_id, v.Sequence
         from      SNP as s, Gene as g ,
-                  Gene_has_SNP as gs, Variants as v 
+                  Gene_has_SNP as gs, Variants as v
         where     s.idSNP = gs.SNP_idSNP and
                   gs.Gene_Gene_id = g.Gene_id and
                   v.idSNP = s.idSNP
@@ -104,7 +102,7 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
     <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
 </head>
 <body>
-
+<div class="se-pre-con"></div>
 
 <div class="container">
 <h1>RESULTS:</h1>
@@ -159,23 +157,23 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
     </tbody>
 </table>
 </div>
-<?php
-#############################################################
-#############################################################
-################                                  ###########
-################        Processing genes          ###########
-################                                  ###########
-#############################################################
-#############################################################
 
 
 
-?>
+
 
 <script type="text/javascript">
 $(document).ready(function () {
     $('#blastTable').DataTable();
 });
+</script>
+
+<script>
+$(window).load(function() {
+  // Animate loader off screen
+  $(".se-pre-con").fadeOut("slow");;
+});
+
 </script>
 
 <?php

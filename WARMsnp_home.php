@@ -28,18 +28,31 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
   <div class="row">
     <div class="col-md-8">
     <h2>WARMsnp</h2>
-    <p style="text-align: justify; text-justify: inter-word;">WARMsnp is a web app designed by and for researchers. It is aimed to deliver SNP enriched information, it allows you to get SNP related information consolidated from several other web sties.</p>
+    <p style="text-align: justify; text-justify: inter-word;">
+      WARMsnp is a web app designed by and for researchers. It is aimed to deliver SNP enriched information, it allows you to get SNP related information consolidated from several other web sties.
+    </p>
 
     <form id="input_form" name="input" action="SNP_out.php" method="post" enctype="multipart/form-data">
         <p><em>Enter gene ensembl id or snp id:</em></p>
-        <textarea id="text_in" name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;"><?php print $_SESSION["queryData"]["query"]?></textarea><span id="query_not_type_message" class="error" style="color:#ff0000; display:none; margin-left: 2%; margin-bottom:30px;">* Input text must be a a gene ensembl id (e.g. ENS0001 or a snp id (e.g. rs0001)</span>
+        <textarea id="text_in" name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 1%;">
+          <?php print $_SESSION["queryData"]["query"]?>
+        </textarea>
+        <span id="query_not_type_message" class="error" style="color:#ff0000; display:none; margin-left: 2%; margin-bottom:30px;">
+          * Input text must be a a gene ensembl id (e.g. ENS0001 or a snp id (e.g. rs0001)
+        </span>
         <br><input id="file_in"name="uploadFile" type="file" style="margin-left: 1%;">
-          <span id="query_err_message" class="error" style="color:#ff0000; display:none;">* Input text or file are required</span><br>
+          <span id="query_err_message" class="error" style="color:#ff0000; display:none;">
+            * Input text or file are required
+          </span><br>
         <br>
         <fieldset class="advanced search" style="border: 1px dashed black;">
-        <h3 style="margin-left: 15px; margin-top: 5px;">Advanced search</h3>
+        <h3 style="margin-left: 15px; margin-top: 5px;">
+          Advanced search
+        </h3>
         <div style="margin-left: 30px;">
-            <p>Select parameters to further filter the search:</p>
+            <p>
+              Select parameters to further filter the search:
+            </p>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -47,8 +60,9 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
                         <p>
                             Higher than:
                             <input type="text" name="minbeta"id="minbeta" value= "<?php print $_SESSION['queryData']['minbeta'] ?>" size="5">
-                            <span id="beta_num" class="error" style="color:#ff0000; display:none;">* Beta must be a number.</span>
-
+                            <span id="beta_num" class="error" style="color:#ff0000; display:none;">
+                              * Beta must be a number.
+                            </span>
                         </p>
                     </div>
                 </div>
@@ -57,20 +71,32 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
                         <label style="font-weight: bold;">P value</label>
                         <p>
                             Lower than: <input type="text" id="maxpval" name="maxpval" value= "<?php print $_SESSION['queryData']['maxpval'] ?>" size="5">
-                            <span id="pval_err" class="error" style="color:#ff0000; display:none;">* Pvalue is out of range, please set it between 0 and 1.</span>
-                            <span id="pval_num" class="error" style="color:#ff0000; display:none;">* Pvalue must be a number.</span>
+                            <span id="pval_err" class="error" style="color:#ff0000; display:none;">
+                              * P value is out of range, please set it between 0 and 1.
+                            </span>
+                            <span id="pval_num" class="error" style="color:#ff0000; display:none;">
+                              * P value must be a number.
+                            </span>
                         </p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label style="font-weight: bold;">Variant Frequency</label>
+                        <label style="font-weight: bold;">
+                          Variant Frequency
+                        </label>
                         <p>
                             from: <input type="text" id="minfreq" name="minfreq" value='<?php print $_SESSION['queryData']['minfreq'] ?>' size="5">
                             to: <input type="text" id="maxfreq" name="maxfreq" value= '<?php print $_SESSION['queryData']['maxfreq'] ?>' size="5" >
-                            <span id="freq_error" class="error" style="color:#ff0000; display:none;">* Frequencies are set out of range, please set them between 0 and 1.</span>
-                            <span id="freq_inv" class="error" style="color:#ff0000; display:none;">* Minimum frequency is bigger than maximum frequency.</span><br>
-                            <span id="freq_num" class="error" style="color:#ff0000; display:none;">* Minimum frequency and maximum frequencies must be numbers.</span>
+                            <span id="freq_error" class="error" style="color:#ff0000; display:none;">
+                              * Frequencies are set out of range, please set them between 0 and 1.
+                            </span>
+                            <span id="freq_inv" class="error" style="color:#ff0000; display:none;">
+                              * Minimum frequency is bigger than maximum frequency.
+                            </span><br>
+                            <span id="freq_num" class="error" style="color:#ff0000; display:none;">
+                              * Minimum frequency and maximum frequencies must be numbers.
+                            </span>
 
                         </p>
                     </div>
@@ -81,8 +107,12 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
         </fieldset>
     </form>
 
-    <button onclick="check()" style="border-radius: 12px;background-color: #e9e9e6">Submit</button>
-    <button onclick="reset()" style="border-radius: 12px;background-color: #e9e9e6">Reset</button><br><br>
+    <button onclick="check()" style="border-radius: 12px;background-color: #e9e9e6">
+      Submit
+    </button>
+    <button onclick="reset()" style="border-radius: 12px;background-color: #e9e9e6">
+      Reset
+    </button><br><br>
 
 
    </div>
@@ -93,17 +123,11 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
         <div style="border: 1px solid black; overflow:scroll; height: 410px">
          <ul style="margin-top: 15px; text-align: justify; text-justify: inter-word;margin-right: 25px;">
           <li>
-            Here is a side column where we can write interesting facts:
-          Which is the gene with the most snps,
-          which is the snp with the highest beta,
-          Which is disease with the most snps,
+            If you were to recite the entire ATCG sequence, pronouncing each of its 3 billion letters the genetic material notation is made of at a rate of 100 ATCG sequences per minute without sleeping, eating or drinking, you would cite for 57 years.
           </li>
           <hr>
           <li>
-            Here is a side column where we can write interesting facts:
-          Which is the gene with the most snps,
-          which is the snp with the highest beta,
-          Which is disease with the most snps,
+            About one in every 4 million lobsters is born with a rare genetic defect that turns it blue. Sadly, these prized critters rarely survive to adulthood. After all, a bright blue crustacean crawling around the ocean floor is simply easier for predators to spot.
           </li>
           <hr>
           <li>
@@ -159,7 +183,6 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
 </div>
 </body>
 </html>
-
 
 <!-- Optional JavaScript -->
 <!-- DataTable activation -->
