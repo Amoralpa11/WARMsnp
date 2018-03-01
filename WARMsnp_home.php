@@ -23,7 +23,6 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
     <meta charset="UTF-8">
 </head>
 <body>
-  <div class="se-pre-con"></div>
   <br>
 <div class="container">
   <div class="row">
@@ -265,6 +264,3 @@ function check() {
 
 
 <?php include "footer.html"?>
-
-</body>
-</html>
