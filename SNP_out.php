@@ -100,14 +100,23 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
     <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
     <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+    <script>
+    //paste this code under the head tag or in a separate js file.
+    // Wait for window load
+    $(window).load(function() {
+      // Animate loader off screen
+      $(".se-pre-con").fadeOut("slow");;
+    });
+    </script>
 </head>
+
 <body>
 
 <div class="se-pre-con"></div>
 
 <div class="container">
 <h1>RESULTS:</h1>
-<table border="0" cellspacing="2" cellpadding="4" id="blastTable">
+<table border="0" cellspacing="2" cellpadding="4" id="Table">
     <thead>
         <tr>
           <th>SNP Id</th>
@@ -159,22 +168,9 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 </table>
 </div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
-
-<script type="text/javascript">
-//paste this code under the head tag or in a separate js file.
-// Wait for window load
-$(window).load(function() {
-  // Animate loader off screen
-  $(".se-pre-con").fadeOut("slow");;
-});
-
-</script>
-
-<script type="text/javascript">
+<script>
 $(document).ready(function () {
-    $('#blastTable').DataTable();
+    $('#Table').DataTable();
 });
 </script>
 
