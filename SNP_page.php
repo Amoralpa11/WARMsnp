@@ -52,7 +52,10 @@ function transpose($data)
   return $retData;
 }
 
-$rsT = transpose($rsT);
+
+
+$rsT_disease = mysqli_fetch_all($rs_disease,MYSQLI_ASSOC);
+
 
 $rsT = mysqli_fetch_assoc($rs);
 
@@ -61,6 +64,11 @@ $rsT_gene = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
 $rsT_gene = transpose($rsT_gene);
 
 
+
+
+if (is_null($rsT['chr'])){
+	$rsT['chr'] = $rsT_gene['Chromosome'][0];
+}
 
 ?>
 
@@ -73,7 +81,7 @@ $rsT_gene = transpose($rsT_gene);
 		<div>
 
 			<div class="row">
-				<p>Location: <?php print $rsT['pos']?></p>
+				<p>Location: chr: <?php print $rsT['chr']." : ".$rsT['pos']?></p>
 				<p>  </p>
 			</div>
 			<div class="row">
@@ -103,7 +111,21 @@ $rsT_gene = transpose($rsT_gene);
 			<div class="row">
 				<p>beta: <?php print $rsT['beta']?></p>
 			</div>
+			<?php 
 
+			if (count($rsT_disease) != 0) {
+				
+				print 	"<div>
+						<strong>Other diseases: </strong>";
+
+				foreach ($rsT_disease as $row) {
+					print "<p>".$row["Name"]."</p>";
+				}
+				
+
+				print "</div>";
+			}
+			 ?>
 
 		</div>
 	</div>
@@ -113,3 +135,31 @@ $rsT_gene = transpose($rsT_gene);
 si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones. 
 3 arrays asociativos en el que la clave sea el id del snp
  -->
+
+ <?php 
+
+ #DATOS PARA RAMON
+
+$sql_plot1 = "select pos, beta, v.p_value, s.idSNP
+from 	SNP as s, Variants as v, Gene_has_SNP as gs, Gene as g
+where	s.pos between 150240076-40000 and 150240076+40000
+and chr = 5  and s.idSNP = v.idSNP;";
+
+$sql_plot2 = "select pos, beta, p_value, s.idSNP
+from 	SNP as s, Variants as v, Gene_has_SNP as gs, Gene as g
+where	s.pos between 150240076-40000 and 150240076+40000
+and Chromosome = 5 and s.idSNP = v.idSNP and 
+s.idSNP = gs.SNP_idSNP and g.Gene_id = gs.Gene_Gene_id;";
+
+
+$rs_plot1 = mysqli_query($mysqli, $sql_plot1) or print mysqli_error($mysqli);
+$rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
+
+$rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_BOTH);
+
+$rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_BOTH);
+
+
+
+
+?>
