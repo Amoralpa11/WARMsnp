@@ -8,26 +8,38 @@ session_start();
 
 $_SESSION['SNP_page'] = $_REQUEST;
 
+$sql_disease = "select d.Name
+from Disease as d, SNP as s, SNP_disease as sd
+where sd.idDisease = d.idDisease and sd.idSNP = s.idSNP and s.idSNP like '".$_REQUEST['ref']."'";
+
+$sql_GO = "select GO.GO_name
+from GO, Gene_Go as gg, Gene as g, SNP as s, Gene_has_SNP as gs
+where gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and 
+g.Gene_id = gs.Gene_Gene_id and s.idSNP = gs.SNP_idSNP and  s.idSNP like '".$_REQUEST['ref']."'";
+
+$sql_tissue = "select t.name, gt.expression_level
+from tissue as t, Gene_Tissue as gt, Gene as g, SNP as s, Gene_has_SNP as gs
+where  g.Gene_id = gt.idGene and t.Tissue_id = gt.Tissue_id and 
+g.Gene_id = gs.Gene_Gene_id and s.idSNP = gs.SNP_idSNP and 
+s.idSNP like '".$_REQUEST['ref']."'";
 
 
-$sql = "select d.Name as disease, g.Gene_id, Chromosome, Start_position, End_position,
-			hgnc_name, GO_name, s.idSNP, pos, Main_allele, chr, 
-            t.name, Frequency, Sequence, p_value, beta, predicted_consequences,
-            expression_level
-from 	Disease as d, Gene as g,  Gene_Go as gg, Gene_has_SNP as gs, 
-		Gene_Tissue as gt, GO, SNP as s, SNP_disease as sd, tissue as t,
-        Variants as v
-where	g.Gene_id = gs.Gene_Gene_id and s.idSNP = gs.SNP_idSNP and
-		g.Gene_id = gt.idGene and t.Tissue_id = gt.Tissue_id and
-        gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and
-        v.idSNP = s.idSNP and sd.idSNP = s.idSNP and 
-        sd.idDisease = d.idDisease and s.idSNP like '".$_REQUEST['ref']."'";
+$sql_gene = "select g.Gene_id, Chromosome, Start_position, End_position,
+			hgnc_name
+from 	Gene as g, Gene_has_SNP as gs, 
+		SNP as s
+where	g.Gene_id = gs.Gene_Gene_id and s.idSNP = gs.SNP_idSNP and s.idSNP like '".$_REQUEST['ref']."'";
 
-print $sql."<br>";
+$sql = "select pos, Main_allele, chr, 
+            Frequency, Sequence, p_value, beta, predicted_consequences
+from 	SNP as s, Variants as v
+where	v.idSNP = s.idSNP and s.idSNP like '".$_REQUEST['ref']."'";
 
+$rs_disease = mysqli_query($mysqli, $sql_disease) or print mysqli_error($mysqli);
+$rs_GO = mysqli_query($mysqli, $sql_GO) or print mysqli_error($mysqli);
+$rs_tissue = mysqli_query($mysqli, $sql_tissue) or print mysqli_error($mysqli);
+$rs_gene = mysqli_query($mysqli, $sql_gene) or print mysqli_error($mysqli); 
 $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
-
-$rsT = mysqli_fetch_all($rs, MYSQLI_ASSOC);
 
 function transpose($data)
 {
@@ -42,12 +54,11 @@ function transpose($data)
 
 $rsT = transpose($rsT);
 
-foreach ($rsT as $key => $field) {
-	$rsT[$key] = array_unique($rsT[$key]);
-}
+$rsT = mysqli_fetch_assoc($rs);
 
-print_r($rsT)
+$rsT_gene = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
 
+$rsT_gene = transpose($rsT_gene);
 
 
 
@@ -56,20 +67,20 @@ print_r($rsT)
 <div class="container" style="padding-top: 25px">
 	<div>
 		<div class="row">
-			<h3 style="margin-right: 10px">SNP: </h3><h4> <?php print $_SESSION['SNP_page']['ref'] ?></h4>
+			<h3 style="margin-right: 10px">SNP: </h3><h4> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['SNP_page']['ref'] ?> ><?php print $_SESSION['SNP_page']['ref'] ?></a></h4>
 		</div>
 
 		<div>
 
 			<div class="row">
-				<p>Location: <?php print $rsT['pos'][0] ?></p>
+				<p>Location: <?php print $rsT['pos']?></p>
 				<p>  </p>
 			</div>
 			<div class="row">
 				
 				<p>Gene: <?php 
 				$link_array = [];
-				foreach ($rsT['Gene_id'] as $gene){
+				foreach ($rsT_gene['Gene_id'] as $gene){
 				$link_array[] = "<a href ='gene_page.php?ref=$gene'>$gene</a>";
 				}
 
@@ -78,24 +89,19 @@ print_r($rsT)
 
 			</div>
 			<div class="row">
-				<p>Main allele:</p>
-				<p>.............</p>
+				<p>Main allele: <?php print " ".$rsT['Main_allele']?></p>
 			</div>
 			<div class="row">
-				<p>Frequency:</p>
-				<p>.............</p>
+				<p>Frequency: <?php print $rsT['Frequency']?></p>
 			</div>
 			<div class="row">
-				<p>Variant:</p>
-				<p>.............</p>
+				<p>Variant: <?php print $rsT['Sequence']?></p>
 			</div>
 			<div class="row">
-				<p>p-value:</p>
-				<p>.............</p>
+				<p>p-value: <?php print $rsT['p_value']?></p>
 			</div>
 			<div class="row">
-				<p>beta:</p>
-				<p>.............</p>
+				<p>beta: <?php print $rsT['beta']?></p>
 			</div>
 
 
