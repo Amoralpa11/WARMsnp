@@ -102,6 +102,7 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
     <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
     <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+
     <script>
     //paste this code under the head tag or in a separate js file.
     // Wait for window load
@@ -169,6 +170,9 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
     </tbody>
 </table>
 </div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
 <script>
 $(document).ready(function () {
