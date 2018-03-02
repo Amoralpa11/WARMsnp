@@ -1,0 +1,51 @@
+<head>
+  <!-- Plotly.js -->
+  <title>Manhattan</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+  	.slider {
+	    width: 2px;
+	    height: 5px;
+	    background: #d3d3d3;
+	    outline: none;
+	    opacity: 0.7;
+	   
+}
+  </style>
+</head>
+
+<body>
+
+  <div class="container-fluid">
+  	<div class="row">
+  		
+  		<div class="col-md-4" style="background-color:#F0F0F0;">
+		  <form id="frm1" action>
+
+			  <b>Filter by significance:</b></p>
+			  <input type="radio" name="signif" value="signif" checked> Significant
+			  <input type="radio" name="signif" value="not_signif"> Not significant<br></br>
+			  <b>Filter by Beta value</b>
+			  <input type="range" name="beta" min="0" max="1" value="0" class="slider" class="slider" step=0.01 id="betarange" onchange="updateSlider()">
+        <br>
+        <div id="sliderAmount"></div>
+
+
+			  <b>Enter a new gene or SNP:</b></br>
+			  <input type="text" name="snp">
+			  <input type="submit" value="Submit">
+		  </form>
+		</div>
+  		<div class="col-md-7">
+  			<div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+  			<script src="./manhattan.js"> </script>
+  		</div>
+  		<div class="col-md-1"></div>
+  	</div>
+  </div>
+</body>
