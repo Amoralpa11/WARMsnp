@@ -102,20 +102,11 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
     <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
     <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
-
-    <script>
-    //paste this code under the head tag or in a separate js file.
-    // Wait for window load
-    $(window).load(function() {
-      // Animate loader off screen
-      $(".se-pre-con").fadeOut("slow");;
-    });
-    </script>
 </head>
 
 <body>
 
-<div class="se-pre-con"></div>
+<div id="loader" class="loader" style="width: 100%;height: 100%;background-color: white;margin: 0;"><img src="images/ajax-loader.gif" alt="Be patient..." /></div>
 
 <div class="container">
 <h1>RESULTS:</h1>
@@ -171,15 +162,17 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 </table>
 </div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
-
 <script>
 $(document).ready(function () {
     $('#Table').DataTable();
 });
 </script>
 
+<script>
+$(window).load(function() {      //Do the code in the {}s when the window has loaded
+  $("#loader").fadeOut("fast");  //Fade out the #loader div
+});
+</script>
 <?php
 include "footer.html";
 ?>
