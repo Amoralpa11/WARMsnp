@@ -95,6 +95,8 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 
 ?>
 <html>
+<link rel="stylesheet" type="text/css" href="scss/loading_page.css">
+
 <head>
 
     <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
