@@ -106,7 +106,11 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 
 <body>
 
-<div id="loader" class="loader" style="width: 100%;height: 100%;background-color: white;margin: 0;"><img src="images/ajax-loader.gif" alt="Be patient..." /></div>
+<div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;left:0px;top:0px;position:absolute">
+  <img src="images/ajax-loader.gif" alt="Be patient...">
+  <p>the page is loading, please wait</p>
+  <div id="counter"></div>
+</div>
 
 <div class="container">
 <h1>RESULTS:</h1>
@@ -173,6 +177,19 @@ $(window).load(function() {      //Do the code in the {}s when the window has lo
   $("#loader").fadeOut("fast");  //Fade out the #loader div
 });
 </script>
+
+<script>
+$(document).ready(
+ var someval = 0;
+ var delay = 3;
+ function() {
+ setInterval(function() {
+  $('#counter').text('Time waited' + someval);
+  someval = someval+delay;
+}, delay*1000);  //Delay here = 3 seconds
+});
+</script>
+
 <?php
 include "footer.html";
 ?>
