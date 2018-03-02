@@ -181,12 +181,11 @@ $(window).load(function() {      //Do the code in the {}s when the window has lo
 <script>
 $(document).ready(
  var someval = 0;
- var delay = 3;
  function() {
  setInterval(function() {
-  $('#counter').text('Time waited' + someval);
-  someval = someval+delay;
-}, delay*1000);  //Delay here = 3 seconds
+  $('#counter').text('Time waited: ' + someval);
+  someval = someval+3;
+}, 3000);  //Delay here = 3 seconds
 });
 </script>
 
