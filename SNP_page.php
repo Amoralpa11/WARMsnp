@@ -159,8 +159,20 @@ $rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 
 $rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
 
+
+
+function cmp($a, $b)
+{
+    if ($a["pos"] == $b["pos"]) {
+        return 0;
+    }
+    return ($a["pos"] < $b["pos"]) ? -1 : 1;
+}
+
+usort($rsT_plot,"cmp");
+
 $rsT_plot = transpose($rsT_plot);
 
-print_r($rsT_plot);
+
 
 ?>
