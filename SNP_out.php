@@ -106,9 +106,10 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 
 <body>
 
-<div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;left:0px;top:0px;position:absolute">
+<div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;position:absolute;text-align: center;vertical-align: middle;position: relative;top: 50%;">
+<!-- <div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;left:0px;top:0px;position:absolute"> -->
   <img src="images/ajax-loader.gif" alt="Be patient...">
-  <p>the page is loading, please wait</p>
+  <p>The page is loading, please wait</p>
   <div id="counter"></div>
 </div>
 
