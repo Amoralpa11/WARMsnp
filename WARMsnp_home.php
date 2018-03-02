@@ -26,11 +26,14 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
   <div class="row">
     <div class="col-md-8">
     <h2>WARMsnp</h2>
-    <p style="text-align: justify; text-justify: inter-word;">WARMsnp is a web app designed by and for researchers. It is aimed to deliver SNP enriched information, it allows you to get SNP related information consolidated from several other web sties.</p>
+    <p style="text-align: justify; text-justify: inter-word;">WARMsnp is a web app designed by and for researchers. It is aimed to deliver SNP enriched information, it allows you to get SNP related information consolidated from several other web sites.</p>
 
     <form id="input_form" name="input" action="SNP_out.php" method="post" enctype="multipart/form-data">
-      <div style="border: 1px dashed">
-        <p style="margin-left:25px; margin-top:5px"><em>Enter gene ensembl id or snp id:</em></p>
+      <div style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2">
+        <h3 style="margin-left:15px; margin-top:5px">Main search</h3>
+        <p style="margin-left:25px; margin-top:5px">
+          <em style="size:59">Enter gene ensembl id or snp id:</em>
+        </p>
         <textarea id="text_in" name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 35px;"><?php print $_SESSION["queryData"]["query"]?></textarea>
         <span id="query_not_type_message" class="error" style="color:#ff0000; display:none; margin-left: 2%; margin-bottom:30px;">* Input text must be a a gene ensembl id (e.g. ENS0001 or a snp id (e.g. rs0001)</span><br>
         <span id="perc_doll" class="error" style="color:#ff0000; display:none;">* Input text or file can't contain $ or % signs.</span>
@@ -38,8 +41,9 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
         <span id="query_err_message" class="error" style="color:#ff0000; display:none;">* Input text or file are required</span><br>
       </div>
         <br>
-        <fieldset id="advanced_search" class="advanced search" style="border: 1px dashed black; display:none;">
+        <fieldset id="advanced_search" class="advanced search" style="border: 1px dashed black; display:none; background-color:#f2f2f2; border-radius:25px">
         <h3 style="margin-left: 15px; margin-top: 5px;">Advanced search</h3>
+        <!-- <hr> -->
         <div style="margin-left: 30px;">
             <p>Select parameters to further filter the search:</p>
             <div class="row">
