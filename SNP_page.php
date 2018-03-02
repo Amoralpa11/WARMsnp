@@ -142,24 +142,25 @@ si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
 
 $sql_plot1 = "select pos, beta, v.p_value, s.idSNP
 from 	SNP as s, Variants as v, Gene_has_SNP as gs, Gene as g
-where	s.pos between 150240076-40000 and 150240076+40000
-and chr = 5  and s.idSNP = v.idSNP;";
+where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
+and chr = ".$rsT['chr']."  and s.idSNP = v.idSNP;";
 
 $sql_plot2 = "select pos, beta, p_value, s.idSNP
 from 	SNP as s, Variants as v, Gene_has_SNP as gs, Gene as g
-where	s.pos between 150240076-40000 and 150240076+40000
-and Chromosome = 5 and s.idSNP = v.idSNP and 
+where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
+and Chromosome = ".$rsT['chr']." and s.idSNP = v.idSNP and 
 s.idSNP = gs.SNP_idSNP and g.Gene_id = gs.Gene_Gene_id;";
 
 
 $rs_plot1 = mysqli_query($mysqli, $sql_plot1) or print mysqli_error($mysqli);
 $rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
 
-$rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_BOTH);
+$rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 
-$rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_BOTH);
+$rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
 
+$rsT_plot = transpose($rsT_plot);
 
-
+print_r($rsT_plot);
 
 ?>
