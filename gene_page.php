@@ -51,13 +51,6 @@ function transpose($data)
 	return $retData;
 }
 
-
-
-$rsT_disease = mysqli_fetch_all($rs_disease,MYSQLI_ASSOC);
-
-
-
-
 $rsT_gene = mysqli_fetch_assoc($rs_gene);
 
 if (is_null($rsT['chr'])){
@@ -75,8 +68,11 @@ if (is_null($rsT['chr'])){
 		<div>
 
 			<div class="row">
-				<p>Location: chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?></p>
-				<p>  </p>
+				<p>
+					<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
+						Location: chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
+						
+					</a></p>
 			</div>
 
 			<table border="0" cellspacing="2" cellpadding="4" id="blastTable">
@@ -123,6 +119,8 @@ if (is_null($rsT['chr'])){
 		</div>
 	</div>
 </div>
+
+
 
 <!-- 
 si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones. 
