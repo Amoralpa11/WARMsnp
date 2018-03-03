@@ -113,19 +113,39 @@ foreach ($rst_gene as $row) {
   // El siguiente codigo hace que se muestre el número de genes en caso de que el gen tenga más de uno
 
   $rst_both[$row['idSNP']]['Gene_id'][] = $rst_both[$row['idSNP']]['Gene_id'];
-  $rst_both[$row['idSNP']]['Chromosome']  = $rst_both[$row['idSNP']]['Chromosome']; 
+  $rst_both[$row['idSNP']]['Chromosome']  = $rst_both[$row['idSNP']]['Chromosome'];
 }
 
 // print_r($rst_both);
 
 
 
+?>
+<html>
+<link rel="stylesheet" type="text/css" href="scss/loading_page.css">
 
-?>  
+<head>
 
-<div class="container">
-<h1>RESULTS:</h1>
-<table border="0" cellspacing="2" cellpadding="4" id="blastTable">
+    <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+
+<div id="loader" class="loader" style="width:100%; height:100%; background-color:white; margin:0; text-align: center; position: fixed; top: 0px;">
+<!-- <div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;position:fixed;text-align: center;vertical-align: middle;position: relative;top: 50%;"> -->
+  <div style="position:absolute;top:50%; left:50%; transform: translate(-50%, -50%);">
+    <img src="images/ajax-loader.gif" alt="Be patient..." style="vertical-align: middle">
+  </div>
+  <div style="position:absolute;top:55%; left:50%; transform: translate(-50%, -50%);">Hey there, we are processing you request, the results will be displayed soon.</div>
+  <div id="counter" style="position:absolute;top:60%; left:50%; transform: translate(-50%, -50%);">The page is loading, please wait...</div>
+
+</div>
+
+<div class="container" style="min-height:75%; margin-bottom:20px">
+<h1 style="margin-top:2.5%">RESULTS:</h1>
+<table border="0" cellspacing="2" cellpadding="4" id="Table" style="margint-bottom:5%">
     <thead>
         <tr>
           <th>SNP Id</th>
@@ -186,22 +206,25 @@ foreach ($rst_gene as $row) {
 </table>
 </div>
 
-
-
-
-
-<script type="text/javascript">
+<script>
 $(document).ready(function () {
-    $('#blastTable').DataTable();
+    $('#Table').DataTable();
 });
 </script>
 
 <script>
-$(window).load(function() {
-  // Animate loader off screen
-  $(".se-pre-con").fadeOut("slow");;
+$(window).load(function() {      //Do the code in the {}s when the window has loaded
+  $("#loader").fadeOut("fast");
 });
+</script>
 
+<script>
+ function() {
+ setInterval(function() {
+ var someval = Math.floor(Math.random() * 100);
+  $('#counter').text('Test' + someval);
+}, 1000);  //Delay here = 5 seconds
+};
 </script>
 
 <?php
