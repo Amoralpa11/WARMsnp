@@ -11,11 +11,12 @@ if ($_REQUEST) {
 }
 
 
-$sql_GO = "select GO.GO_name
-from GO, Gene_Go as gg, Gene as g, SNP as s, Gene_has_SNP as gs
+$sql_GO = "select GO.GO_name, GO.GO_id
+from GO, Gene_Go as gg, Gene as g
 where gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and 
-g.Gene_id = gs.Gene_Gene_id and s.idSNP = gs.SNP_idSNP and g.Gene_id like '".$_REQUEST['ref']."'";
+g.Gene_id like '".$_REQUEST['ref']."'";
 
+print $sql_GO;
 
 $sql_tissue = "select t.name, gt.expression_level
 from tissue as t, Gene_Tissue as gt, Gene as g
@@ -76,6 +77,18 @@ if (is_null($rsT['chr'])){
 			</div>
 
 			<div>
+				<p>GO: <?php 
+				$link_array = [];
+				while ($rsT_Go = mysqli_fetch_assoc($rs_GO)){
+				$link_array[] = "<a href ='http://amigo.geneontology.org/amigo/term/".$rsT_Go['GO_id']."'>".$rsT_Go['GO_name']."</a>";
+				}
+
+				print implode(", ", $link_array);
+				?></p>
+
+			</div>
+
+			<div class="container">
 
 				<table border="0" cellspacing="2" cellpadding="4" id="tissueTable">
 					<thead>
@@ -110,7 +123,7 @@ if (is_null($rsT['chr'])){
 			</div>
 
 
-			<div>
+			<div class="container">
 
 				<table border="0" cellspacing="2" cellpadding="4" id="blastTable">
 					<thead>
@@ -152,12 +165,12 @@ if (is_null($rsT['chr'])){
 						?>
 					</tbody>
 				</table>			
-				
+
 			</div>
 
 			
 
-			
+
 
 
 
