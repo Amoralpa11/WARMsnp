@@ -106,16 +106,19 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 
 <body>
 
-<div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;position:absolute;text-align: center;vertical-align: middle;position: relative;top: 50%;">
-<!-- <div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;left:0px;top:0px;position:absolute"> -->
-  <img src="images/ajax-loader.gif" alt="Be patient...">
-  <p>The page is loading, please wait</p>
-  <div id="counter"></div>
+<div id="loader" class="loader" style="width:100%; height:100%; background-color:white; margin:0; text-align: center; position: fixed; top: 0px;">
+<!-- <div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;position:fixed;text-align: center;vertical-align: middle;position: relative;top: 50%;"> -->
+  <div style="position:absolute;top:50%; left:50%; transform: translate(-50%, -50%);">
+    <img src="images/ajax-loader.gif" alt="Be patient..." style="vertical-align: middle">
+  </div>
+  <div style="position:absolute;top:55%; left:50%; transform: translate(-50%, -50%);">Hey there, we are processing you request, the results will be displayed soon.</div>
+  <div id="counter" style="position:absolute;top:60%; left:50%; transform: translate(-50%, -50%);">The page is loading, please wait...</div>
+
 </div>
 
-<div class="container">
-<h1>RESULTS:</h1>
-<table border="0" cellspacing="2" cellpadding="4" id="Table">
+<div class="container" style="min-height:75%; margin-bottom:20px">
+<h1 style="margin-top:2.5%">RESULTS:</h1>
+<table border="0" cellspacing="2" cellpadding="4" id="Table" style="margint-bottom:5%">
     <thead>
         <tr>
           <th>SNP Id</th>
@@ -175,19 +178,17 @@ $(document).ready(function () {
 
 <script>
 $(window).load(function() {      //Do the code in the {}s when the window has loaded
-  $("#loader").fadeOut("fast");  //Fade out the #loader div
+  $("#loader").fadeOut("fast");
 });
 </script>
 
 <script>
-$(document).ready(
- var someval = 0;
  function() {
  setInterval(function() {
-  $('#counter').text('Time waited: ' + someval);
-  someval = someval+3;
-}, 3000);  //Delay here = 3 seconds
-});
+ var someval = Math.floor(Math.random() * 100);
+  $('#counter').text('Test' + someval);
+}, 1000);  //Delay here = 5 seconds
+};
 </script>
 
 <?php
