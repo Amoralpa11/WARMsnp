@@ -94,14 +94,6 @@ $sql = "select   s.chr, g.Chromosome, s.pos,
 $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 
 ?>
-<html>
-<head>
-
-    <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
-    <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
-    <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
-</head>
-<body>
 
 <div class="container">
 <h1>RESULTS:</h1>
@@ -142,7 +134,7 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
             <?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
             <td> <?php print $chromosome ?> </td>
             <td> <?php print $position ?> </td>
-            <?php  print "<td><a target='_blank' href='Gene_page.php?ref=$gene'>$gene</a></td>" ?>
+            <?php  print "<td><a target='_blank' href='gene_page.php?ref=$gene'>$gene</a></td>" ?>
             <td> <?php print $Main_allele ?> </td>
             <td> <?php print $variant_allele ?> </td>
             <td> <?php print $frequency ?> </td>
