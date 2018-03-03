@@ -19,8 +19,9 @@ g.Gene_id = gs.Gene_Gene_id and s.idSNP = gs.SNP_idSNP and g.Gene_id like '".$_R
 
 $sql_tissue = "select t.name, gt.expression_level
 from tissue as t, Gene_Tissue as gt, Gene as g
-where  g.Gene_id = gt.idGene and t.Tissue_id = gt.Tissue_id
-g.Gene_id like '".$_REQUEST['ref']."'";
+where  g.Gene_id = gt.idGene and expression_level > 0 and t.Tissue_id = gt.Tissue_id
+and g.Gene_id like '".$_REQUEST['ref']."'
+order by gt.expression_level desc";
 
 
 $sql_gene = "select g.Gene_id, Chromosome, Start_position, End_position,
@@ -62,63 +63,108 @@ if (is_null($rsT['chr'])){
 <div class="container" style="padding-top: 25px">
 	<div>
 		
-			<h3 style="margin-right: 10px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['gene_page']['ref'] ?> ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
+		<h3 style="margin-right: 10px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['gene_page']['ref'] ?> ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
 		
+		<div class="row">
+			<p>
+				<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
+					Location: chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
 
-		<div>
+				</a></p>
 
-			<div class="row">
-				<p>
-					<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
-						Location: chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
-						
-					</a></p>
+
 			</div>
 
-			<table border="0" cellspacing="2" cellpadding="4" id="blastTable">
-				<thead>
-					<tr>
-						<th>SNP Id</th>
-						<th>Position</th>
-						<th>Main allele</th>
-						<th>Mutation</th>
-						<th>Variant frequency</th>
-						<th>Beta</th>
-						<th>p value</th>
-					</tr>
-				</thead>
-				<tbody>
+			<div>
 
-					<?php while ($rsF = mysqli_fetch_assoc($rs_snp)) {
+				<table border="0" cellspacing="2" cellpadding="4" id="tissueTable">
+					<thead>
+						<tr>
+							<th>Tissue</th>
+							<th>Expression level (tpm)</th>
+						</tr>
+					</thead>
+					<tbody>
 
-						$SNP_id =  $rsF['idSNP'];
-						$Main_allele =  $rsF['Main_allele'];
-						$variant_allele =  $rsF['Sequence'];
-						$position = $rsF['pos'];
-						$frequency = $rsF['Frequency'];
-						$beta = $rsF['beta'];
-						$pval = $rsF['p_value'];
+						<?php 
+
+						while ($rsT_tissue = mysqli_fetch_assoc($rs_tissue)) {
+
+							?><tr><?php 
+							foreach ($rsT_tissue as $field) {
+
+								?>
+
+								<td><?php print $field ?></td>
+
+								<?php 
+							}
+							?><tr><?php 
+						}
 
 						?>
-						<tr>
-							<?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
-							<td> <?php print $position ?> </td>
-							<td> <?php print $Main_allele ?> </td>
-							<td> <?php print $variant_allele ?> </td>
-							<td> <?php print $frequency ?> </td>
-							<td> <?php print $beta ?> </td>
-							<td> <?php print $pval ?> </td>
-						</tr>
-						<?php
-					}
 
-					?>
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+
+			</div>
+
+
+			<div>
+
+				<table border="0" cellspacing="2" cellpadding="4" id="blastTable">
+					<thead>
+						<tr>
+							<th>SNP Id</th>
+							<th>Position</th>
+							<th>Main allele</th>
+							<th>Mutation</th>
+							<th>Variant frequency</th>
+							<th>Beta</th>
+							<th>p value</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<?php while ($rsF = mysqli_fetch_assoc($rs_snp)) {
+
+							$SNP_id =  $rsF['idSNP'];
+							$Main_allele =  $rsF['Main_allele'];
+							$variant_allele =  $rsF['Sequence'];
+							$position = $rsF['pos'];
+							$frequency = $rsF['Frequency'];
+							$beta = $rsF['beta'];
+							$pval = $rsF['p_value'];
+
+							?>
+							<tr>
+								<?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
+								<td> <?php print $position ?> </td>
+								<td> <?php print $Main_allele ?> </td>
+								<td> <?php print $variant_allele ?> </td>
+								<td> <?php print $frequency ?> </td>
+								<td> <?php print $beta ?> </td>
+								<td> <?php print $pval ?> </td>
+							</tr>
+							<?php
+						}
+
+						?>
+					</tbody>
+				</table>			
+				
+			</div>
+
+			
+
+			
+
+
+
+
 
 		</div>
 	</div>
-</div>
 
 
 
@@ -127,11 +173,15 @@ si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
 3 arrays asociativos en el que la clave sea el id del snp
 -->
 
+
 <script type="text/javascript">
-$(document).ready(function () {
-    $('#blastTable').DataTable();
-});
+	$(document).ready(function () {
+		$('#blastTable').DataTable();
+		$('#tissueTable').DataTable();
+	});
 </script>
+
+
 
 <?php 
 
