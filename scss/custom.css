@@ -22,3 +22,7 @@ $theme-colors: (
     color: #555;
     font-size: .7em;
 }
+
+.gene-name {
+  font-size: 1.75rem;
+}

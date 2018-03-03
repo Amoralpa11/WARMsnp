@@ -35,10 +35,10 @@ where	v.idSNP = s.idSNP and g.Gene_id = gs.Gene_Gene_id and
 s.idSNP = gs.SNP_idSNP and g.Gene_id like '".$_REQUEST['ref']."'";
 
 
-$rs_GO = mysqli_query($mysqli, $sql_GO) or print mysqli_error($mysqli);
-$rs_tissue = mysqli_query($mysqli, $sql_tissue) or print mysqli_error($mysqli);
-$rs_gene = mysqli_query($mysqli, $sql_gene) or print mysqli_error($mysqli); 
-$rs_snp = mysqli_query($mysqli, $sql_snp) or print mysqli_error($mysqli);
+$rs_GO = mysqli_query($mysqli, $sql_GO) or print "GO: ".mysqli_error($mysqli);
+$rs_tissue = mysqli_query($mysqli, $sql_tissue) or print "Tissue: ".mysqli_error($mysqli);
+$rs_gene = mysqli_query($mysqli, $sql_gene) or print "Gene: ".mysqli_error($mysqli); 
+$rs_snp = mysqli_query($mysqli, $sql_snp) or print "SNP: ".mysqli_error($mysqli);
 
 function transpose($data)
 {
@@ -61,9 +61,9 @@ if (is_null($rsT['chr'])){
 
 <div class="container" style="padding-top: 25px">
 	<div>
-		<div class="row">
-			<h3 style="margin-right: 10px">Gene: </h3><h4> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['gene_page']['ref'] ?> ><?php print $_SESSION['gene_page']['ref'] ?></a></h4>
-		</div>
+		
+			<h3 style="margin-right: 10px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['gene_page']['ref'] ?> ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
+		
 
 		<div>
 

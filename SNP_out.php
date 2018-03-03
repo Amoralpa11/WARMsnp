@@ -78,22 +78,50 @@ if ($Gene_array) {
 
 
 
-$sql = "select   s.chr, g.Chromosome, s.pos,
+$sql_snp = "select   s.chr, s.pos,
                   v.Frequency, v.beta, v.p_value,
-                  s.Main_allele, s.idSNP, g.Gene_id, v.Sequence
+                  s.Main_allele, s.idSNP, v.Sequence
+        from      SNP as s, Variants as v
+        where     v.idSNP = s.idSNP
+                  and
+                  ". join(" AND ", $ANDconds);
+
+$sql_gene = "select   g.Chromosome,
+                   s.idSNP, g.Gene_id
         from      SNP as s, Gene as g ,
                   Gene_has_SNP as gs, Variants as v
         where     s.idSNP = gs.SNP_idSNP and
                   gs.Gene_Gene_id = g.Gene_id and
-                  v.idSNP = s.idSNP
-                  and
+                  v.idSNP = s.idSNP and
                   ". join(" AND ", $ANDconds);
+// print $sql_gene;
 
-// print $sql."<br>";
+$rs_snp = mysqli_query($mysqli, $sql_snp) or print "snp: ".mysqli_error($mysqli);
+$rs_gene = mysqli_query($mysqli, $sql_gene) or print "gene: ".mysqli_error($mysqli);
 
-$rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
+$rst_snp = mysqli_fetch_all($rs_snp,MYSQLI_ASSOC);
+// print_r($rst_snp);
+// print "<br>";
+$rst_gene = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
+ // print_r($rst_gene);
 
-?>
+foreach ($rst_snp as $row) {
+  $rst_both[$row['idSNP']] = $row;
+}
+
+foreach ($rst_gene as $row) {
+  // El siguiente codigo hace que se muestre el número de genes en caso de que el gen tenga más de uno
+
+  $rst_both[$row['idSNP']]['Gene_id'][] = $rst_both[$row['idSNP']]['Gene_id'];
+  $rst_both[$row['idSNP']]['Chromosome']  = $rst_both[$row['idSNP']]['Chromosome']; 
+}
+
+// print_r($rst_both);
+
+
+
+
+?>  
 
 <div class="container">
 <h1>RESULTS:</h1>
@@ -113,7 +141,7 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
     </thead>
     <tbody>
 
-        <?php while ($rsF = mysqli_fetch_assoc($rs)) {
+        <?php foreach ($rst_both as $rsF){
 
           if (isset($rsF['Chromosome'])) {
             $chromosome = $rsF['Chromosome'];
@@ -134,7 +162,16 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
             <?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
             <td> <?php print $chromosome ?> </td>
             <td> <?php print $position ?> </td>
-            <?php  print "<td><a target='_blank' href='gene_page.php?ref=$gene'>$gene</a></td>" ?>
+            <?php
+              if (count($gene) == 1 ){
+              print "<td><a target='_blank' href='gene_page.php?ref=$gene'>$gene</a></td>";
+              } elseif (count($gene) > 1) {
+                print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>".count($rsF['Gene_id'])."</a></td>";
+              }else{
+                print "<td></td>";
+              }
+
+              ?>
             <td> <?php print $Main_allele ?> </td>
             <td> <?php print $variant_allele ?> </td>
             <td> <?php print $frequency ?> </td>
