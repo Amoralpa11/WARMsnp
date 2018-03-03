@@ -87,7 +87,8 @@ $sql_snp = "select   s.chr, s.pos,
                   ". join(" AND ", $ANDconds);
 
 $sql_gene = "select   g.Chromosome,
-                   s.idSNP, g.Gene_id
+                   s.idSNP, g.Gene_id, s.pos,v.Frequency, v.beta, v.p_value,
+                  s.Main_allele, s.idSNP, v.Sequence
         from      SNP as s, Gene as g ,
                   Gene_has_SNP as gs, Variants as v
         where     s.idSNP = gs.SNP_idSNP and
@@ -112,8 +113,12 @@ foreach ($rst_snp as $row) {
 foreach ($rst_gene as $row) {
   // El siguiente codigo hace que se muestre el número de genes en caso de que el gen tenga más de uno
 
-  $rst_both[$row['idSNP']]['Gene_id'][] = $rst_both[$row['idSNP']]['Gene_id'];
-  $rst_both[$row['idSNP']]['Chromosome']  = $rst_both[$row['idSNP']]['Chromosome'];
+  if (!isset($rst_both[$row['idSNP']])) {
+    $rst_both[$row['idSNP']] = $row;
+  } else{
+    $rst_both[$row['idSNP']]['Gene_id'][] = $row['idSNP']['Gene_id'];
+  }
+
 }
 
 // print_r($rst_both);
