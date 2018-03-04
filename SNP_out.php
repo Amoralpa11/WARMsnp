@@ -32,9 +32,9 @@
 
 <body>
 
-  <?php 
+  <?php
   session_start();
-  $rst = $_SESSION['SNP_out']; 
+  $rst = $_SESSION['SNP_out'];
   include "navbar.html";
   ?>
 
@@ -111,13 +111,13 @@
       </table>
     </div>
 
-    <script>
+<script>
       $(document).ready(function () {
         $('#Table').DataTable();
       });
-    </script>
+</script>
 
-    <script>
+<script>
 $(window).load(function() {      //Do the code in the {}s when the window has loaded
   $("#loader").fadeOut("fast");
 });
