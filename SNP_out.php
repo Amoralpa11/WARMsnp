@@ -153,7 +153,7 @@ $sql_with_no_genes = "select   s.chr,
                    s.idSNP, s.pos,v.Frequency, v.beta, v.p_value,
                   s.Main_allele, s.idSNP, v.Sequence
         from      SNP as s, Variants as v
-        where     
+        where
                   v.idSNP = s.idSNP and
                   ". join(" AND ", $nogene_ANDconds);
 
@@ -214,7 +214,7 @@ foreach ($rst_gene as $row) {
 
 </div>
 
-<div class="container" style="min-height:75%; margin-bottom:20px">
+<div class="container" style="min-height:60%; margin-bottom:20px">
 <h3 style="margin-top:2.5%">RESULTS:</h3>
 <table border="0" cellspacing="2" cellpadding="4" id="Table" style="margint-bottom:5%">
     <thead>

@@ -241,8 +241,11 @@ function check() {
         $("#query_not_type_message").hide();
       } else {
         $("#query_not_type_message").show();
-        okay = 1;
       }
+    }
+
+    if ( $("#file_in").val() ) {
+      $("#query_not_type_message").hide();
     }
 
     if ( $.isNumeric( $("#minbeta").val() ) || !$("#minbeta").val() ) {
