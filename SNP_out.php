@@ -11,7 +11,6 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
-
     <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
     <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
@@ -19,6 +18,7 @@
 	<link rel="icon" href="Home_images/flame.png">
 	<title>Results Table</title>
 </head>
+
 
 <?php
 #start Session to hold input data
