@@ -36,9 +36,9 @@ if ($_REQUEST) {
 
 
 $sql_GO = "select GO.GO_name, GO.GO_id
- from GO, Gene_Go as gg, Gene as g
- where gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and 
- g.Gene_id like '".$_REQUEST['ref']."'";
+from GO, Gene_Go as gg, Gene as g
+where gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and 
+g.Gene_id like '".$_REQUEST['ref']."'";
 
 
 $sql_tissue = "select t.name, gt.expression_level
@@ -143,7 +143,7 @@ if (is_null($rsT['chr'])){
 
 		</div>
 
-		<h3 style="margin-right: 10px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['gene_page']['ref'] ?> ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
+		<h3 style="margin-right: 10px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
 
 
 		<div class="row" style="margin-top:4%">
@@ -163,120 +163,124 @@ if (is_null($rsT['chr'])){
 				<div class="tab">
 					<div id="London" class="tabcontent">
 						<h4>Gene attributes</h4>
+						
+						<p> Location: 
+							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
+								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
+
+							</a></p>
 
 
-						<p>Here go gene characteristics: how many snps does it have, tissue where it is expressed the mosts, GO...</p>
+							<div>
+								<p>GO: <?php 
+								$link_array = [];
+								while ($rsT_Go = mysqli_fetch_assoc($rs_GO)){
+									$link_array[] = "<a href ='http://amigo.geneontology.org/amigo/term/".$rsT_Go['GO_id']."'>".$rsT_Go['GO_name']."</a>";
+								}
 
-						<div>
-							<p>GO: <?php 
-							$link_array = [];
-							while ($rsT_Go = mysqli_fetch_assoc($rs_GO)){
-								$link_array[] = "<a href ='http://amigo.geneontology.org/amigo/term/".$rsT_Go['GO_id']."'>".$rsT_Go['GO_name']."</a>";
-							}
+								print implode(", ", $link_array);
+								?></p>
 
-							print implode(", ", $link_array);
-							?></p>
+							</div>
 
 						</div>
 
-					</div>
-
-					<div id="Paris" class="tabcontent">
-						<h4>SNPs</h4>
-						<table border="0" cellspacing="2" cellpadding="4" id="snpTable">
-							<thead>
-								<tr>
-									<th>SNP Id</th>
-									<th>Position</th>
-									<th>Main allele</th>
-									<th>Mutation</th>
-									<th>Frequency</th>
-									<th>Beta</th>
-									<th>p value</th>
-								</tr>
-							</thead>
-							<tbody>
-
-								<?php while ($rsF = mysqli_fetch_assoc($rs_snp)) {
-
-									$SNP_id =  $rsF['idSNP'];
-									$Main_allele =  $rsF['Main_allele'];
-									$variant_allele =  $rsF['Sequence'];
-									$position = $rsF['pos'];
-									$frequency = $rsF['Frequency'];
-									$beta = $rsF['beta'];
-									$pval = $rsF['p_value'];
-
-									?>
+						<div id="Paris" class="tabcontent">
+							<h4>SNPs</h4>
+							<table border="0" cellspacing="2" cellpadding="4" id="snpTable">
+								<thead>
 									<tr>
-										<?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
-										<td> <?php print $position ?> </td>
-										<td> <?php print $Main_allele ?> </td>
-										<td> <?php print $variant_allele ?> </td>
-										<td> <?php print $frequency ?> </td>
-										<td> <?php print $beta ?> </td>
-										<td> <?php print $pval ?> </td>
+										<th>SNP Id</th>
+										<th>Position</th>
+										<th>Main allele</th>
+										<th>Mutation</th>
+										<th>Frequency</th>
+										<th>Beta</th>
+										<th>p value</th>
 									</tr>
-									<?php
-								}
+								</thead>
+								<tbody>
 
-								?>
-							</tbody>
-						</table>
-					</div>
+									<?php while ($rsF = mysqli_fetch_assoc($rs_snp)) {
 
-					<div id="Tokyo" class="tabcontent">
-						<h4>Tissue expression</h4>
-						<table border="0" cellspacing="2" cellpadding="4" id="tissueTable">
-							<thead>
-								<tr>
-									<th>Tissue</th>
-									<th>Expression level (tpm)</th>
-								</tr>
-							</thead>
-							<tbody>
-
-								<?php
-
-								while ($rsT_tissue = mysqli_fetch_assoc($rs_tissue)) {
-
-									?><tr><?php
-									foreach ($rsT_tissue as $field) {
+										$SNP_id =  $rsF['idSNP'];
+										$Main_allele =  $rsF['Main_allele'];
+										$variant_allele =  $rsF['Sequence'];
+										$position = $rsF['pos'];
+										$frequency = $rsF['Frequency'];
+										$beta = $rsF['beta'];
+										$pval = $rsF['p_value'];
 
 										?>
-
-										<td><?php print $field ?></td>
-
+										<tr>
+											<?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
+											<td> <?php print $position ?> </td>
+											<td> <?php print $Main_allele ?> </td>
+											<td> <?php print $variant_allele ?> </td>
+											<td> <?php print $frequency ?> </td>
+											<td> <?php print $beta ?> </td>
+											<td> <?php print $pval ?> </td>
+										</tr>
 										<?php
 									}
-									?><tr><?php
-								}
 
-								?>
+									?>
+								</tbody>
+							</table>
+						</div>
 
-							</tbody>
-						</table>
+						<div id="Tokyo" class="tabcontent">
+							<h4>Tissue expression</h4>
+							<table border="0" cellspacing="2" cellpadding="4" id="tissueTable">
+								<thead>
+									<tr>
+										<th>Tissue</th>
+										<th>Expression level (tpm)</th>
+									</tr>
+								</thead>
+								<tbody>
 
-					</div></div>
+									<?php
+
+									while ($rsT_tissue = mysqli_fetch_assoc($rs_tissue)) {
+
+										?><tr><?php
+										foreach ($rsT_tissue as $field) {
+
+											?>
+
+											<td><?php print $field ?></td>
+
+											<?php
+										}
+										?><tr><?php
+									}
+
+									?>
+
+								</tbody>
+							</table>
+
+						</div></div>
+					</div>
 				</div>
-			</div>
 
 
 
-			<script>
-				function gene_tabs(evt, cityName) {
-					var i, tabcontent, tablinks;
-					tabcontent = document.getElementsByClassName("tabcontent");
-					for (i = 0; i < tabcontent.length; i++) {
-						tabcontent[i].style.display = "none";
+				<script>
+					function gene_tabs(evt, cityName) {
+						var i, tabcontent, tablinks;
+						tabcontent = document.getElementsByClassName("tabcontent");
+						for (i = 0; i < tabcontent.length; i++) {
+							tabcontent[i].style.display = "none";
+						}
+						tablinks = document.getElementsByClassName("tablinks");
+						for (i = 0; i < tablinks.length; i++) {
+							tablinks[i].className = tablinks[i].className.replace(" active", "");
+						}
+						document.getElementById(cityName).style.display = "block";
+						evt.currentTarget.className += " active";
 					}
-					tablinks = document.getElementsByClassName("tablinks");
-					for (i = 0; i < tablinks.length; i++) {
-						tablinks[i].className = tablinks[i].className.replace(" active", "");
-					}
-					document.getElementById(cityName).style.display = "block";
-					evt.currentTarget.className += " active";
-				}
 
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
