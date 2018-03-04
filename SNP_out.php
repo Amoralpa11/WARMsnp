@@ -232,11 +232,7 @@ foreach ($rst_gene as $row) {
 </table>
 </div>
 
-<script>
-$(document).ready(function () {
-    $('#Table').DataTable();
-});
-</script>
+
 
 <script>
 $(window).load(function() {      //Do the code in the {}s when the window has loaded

@@ -227,10 +227,10 @@ function check() {
     }
 
     if ( !$("#maxpval").val() ) {
-      $("#maxpval").val('1')
+      $("#maxpval").val('1');
     }
 
-    if ($("#maxpval").val() < 0 || $("#maxpval").val() > 1) {
+    if ( $("#maxpval").val() < 0 || $("#maxpval").val() > 1 ) {
       $("#pval_err").show();
       okay = 1;
     } else {
@@ -269,10 +269,6 @@ function check() {
       okay = 1;
     } else {
       $("#perc_doll").hide();
-    }
-
-    if (okay == 0) {
-      $("#input_form").submit();
     }
 
     if ( /(\$|%)/.test( $("#minbeta").val() ) || /(\$|%)/.test( $("#maxpval").val() ) || /(\$|%)/.test( $("#maxfreq").val() ) || /(\$|%)/.test( $("#minfreq").val() ) ) {
