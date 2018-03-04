@@ -21,14 +21,19 @@
 
 
 <?php
+
+include "navbar.html";
 #start Session to hold input data
 session_start();
+if (is_array($_REQUEST)) {
+
+
 $_SESSION['queryData'] = $_REQUEST;
 
 if (!isset($_SESSION['queryData']))
     header('Location: WARMsnp_home.php');
 
-include "navbar.html";
+
 
 # Check if input comes from an uploaded file
 # If the data comes from a file get the content from the file
@@ -187,6 +192,13 @@ foreach ($rst_gene as $row) {
 
 }
 
+$_SESSION['snp_out'] = $rst;
+
+} else{
+
+  $rst = $_SESSION['snp_out'];
+
+}
  // print_r($rst);
 
 
