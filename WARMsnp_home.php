@@ -187,6 +187,7 @@ function reset() {
     $("#minbeta").val('');
     $("#maxpval").val('');
     $("#text_in").val('');
+    $("#file_in").val('');
 }
 </script>
 
