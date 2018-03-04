@@ -93,7 +93,7 @@ if ($SNP_array) {
         from      SNP as s
         where    ". join(" AND ", $filter_ANDconds);
 
-print "Sql_filter: <br>".$sql_filter."<br><br>";
+// print "Sql_filter: <br>".$sql_filter."<br><br>";
 
 $rs_filter = mysqli_query($mysqli, $sql_filter) or print "rs_filter: ". mysqli_error($mysqli)."<br>";
 
@@ -158,7 +158,7 @@ $sql_with_no_genes = "select   s.chr,
                   ". join(" AND ", $nogene_ANDconds);
 
 
-// print "Query with genes:  <br>".$sql_with_genes."<br><br>";
+// print   "Query with genes:  <br>".$sql_with_genes."<br><br>";
 // print "Query without genes:  <br>".$sql_with_no_genes."<br><br>";
 
 

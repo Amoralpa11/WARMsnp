@@ -84,7 +84,7 @@ if (is_null($rsT['chr'])){
 
 ?>
 
-<<<<<<< HEAD
+
 <!DOCTYPE html>
 <html>
 <head>
