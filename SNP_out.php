@@ -11,10 +11,15 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
+    <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
 
+	<link rel="icon" href="Home_images/flame.png">
 	<title>Results Table</title>
 </head>
-<!-- Page Content -->
+
+
 <?php
 #start Session to hold input data
 session_start();
@@ -74,40 +79,119 @@ if ($_REQUEST['maxfreq'] != 1 and $_REQUEST['maxfreq'] != "") {
 ## trieve all the ids that the user has provided.
 
 
+// print_r($snps_with_gene);
+// print_r($snps_without_gene);
+
 if ($SNP_array) {
     $ORconds = [];
     foreach (array_values($SNP_array) as $ref) {
         $ORconds[] = "s.idSNP like '".$ref."'";
     }
-    $ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
+    $filter_ANDconds = $ANDconds;
+    $filter_ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
+
+    $sql_filter = "select   s.chr,
+                   s.idSNP
+        from      SNP as s
+        where    ". join(" AND ", $filter_ANDconds);
+
+print "Sql_filter: <br>".$sql_filter."<br><br>";
+
+$rs_filter = mysqli_query($mysqli, $sql_filter) or print "rs_filter: ". mysqli_error($mysqli)."<br>";
+
+while ($rst_filter = mysqli_fetch_assoc($rs_filter)) {
+  if (is_null($rst_filter["chr"])) {
+    $snps_with_gene[] = $rst_filter['idSNP'];
+  }else{
+    $snps_without_gene[] = $rst_filter['idSNP'];
+  }
 }
 
-if ($Gene_array) {
+// print "Snips without gene: <br>";
+// print_r($snps_without_gene);
+// print "<br><br>Snips with gene: <br>";
+// print_r($snps_with_gene);
+// print "<br><br>";
 
-      $ORconds = [];
+}
+
+if ($snps_without_gene) {
+    $ORconds = [];
+    foreach (array_values($snps_without_gene) as $ref) {
+        $ORconds[] = "s.idSNP like '".$ref."'";
+    }
+    $nogene_ANDconds = $ANDconds;
+    $nogene_ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
+    }
+
+if ($snps_with_gene or $Gene_array) {
+    $ORconds = [];
+    foreach (array_values($snps_with_gene) as $ref) {
+        $ORconds[] = "s.idSNP like '".$ref."'";
+    }
+
     foreach (array_values($Gene_array) as $ref) {
         $ORconds[] = "g.Gene_id like '".$ref."'";
     }
+
     $ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
-
-}
-
+    }
 
 
-$sql = "select   s.chr, g.Chromosome, s.pos,
-                  v.Frequency, v.beta, v.p_value,
-                  s.Main_allele, s.idSNP, g.Gene_id, v.Sequence
+
+
+$sql_with_genes = "select   g.Chromosome, s.chr,
+                   s.idSNP, g.Gene_id, s.pos,v.Frequency, v.beta, v.p_value,
+                  s.Main_allele, s.idSNP, v.Sequence
         from      SNP as s, Gene as g ,
                   Gene_has_SNP as gs, Variants as v
         where     s.idSNP = gs.SNP_idSNP and
-                  gs.Gene_Gene_id = g.Gene_id and
-                  v.idSNP = s.idSNP
-                  and
+                   gs.Gene_Gene_id = g.Gene_id
+                    and
+                  v.idSNP = s.idSNP and
                   ". join(" AND ", $ANDconds);
 
-// print $sql."<br>";
+$sql_with_no_genes = "select   s.chr,
+                   s.idSNP, s.pos,v.Frequency, v.beta, v.p_value,
+                  s.Main_allele, s.idSNP, v.Sequence
+        from      SNP as s, Variants as v
+        where     
+                  v.idSNP = s.idSNP and
+                  ". join(" AND ", $nogene_ANDconds);
 
-$rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
+
+// print "Query with genes:  <br>".$sql_with_genes."<br><br>";
+// print "Query without genes:  <br>".$sql_with_no_genes."<br><br>";
+
+
+$rs_genes = mysqli_query($mysqli, $sql_with_genes) or print "rs_genes: ". mysqli_error($mysqli)."<br>";
+$rs_no_genes = mysqli_query($mysqli, $sql_with_no_genes) or "rs_no_genesprint". mysqli_error($mysqli)."<br>";
+
+
+// print_r($rst_snp);
+// print "<br>";
+$rst= mysqli_fetch_all($rs_no_genes,MYSQLI_ASSOC);
+ // print_r($rst);
+$rst_gene = mysqli_fetch_all($rs_genes,MYSQLI_ASSOC);
+ // print_r($rst_gene);
+
+foreach ($rst_gene as $row) {
+  // El siguiente codigo hace que se muestre el número de genes en caso de que el gen tenga más de uno
+
+  if (!isset($rst[$row['idSNP']])) {
+    $rst[$row['idSNP']] = $row;
+  } else{
+    if (!is_array($rst[$row['idSNP']]['Gene_id'])){
+      $rst[$row['idSNP']]['Gene_id'] = [$rst[$row['idSNP']]['Gene_id']];
+    }
+    $rst[$row['idSNP']]['Gene_id'][] = $row['idSNP']['Gene_id'];
+  }
+
+}
+
+ // print_r($rst);
+
+
 
 ?>
 <html>
@@ -133,7 +217,7 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 </div>
 
 <div class="container" style="min-height:75%; margin-bottom:20px">
-<h1 style="margin-top:2.5%">RESULTS:</h1>
+<h3 style="margin-top:2.5%">RESULTS:</h3>
 <table border="0" cellspacing="2" cellpadding="4" id="Table" style="margint-bottom:5%">
     <thead>
         <tr>
@@ -150,7 +234,7 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
     </thead>
     <tbody>
 
-        <?php while ($rsF = mysqli_fetch_assoc($rs)) {
+        <?php foreach ($rst as $rsF){
 
           if (isset($rsF['Chromosome'])) {
             $chromosome = $rsF['Chromosome'];
@@ -171,7 +255,16 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
             <?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
             <td> <?php print $chromosome ?> </td>
             <td> <?php print $position ?> </td>
-            <?php  print "<td><a target='_blank' href='Gene_page.php?ref=$gene'>$gene</a></td>" ?>
+            <?php
+              if (count($gene) == 1 ){
+              print "<td><a target='_blank' href='gene_page.php?ref=$gene'>$gene</a></td>";
+              } elseif (count($gene) > 1) {
+                print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>".count($rsF['Gene_id'])."</a></td>";
+              }else{
+                print "<td></td>";
+              }
+
+              ?>
             <td> <?php print $Main_allele ?> </td>
             <td> <?php print $variant_allele ?> </td>
             <td> <?php print $frequency ?> </td>

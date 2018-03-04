@@ -33,11 +33,11 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
 <!-- Page Content -->
 <html>
 <head>
+    <link rel="icon" href="Home_images/flame.png">
     <title>WARMsnp</title>
     <meta charset="UTF-8">
 </head>
 <body>
-  <!-- <div class="se-pre-con"></div> -->
   <br>
 <div class="container">
   <div class="row">
@@ -304,6 +304,3 @@ function AS(){
 
 
 <?php include "footer.html"?>
-
-</body>
-</html>

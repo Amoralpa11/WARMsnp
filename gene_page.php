@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
 	<!-- Required meta tags -->
@@ -17,6 +18,7 @@
     <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
 
 	<link rel="icon" href="Home_images/flame.png">
+
 	<title>Gene results</title>
 </head>
 
@@ -82,6 +84,7 @@ if (is_null($rsT['chr'])){
 
 ?>
 
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -281,6 +284,6 @@ $(window).load(function() {      //Do the code in the {}s when the window has lo
 </script>
 
 </body>
-<?php include "footer.html"?>
+<?php include "footer.html" ?>
 
 </html>
