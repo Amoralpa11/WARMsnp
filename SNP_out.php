@@ -22,18 +22,16 @@
 
 <?php
 
-include "navbar.html";
 #start Session to hold input data
 session_start();
-if (is_array($_REQUEST)) {
-
-
 $_SESSION['queryData'] = $_REQUEST;
+
+
 
 if (!isset($_SESSION['queryData']))
     header('Location: WARMsnp_home.php');
 
-
+include "navbar.html";
 
 # Check if input comes from an uploaded file
 # If the data comes from a file get the content from the file
@@ -194,11 +192,6 @@ foreach ($rst_gene as $row) {
 
 $_SESSION['snp_out'] = $rst;
 
-} else{
-
-  $rst = $_SESSION['snp_out'];
-
-}
  // print_r($rst);
 
 
@@ -215,6 +208,18 @@ $_SESSION['snp_out'] = $rst;
 </head>
 
 <body>
+
+  <script type="text/javascript">
+    
+    if (window.performance) {
+  console.info("window.performance work's fine on this browser");
+}
+  if (performance.navigation.type == 1) {
+    console.info( "This page is reloaded" );
+  } else {
+    console.info( "This page is not reloaded");
+  }
+  </script>
 
 <div id="loader" class="loader" style="width:100%; height:100%; background-color:white; margin:0; text-align: center; position: fixed; top: 0px;">
 <!-- <div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;position:fixed;text-align: center;vertical-align: middle;position: relative;top: 50%;"> -->
