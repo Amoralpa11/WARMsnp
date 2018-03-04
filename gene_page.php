@@ -19,7 +19,6 @@
 
 	<link rel="icon" href="Home_images/flame.png">
 	
-	<link rel="icon" href="Home_images/flame.png">
 	<title>Gene results</title>
 </head>
 
