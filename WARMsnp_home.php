@@ -45,7 +45,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
     <h2>WARMsnp</h2>
     <p style="text-align: justify; text-justify: inter-word;">WARMsnp is a web app designed by and for researchers. It is aimed to deliver SNP enriched information, it allows you to get SNP related information consolidated from several other web sites.</p>
 
-    <form id="input_form" name="input" action="SNP_out.php" method="post" enctype="multipart/form-data">
+    <form id="input_form" name="input" action="query_processiong.php" method="post" enctype="multipart/form-data">
       <div style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2">
         <h3 style="margin-left:15px; margin-top:5px">Main search</h3>
         <p style="margin-left:25px; margin-top:5px">
