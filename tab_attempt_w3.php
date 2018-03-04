@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
 	<!-- Required meta tags -->
@@ -18,7 +17,6 @@
     <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
 
 	<link rel="icon" href="Home_images/flame.png">
-
 	<title>Gene results</title>
 </head>
 
@@ -84,7 +82,6 @@ if (is_null($rsT['chr'])){
 
 ?>
 
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,7 +94,6 @@ body {font-family: Arial;}
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
-		border-radius:5px
 }
 
 /* Style the buttons inside the tab */
@@ -129,28 +125,13 @@ body {font-family: Arial;}
     border: 1px solid #ccc;
     border-top: none;
 }
-
-/* Style the tablink content */
-.tablinks {
-	border: 1px solid black;
-  border-radius:5px;
-	background-color: #f1f1f1;
- }
 </style>
 </head>
 
+
 <body>
-	<div id="loader" class="loader" style="width:100%; height:100%; background-color:white; margin:0; text-align: center; position: fixed; top: 0px;">
-	<!-- <div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;position:fixed;text-align: center;vertical-align: middle;position: relative;top: 50%;"> -->
-		<div style="position:absolute;top:50%; left:50%; transform: translate(-50%, -50%);">
-			<img src="images/ajax-loader.gif" alt="Be patient..." style="vertical-align: middle">
-		</div>
-		<div style="position:absolute;top:55%; left:50%; transform: translate(-50%, -50%);">Hey there, we are processing you request, the results will be displayed soon.</div>
-		<div id="counter" style="position:absolute;top:60%; left:50%; transform: translate(-50%, -50%);">The page is loading, please wait...</div>
 
-	</div>
-
-<div class="row" style="margin-top:4%">
+<div class="row">
 <div class="col-md-1"></div>
 <div class="col-md-10">
 <div class="tab">
@@ -161,7 +142,7 @@ body {font-family: Arial;}
 </div>
 </div>
 
-<div class="row" style="min-height:62%; margin-bottom:20px">
+<div class="row">
 <div class="col-md-1"></div>
 <div class="col-md-10">
 <div class="tab">
@@ -267,8 +248,6 @@ function gene_tabs(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
 </script>
 
 <script>
@@ -283,13 +262,6 @@ $(document).ready(function () {
 });
 </script>
 
-<script>
-$(window).load(function() {      //Do the code in the {}s when the window has loaded
-  $("#loader").fadeOut("fast");
-});
-</script>
 
 </body>
-<?php include "footer.html" ?>
-
 </html>
