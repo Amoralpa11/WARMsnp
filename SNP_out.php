@@ -1,4 +1,25 @@
-<!-- Page Content -->
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="scss/custom.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+
+
+    <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+
+	<link rel="icon" href="Home_images/flame.png">
+	<title>Results Table</title>
+</head>
+
 <?php
 #start Session to hold input data
 session_start();
@@ -150,9 +171,9 @@ $rs_no_genes = mysqli_query($mysqli, $sql_with_no_genes) or "rs_no_genesprint". 
 // print_r($rst_snp);
 // print "<br>";
 $rst= mysqli_fetch_all($rs_no_genes,MYSQLI_ASSOC);
- print_r($rst);
+ // print_r($rst);
 $rst_gene = mysqli_fetch_all($rs_genes,MYSQLI_ASSOC);
- print_r($rst_gene);
+ // print_r($rst_gene);
 
 foreach ($rst_gene as $row) {
   // El siguiente codigo hace que se muestre el número de genes en caso de que el gen tenga más de uno
@@ -196,7 +217,7 @@ foreach ($rst_gene as $row) {
 </div>
 
 <div class="container" style="min-height:75%; margin-bottom:20px">
-<h1 style="margin-top:2.5%">RESULTS:</h1>
+<h3 style="margin-top:2.5%">RESULTS:</h3>
 <table border="0" cellspacing="2" cellpadding="4" id="Table" style="margint-bottom:5%">
     <thead>
         <tr>

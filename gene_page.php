@@ -1,14 +1,38 @@
 <?php 
+session_start();
+
+if ($_REQUEST) {
+	$_SESSION['gene_page'] = $_REQUEST;
+} 
+?>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="scss/custom.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+
+
+    <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
+    <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+
+	<link rel="icon" href="Home_images/flame.png">
+	<title><?php  print $_SESSION['gene_page']['ref'] ?></title>
+</head>
+
+<?php 
 
 
 include "navbar.html";				#incluimos la barra de navegación y el head de la pagina
 include 'databasecon.php';			#incluimos la página en la que nos conectamos con la base de datos 
 
-session_start();
-
-if ($_REQUEST) {
-	$_SESSION['gene_page'] = $_REQUEST;
-}
 
 
 $sql_GO = "select GO.GO_name, GO.GO_id
@@ -64,11 +88,11 @@ if (is_null($rsT['chr'])){
 <div class="container" style="padding-top: 25px">
 	<div>
 		
-		<h3 style="margin-right: 10px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['gene_page']['ref'] ?> ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
+		<h3 style="margin-right: 10px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a target="_blank" href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
 		
 		<div class="row">
 			<p>
-				<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
+				<a  target="_blank" href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
 					Location: chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
 
 				</a></p>
@@ -80,7 +104,7 @@ if (is_null($rsT['chr'])){
 				<p>GO: <?php 
 				$link_array = [];
 				while ($rsT_Go = mysqli_fetch_assoc($rs_GO)){
-				$link_array[] = "<a href ='http://amigo.geneontology.org/amigo/term/".$rsT_Go['GO_id']."'>".$rsT_Go['GO_name']."</a>";
+				$link_array[] = "<a target='_blank' href ='http://amigo.geneontology.org/amigo/term/".$rsT_Go['GO_id']."'>".$rsT_Go['GO_name']."</a>";
 				}
 
 				print implode(", ", $link_array);
