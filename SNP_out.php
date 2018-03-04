@@ -58,70 +58,117 @@ if ($_REQUEST['maxfreq'] != 1 and $_REQUEST['maxfreq'] != "") {
 ## trieve all the ids that the user has provided.
 
 
+// print_r($snps_with_gene);
+// print_r($snps_without_gene);
+
 if ($SNP_array) {
     $ORconds = [];
     foreach (array_values($SNP_array) as $ref) {
         $ORconds[] = "s.idSNP like '".$ref."'";
     }
-    $ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
+    $filter_ANDconds = $ANDconds;
+    $filter_ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
+
+    $sql_filter = "select   s.chr,
+                   s.idSNP
+        from      SNP as s
+        where    ". join(" AND ", $filter_ANDconds);
+
+print "Sql_filter: <br>".$sql_filter."<br><br>";
+
+$rs_filter = mysqli_query($mysqli, $sql_filter) or print "rs_filter: ". mysqli_error($mysqli)."<br>";
+
+while ($rst_filter = mysqli_fetch_assoc($rs_filter)) {
+  if (is_null($rst_filter["chr"])) {
+    $snps_with_gene[] = $rst_filter['idSNP'];
+  }else{
+    $snps_without_gene[] = $rst_filter['idSNP'];
+  }
 }
 
-if ($Gene_array) {
+// print "Snips without gene: <br>";
+// print_r($snps_without_gene);
+// print "<br><br>Snips with gene: <br>";
+// print_r($snps_with_gene);
+// print "<br><br>";
 
-      $ORconds = [];
+}
+
+if ($snps_without_gene) {
+    $ORconds = [];
+    foreach (array_values($snps_without_gene) as $ref) {
+        $ORconds[] = "s.idSNP like '".$ref."'";
+    }
+    $nogene_ANDconds = $ANDconds;
+    $nogene_ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
+    }
+
+if ($snps_with_gene or $Gene_array) {
+    $ORconds = [];
+    foreach (array_values($snps_with_gene) as $ref) {
+        $ORconds[] = "s.idSNP like '".$ref."'";
+    }
+
     foreach (array_values($Gene_array) as $ref) {
         $ORconds[] = "g.Gene_id like '".$ref."'";
     }
+
     $ANDconds[] = "(" . join(" OR ", $ORconds) . ")";
-
-}
-
+    }
 
 
-$sql_snp = "select   s.chr, s.pos,
-                  v.Frequency, v.beta, v.p_value,
-                  s.Main_allele, s.idSNP, v.Sequence
-        from      SNP as s, Variants as v
-        where     v.idSNP = s.idSNP
-                  and
-                  ". join(" AND ", $ANDconds);
 
-$sql_gene = "select   g.Chromosome,
+
+$sql_with_genes = "select   g.Chromosome, s.chr,
                    s.idSNP, g.Gene_id, s.pos,v.Frequency, v.beta, v.p_value,
                   s.Main_allele, s.idSNP, v.Sequence
         from      SNP as s, Gene as g ,
                   Gene_has_SNP as gs, Variants as v
         where     s.idSNP = gs.SNP_idSNP and
-                  gs.Gene_Gene_id = g.Gene_id and
+                   gs.Gene_Gene_id = g.Gene_id
+                    and
                   v.idSNP = s.idSNP and
                   ". join(" AND ", $ANDconds);
-// print $sql_gene;
 
-$rs_snp = mysqli_query($mysqli, $sql_snp) or print "snp: ".mysqli_error($mysqli);
-$rs_gene = mysqli_query($mysqli, $sql_gene) or print "gene: ".mysqli_error($mysqli);
+$sql_with_no_genes = "select   s.chr,
+                   s.idSNP, s.pos,v.Frequency, v.beta, v.p_value,
+                  s.Main_allele, s.idSNP, v.Sequence
+        from      SNP as s, Variants as v
+        where     
+                  v.idSNP = s.idSNP and
+                  ". join(" AND ", $nogene_ANDconds);
 
-$rst_snp = mysqli_fetch_all($rs_snp,MYSQLI_ASSOC);
+
+// print "Query with genes:  <br>".$sql_with_genes."<br><br>";
+// print "Query without genes:  <br>".$sql_with_no_genes."<br><br>";
+
+
+$rs_genes = mysqli_query($mysqli, $sql_with_genes) or print "rs_genes: ". mysqli_error($mysqli)."<br>";
+$rs_no_genes = mysqli_query($mysqli, $sql_with_no_genes) or "rs_no_genesprint". mysqli_error($mysqli)."<br>";
+
+
 // print_r($rst_snp);
 // print "<br>";
-$rst_gene = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
- // print_r($rst_gene);
-
-foreach ($rst_snp as $row) {
-  $rst_both[$row['idSNP']] = $row;
-}
+$rst= mysqli_fetch_all($rs_no_genes,MYSQLI_ASSOC);
+ print_r($rst);
+$rst_gene = mysqli_fetch_all($rs_genes,MYSQLI_ASSOC);
+ print_r($rst_gene);
 
 foreach ($rst_gene as $row) {
   // El siguiente codigo hace que se muestre el número de genes en caso de que el gen tenga más de uno
 
-  if (!isset($rst_both[$row['idSNP']])) {
-    $rst_both[$row['idSNP']] = $row;
+  if (!isset($rst[$row['idSNP']])) {
+    $rst[$row['idSNP']] = $row;
   } else{
-    $rst_both[$row['idSNP']]['Gene_id'][] = $row['idSNP']['Gene_id'];
+    if (!is_array($rst[$row['idSNP']]['Gene_id'])){
+      $rst[$row['idSNP']]['Gene_id'] = [$rst[$row['idSNP']]['Gene_id']];
+    }
+    $rst[$row['idSNP']]['Gene_id'][] = $row['idSNP']['Gene_id'];
   }
 
 }
 
-// print_r($rst_both);
+ // print_r($rst);
 
 
 
@@ -166,7 +213,7 @@ foreach ($rst_gene as $row) {
     </thead>
     <tbody>
 
-        <?php foreach ($rst_both as $rsF){
+        <?php foreach ($rst as $rsF){
 
           if (isset($rsF['Chromosome'])) {
             $chromosome = $rsF['Chromosome'];
