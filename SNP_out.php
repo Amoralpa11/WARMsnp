@@ -23,8 +23,6 @@ $_SESSION['queryData'] = $_REQUEST;
 if (!isset($_SESSION['queryData']))
     header('Location: WARMsnp_home.php');
 
-
-
 include "navbar.html";
 
 # Check if input comes from an uploaded file
@@ -127,7 +125,7 @@ $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
   <div style="position:absolute;top:50%; left:50%; transform: translate(-50%, -50%);">
     <img src="images/ajax-loader.gif" alt="Be patient..." style="vertical-align: middle">
   </div>
-  <div style="position:absolute;top:55%; left:50%; transform: translate(-50%, -50%);">Hey there, we are processing you request, the results will be displayed soon.</div>
+  <div style="position:absolute;top:55%; left:50%; transform: translate(-50%, -50%);">Hey there! we are processing you request, the results will be displayed soon.</div>
   <div id="counter" style="position:absolute;top:60%; left:50%; transform: translate(-50%, -50%);">The page is loading, please wait...</div>
 
 </div>
