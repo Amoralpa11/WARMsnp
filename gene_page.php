@@ -82,6 +82,13 @@ if (is_null($rsT['chr'])){
 	$rsT['chr'] = $rsT_gene['Chromosome'][0];
 }
 
+// Aqui van los datos para ramón 
+
+$array_manhattan = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
+
+$array_manhattan = transpose($array_manhattan);
+
+
 ?>
 
 
@@ -163,7 +170,7 @@ if (is_null($rsT['chr'])){
 				<div class="tab">
 					<div id="London" class="tabcontent">
 						<h4>Gene attributes</h4>
-						
+
 						<p> Location: 
 							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
 								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
