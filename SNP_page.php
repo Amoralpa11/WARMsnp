@@ -43,7 +43,7 @@ $rsT_gene=$_SESSION['snp_gene']['rsT_gene'];
 
 		<div>
 		<div class="row">
-	    <div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2; margin-right:5%">
+	    <div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2; margin-right:5%; margin-bottom:25px">
 				<h5 style="margin-top:5%; text-align: center">Genomic attributes:</h5>
 				<p>Location: chr: <?php print $rsT['chr']." : ".$rsT['pos']?></p>
 				<p>Gene: <?php
@@ -54,19 +54,19 @@ $rsT_gene=$_SESSION['snp_gene']['rsT_gene'];
 				print implode(", ", $link_array);
 				?></p>
 			</div>
-			<div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2; margin-right:5%; ">
+			<div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2; margin-right:5%; margin-bottom:25px">
 				<h5 style="margin-top:5%; text-align: center">SNP attributes:</h5>
 				<p>Main allele: <?php print " ".$rsT['Main_allele']?></p>
 				<p>Variant: <?php print $rsT['Sequence']?></p>
-				<p>Main allele frequency: <?php print $rsT['Frequency']?></p>
+				<p>Variant frequency: <?php print 1 - $rsT['Frequency']?></p>
 			</div>
-			<div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2; margin-right:5%">
+			<div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2; margin-right:5%; margin-bottom:25px">
 				<h5 style="margin-top:5%; text-align: center">CAD & MI association:</h5>
 				<p>p-value: <?php print $rsT['p_value']?></p>
 				<p>beta: <?php print $rsT['beta']?></p>
 			</div>
 		</div>
-		<div class="row" style="margin-top:8%">
+		<div class="row">
 			<div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2">
 				<h5 style="margin-top:5%; text-align: center">Other related disease:</h5>
 				<?php

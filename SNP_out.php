@@ -10,8 +10,10 @@
 	<link rel="stylesheet" type="text/css" href="scss/custom.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
-  <script src="src/table2csv.js"></script>
-  <script src="//code.jquery.com/jquery.min.js"></script>
+  <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.1.min.js" > </script>
+  <script type="text/javascript" src="/srchtml2CSV.js"></script>
+
+
 
   <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
   <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
@@ -28,23 +30,10 @@
 <head>
 
   <script>
-  $(document).ready(function () {
-   $('Table').each(function () {
-       var $table = $(this);
-
-       var $button = $("<button type='button'>");
-       $button.text("Download");
-       $button.insertAfter($table);
-
-       $button.click(function () {
-           var csv = $table.table2CSV({
-               delivery: 'value'
-           });
-           window.location.href = 'data:text/csv;charset=UTF-8,'
-           + encodeURIComponent(csv);
-       });
-   });
-})
+  function getCSVData(){
+  	 var csv_value=$('#Table').table2CSV({delivery:'value'});
+  	 $("#csv_text").val(csv_value);
+  }
   </script>
 
   <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
@@ -70,7 +59,7 @@
 
     </div>
 
-    <div class="container" style="min-height:75%; margin-bottom:20px">
+    <div class="container" style="min-height:76%; margin-bottom:20px">
       <h3 style="margin-top:2.5%">RESULTS:</h3>
       <table border="0" cellspacing="2" cellpadding="4" id="Table" style="margint-bottom:5%">
         <thead>
@@ -121,7 +110,7 @@
               ?>
               <td> <?php print $Main_allele ?> </td>
               <td> <?php print $variant_allele ?> </td>
-              <td> <?php print $frequency ?> </td>
+              <td> <?php print 1 - $frequency ?> </td>
               <td> <?php print $beta ?> </td>
               <td> <?php print $pval ?> </td>
             </tr>
@@ -131,6 +120,7 @@
           ?>
         </tbody>
       </table>
+      <p><input id="csv_text" type="button" value="Export to CSV" onclick="getCSVData()" /></p>
     </div>
 
 <script>
