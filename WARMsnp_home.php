@@ -142,27 +142,19 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
         </li>
         <hr>
         <li>
-            Here is a side column where we can write interesting facts:
-          Which is the gene with the most snps,
-          which is the snp with the highest beta,
-          Which is disease with the most snps,
+          On average, one out of 180 children is born with a chromosomal abnormality. The result of the most frequent abnormality is Down's syndrome.
+        <hr>
+        <li>
+          The great majority of cancers, some 90-95% of cases, are due to environmental factors. The remaining 5-10% are due to inherited genetics.
         </li>
         <hr>
         <li>
-            Here is a side column where we can write interesting facts:
-          Which is the gene with the most snps,
-          which is the snp with the highest beta,
-          Which is disease with the most snps,
+          Some women can have a genetic mutation that makes them tetrachromatic, which causes their eyes to have four different types of cone cells, enabling them to see 100 million different colors compared to the roughly one million colors most of us can see.
         </li>
         <hr>
         <li>
-            Here is a side column where we can write interesting facts:
-          Which is the gene with the most snps,
-          which is the snp with the highest beta,
-          Which is disease with the most snps,
+          There is a genetic disease called the Laron syndrome that results in short stature, longer life expectancy, and near immunity to cancer and diabetes.
         </li>
-        <hr>
-        <li>Tea</li>
         <hr>
         <li>Here is a cat:</li>
         <img src="images/cat.png", style="max-width:90%;max-height:100%;">
