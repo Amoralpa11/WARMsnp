@@ -160,34 +160,7 @@ si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
 3 arrays asociativos en el que la clave sea el id del snp
  -->
 
- <div class="container-fluid">
-    <div class="row">
-      
-      <div class="col-md-4" style="background-color:#F0F0F0;">
-      <form id="frm1">
-
-        <b>Filter by P-value</b> <br>
-        <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" class="slider" step=0.01 id="pvalue" onchange="updateSlider()">
-        <br>
-        <div id="sliderAmount"></div>
-
-        <b>Filter by the effect of the SNP:</b></p>
-        <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
-        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging<br></br>
-        <b>Enter a new gene or SNP:</b></br>
-        <input type="text" name="snp">
-        <input type="submit" value="Submit">
-      </form>
-    </div>
-      <div class="col-md-7">
-        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
-        <script src="./manhattan4.js"> </script>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-  </div>
-
- <?php
+<?php
 
  #DATOS PARA RAMON
 
@@ -222,6 +195,41 @@ usort($rsT_plot,"cmp");
 
 $rsT_plot = transpose($rsT_plot);
 
-
 ?>
 
+<script type="text/javascript">
+	var main_array = <?php echo json_encode($rsT_plot); ?>;
+</script>
+
+
+ <div class="container-fluid">
+    <div class="row">
+      
+      <div class="col-md-4" style="background-color:#F0F0F0;">
+      <form id="frm1">
+
+        <b>Filter by P-value</b> <br>
+        <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" class="slider" step=0.01 id="pvalue" onchange="updateSlider()">
+        <br>
+        <div id="sliderAmount"></div>
+
+        <b>Filter by the effect of the SNP:</b></p>
+        <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
+        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging<br></br>
+        <b>Enter a new gene or SNP:</b></br>
+        <input type="text" name="snp">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+      <div class="col-md-7">
+        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+        <script src="./manhattan4.js"> </script>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>
