@@ -118,18 +118,10 @@ $rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
 
 $rsT_plot1 = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 
-var_dump($rsT_plot1);
-print "<br><br>";
-
 $rsT_plot2 = mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
-
-var_dump($rsT_plot2);
-print "<br><br>";
 
 $rsT_plot = array_merge($rsT_plot1,$rsT_plot2);
 
-var_dump($rsT_plot);
-print "<br><br>";
 
 function cmp($a, $b)
 {
@@ -167,7 +159,6 @@ foreach ($pvalues_pre as &$p){
  array_push($pvalues, floatval($p));
 }
 
-var_dump($pvalues);
 $current_snp = $_SESSION['SNP_page']['ref'];
 $chr =  $rsT['chr'];
 ?>
@@ -232,7 +223,7 @@ $chr =  $rsT['chr'];
 
 		</div>
 		<br>
-		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> SNP: <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['SNP_page']['ref'] ?> style="color:#1e1f21"><?php print $_SESSION['SNP_page']['ref'] ?></a></h3>
+		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> SNP: <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['SNP_page']['ref'] ?>><?php print $_SESSION['SNP_page']['ref'] ?></a></h3>
 		<div class="row" style="margin-top:2%">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
