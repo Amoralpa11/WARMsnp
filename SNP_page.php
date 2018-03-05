@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
     <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 	<link rel="icon" href="Home_images/flame.png">
 	<title>SNP results</title>
@@ -184,5 +185,52 @@ usort($rsT_plot,"cmp");
 
 $rsT_plot = transpose($rsT_plot);
 
+$locations = $rsT_plot['pos'];
+$beta = $rsT_plot['beta'];
+$snps = $rsT_plot['idSNP'];
+$pvalues = $rsT_plot['p_value'];
+$log10_p_values = [];
+// var_dump($pvalues);
+foreach ($pvalues as &$p) {
+  array_push($log10_p_values, floatval(log10(floatval($p))));
+};
 
+var_dump($log10_p_values);
 ?>
+
+
+<div class="container-fluid" style="margin-top:5%; margin-bottom:5%">
+  <div class="row">
+    <div class="col-md-11">
+    <div class="row" style="margin-left:5%">
+      <div class="col-md-3" style="background-color:#F0F0F0;">
+        <form id="frm1">
+          <h4 style="margin-bottom:5%; text-align:center"> Advanced search </h4>
+          <b>Filter by P-value</b> <br>
+          <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" class="slider" step=0.01 id="pvalue" onchange="updateSlider()" style="width:85%; height:5px; background-color:#d3d3d3; outline:none; opacity:0.7; margin-bottom:5%">
+          <br>
+          <div id="sliderAmount"></div>
+
+          <b>Filter by the effect of the SNP:</b></p>
+          <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
+          <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging
+          <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br
+          <br>
+
+          <b>Enter a new gene or SNP:</b></br>
+          <input type="text" name="snp">
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+      <div class="col-md-9">
+        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+        <script src="./manhattan4.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<?php include "footer.html"; ?>
+</html>

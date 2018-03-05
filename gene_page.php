@@ -16,6 +16,8 @@
 	<link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
 	<script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 
 	<link rel="icon" href="Home_images/flame.png">
 
@@ -64,6 +66,16 @@ $rs_GO = mysqli_query($mysqli, $sql_GO) or print "GO: ".mysqli_error($mysqli);
 $rs_tissue = mysqli_query($mysqli, $sql_tissue) or print "Tissue: ".mysqli_error($mysqli);
 $rs_gene = mysqli_query($mysqli, $sql_gene) or print "Gene: ".mysqli_error($mysqli);
 $rs_snp = mysqli_query($mysqli, $sql_snp) or print "SNP: ".mysqli_error($mysqli);
+
+$rsT_tissue = mysqli_fetch_all($rs_tissue, MYSQLI_ASSOC);
+
+$tissue_name = [];
+$tissue_expression = [];
+foreach ($rsT_tissue as &$valor) {
+    array_push($tissue_name, $valor['name']);
+		array_push($tissue_expression, floatval($valor['expression_level']));
+}
+
 
 function transpose($data)
 {
@@ -238,37 +250,24 @@ $array_manhattan = transpose($array_manhattan);
 
 						<div id="Tokyo" class="tabcontent">
 							<h4>Tissue expression</h4>
-							<table border="0" cellspacing="2" cellpadding="4" id="tissueTable">
-								<thead>
-									<tr>
-										<th>Tissue</th>
-										<th>Expression level (tpm)</th>
-									</tr>
-								</thead>
-								<tbody>
+							<div id="tissue">
+								<script type="text/javascript">
+									var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
+									// document.write(tissue);
+								 </script>
+							</div>
+							<div id="expression">
+								<script type="text/javascript">
+									var expression = <?php echo '["'. implode('", "', $tissue_expression) . '"]'?>;
+									// document.write(expression);
+								 </script>
+							</div>
+							<div id="myDiv">
+								<script src="./bar_plot.js"> </script>
+							</div>
 
-									<?php
-
-									while ($rsT_tissue = mysqli_fetch_assoc($rs_tissue)) {
-
-										?><tr><?php
-										foreach ($rsT_tissue as $field) {
-
-											?>
-
-											<td><?php print $field ?></td>
-
-											<?php
-										}
-										?><tr><?php
-									}
-
-									?>
-
-								</tbody>
-							</table>
-
-						</div></div>
+						</div>
+					</div>
 					</div>
 				</div>
 
