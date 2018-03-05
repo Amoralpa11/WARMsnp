@@ -49,7 +49,7 @@ $rsT_gene=$_SESSION['snp_gene']['rsT_gene'];
 				<p>Gene: <?php
 				$link_array = [];
 				foreach ($rsT_gene['Gene_id'] as $gene){
-				$link_array[] = "<a href ='gene_page.php?ref=$gene'>$gene</a>";
+				$link_array[] = "<a href ='gene_page_processing.php?ref=$gene'>$gene</a>";
 				}
 				print implode(", ", $link_array);
 				?></p>
