@@ -103,6 +103,30 @@ $array_manhattan = transpose($rsT_snp);
  // print_r($array_manhattan);
 
 
+$locations_pre = $array_manhattan['pos'];
+$locations = [];
+foreach ($locations_pre as &$pos){
+  array_push($locations, floatval($pos));
+}
+
+$beta_pre = $array_manhattan['beta'];
+$beta = [];
+foreach ($beta_pre as &$i){
+  array_push($beta, floatval($i));
+}
+$snps_pre = $array_manhattan['idSNP'];
+$snps = [];
+foreach ($snps_pre as &$i){
+  array_push($snps, $i);
+}
+
+$pvalues_pre = $array_manhattan['p_value'];
+$pvalues = [];
+foreach ($pvalues_pre as &$p){
+  array_push($pvalues, floatval($p));
+}
+
+
 ?>
 
 
