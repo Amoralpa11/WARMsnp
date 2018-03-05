@@ -84,7 +84,7 @@
 
             ?>
             <tr>
-              <?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
+              <?php  print "<td><a target='_blank' href='SNP_page_processing.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
               <td> <?php print $chromosome ?> </td>
               <td> <?php print $position ?> </td>
               <?php
