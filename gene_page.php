@@ -18,7 +18,7 @@
 	<script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
 
 	<link rel="icon" href="Home_images/flame.png">
-	
+
 	<title>Gene results</title>
 </head>
 
@@ -111,10 +111,10 @@ $manhattan = transpose($rsT_snp);
 
 		</div>
 
-		<h3 style="margin-right: 10px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
+		<h3 style="margin-left: 7%; margin-top:20px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
 
 
-		<div class="row" style="margin-top:4%">
+		<div class="row" style="">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
@@ -132,15 +132,14 @@ $manhattan = transpose($rsT_snp);
 					<div id="London" class="tabcontent">
 						<h4>Gene attributes</h4>
 
-						<p> Location: 
-							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
+						<p> Location:
+							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" style="color: #000000"></a>
 								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
-
-							</a></p>
+							</p>
 
 
 							<div>
-								<p>GO: <?php 
+								<p style="color: #000000">GO: <?php
 								$link_array = [];
 								foreach($rsT_GO as $row){
 									$link_array[] = "<a href ='http://amigo.geneontology.org/amigo/term/".$row['GO_id']."'>".$row['GO_name']."</a>";
@@ -169,7 +168,7 @@ $manhattan = transpose($rsT_snp);
 								</thead>
 								<tbody>
 
-									<?php 
+									<?php
 
 									foreach ($rsT_snp as $rsF){
 
@@ -187,7 +186,7 @@ $manhattan = transpose($rsT_snp);
 											<td> <?php print $position ?> </td>
 											<td> <?php print $Main_allele ?> </td>
 											<td> <?php print $variant_allele ?> </td>
-											<td> <?php print $frequency ?> </td>
+											<td> <?php print 1 - $frequency ?> </td>
 											<td> <?php print $beta ?> </td>
 											<td> <?php print $pval ?> </td>
 										</tr>

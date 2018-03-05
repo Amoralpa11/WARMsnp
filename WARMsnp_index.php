@@ -243,7 +243,7 @@ body, html {
       <img src="images/adri.jpeg" alt="Adri" style="width:100%">
       <div class="container">
         <h2>Adrian Morales</h2>
-        <p class="title">The Brain</p>
+        <p class="title">Web server designer</p>
         <p>In a relationship with JAVA</p>
         <p>drnmoralespastor@gmail.com</p>
         <p><a href="https://www.linkedin.com/in/adri%C3%A1n-morales-pastor-a8b137125/" target="__blank__"><button class="button">Contact</button></a></p>
@@ -256,8 +256,8 @@ body, html {
       <img src="images/ramon.jpg" alt="Ramon" style="width:100%">
       <div class="container">
         <h2>Ramon Massoni</h2>
-        <p class="title">Specialist in snps</p>
-        <p>Beer is life</p>
+        <p class="title">Data visualization specialist</p>
+        <p>Juggle for life</p>
         <p>ramonmassoni@gmail.com</p>
         <p><a href="https://www.facebook.com/ramon.massonibadosa" target="__blank__"><button class="button">Contact</button></a></p>
       </div>
@@ -269,8 +269,8 @@ body, html {
       <img src="images/winona.jpg" alt="Wini" style="width:100%">
       <div class="container">
         <h2>Winona Oliveros</h2>
-        <p class="title">Designer</p>
-        <p>The laziest one</p>
+        <p class="title">Front end developer</p>
+        <p>The foreigner</p>
         <p>winn95@gmail.com</p>
         <p><a href="https://www.linkedin.com/in/winonaoliveros31/" target="__blank__"><button class="button">Contact</button></a></p>
       </div>
@@ -324,7 +324,7 @@ body, html {
     <i class="fa fa-linkedin w3-hover-opacity"></i>
   </div>
 </footer>
- 
+
 <script>
 
 // Modal Image Gallery

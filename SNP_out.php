@@ -10,6 +10,10 @@
 	<link rel="stylesheet" type="text/css" href="scss/custom.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+  <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.1.min.js" > </script>
+  <script type="text/javascript" src="/srchtml2CSV.js"></script>
+
+
 
   <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
   <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
@@ -24,6 +28,13 @@
 <link rel="stylesheet" type="text/css" href="scss/loading_page.css">
 
 <head>
+
+  <script>
+  function getCSVData(){
+  	 var csv_value=$('#Table').table2CSV({delivery:'value'});
+  	 $("#csv_text").val(csv_value);
+  }
+  </script>
 
   <link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
   <script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
@@ -43,12 +54,12 @@
       <div style="position:absolute;top:50%; left:50%; transform: translate(-50%, -50%);">
         <img src="images/ajax-loader.gif" alt="Be patient..." style="vertical-align: middle">
       </div>
-      <div style="position:absolute;top:55%; left:50%; transform: translate(-50%, -50%);">Hey there! we are processing you request, the results will be displayed soon.</div>
+      <div style="position:absolute;top:55%; left:50%; transform: translate(-50%, -50%);">Hey there! we are processing your request, the results will be displayed soon.</div>
       <div id="counter" style="position:absolute;top:60%; left:50%; transform: translate(-50%, -50%);">The page is loading, please wait...</div>
 
     </div>
 
-    <div class="container" style="min-height:60%; margin-bottom:20px">
+    <div class="container" style="min-height:76%; margin-bottom:20px">
       <h3 style="margin-top:2.5%">RESULTS:</h3>
       <table border="0" cellspacing="2" cellpadding="4" id="Table" style="margint-bottom:5%">
         <thead>
@@ -99,7 +110,7 @@
               ?>
               <td> <?php print $Main_allele ?> </td>
               <td> <?php print $variant_allele ?> </td>
-              <td> <?php print $frequency ?> </td>
+              <td> <?php print 1 - $frequency ?> </td>
               <td> <?php print $beta ?> </td>
               <td> <?php print $pval ?> </td>
             </tr>
@@ -109,6 +120,7 @@
           ?>
         </tbody>
       </table>
+      <p><input id="csv_text" type="button" value="Export to CSV" onclick="getCSVData()" /></p>
     </div>
 
 <script>
