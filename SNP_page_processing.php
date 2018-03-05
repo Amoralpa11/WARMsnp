@@ -6,20 +6,17 @@ include 'databasecon.php';			#incluimos la página en la que nos conectamos con 
 
 session_start();
 
-$_SESSION['snp_page'] = $_REQUEST;
-
 $sql_disease = "select d.Name
 from Disease as d, SNP as s, SNP_disease as sd
 where sd.idDisease = d.idDisease and sd.idSNP = s.idSNP and s.idSNP like '".$_REQUEST['ref']."'";
 
-$sql_gene = "select g.Gene_id, Chromosome, Start_position, End_position,
-			hgnc_name
+$sql_gene = "select g.Gene_id, g.Chromosome
 from 	Gene as g, Gene_has_SNP as gs,
 		SNP as s
 where	g.Gene_id = gs.Gene_Gene_id and s.idSNP = gs.SNP_idSNP and s.idSNP like '".$_REQUEST['ref']."'";
 
 $sql = "select pos, Main_allele, chr,
-            Frequency, Sequence, p_value, beta, predicted_consequences
+            Frequency, Sequence, p_value, beta, predicted_consequences,s.idSNP
 from 	SNP as s, Variants as v
 where	v.idSNP = s.idSNP and s.idSNP like '".$_REQUEST['ref']."'";
 
@@ -53,8 +50,18 @@ if (is_null($rsT['chr'])){
 	$rsT['chr'] = $rsT_gene['Chromosome'][0];
 }
 
-$_SESSION['snp_page']['rsT_disease'] = $rsT_disease;
-$_SESSION['snp_page']['rsT'] = $rsT;
-$_SESSION['snp_gene']['rsT_gene'] = $rsT_gene;
+// $_SESSION['snp_page']['rsT_disease'] = $rsT_disease;
+// $_SESSION['snp_page']['rsT'] = $rsT;
+// $_SESSION['snp_gene']['rsT_gene'] = $rsT_gene;
 
-header('Location: SNP_page.php');
+$main_array['disease'] = $rsT_disease;
+$main_array['snp'] = $rsT;
+$main_array['gene'] = $rsT_gene;
+
+print_r($main_array);
+
+$string = http_build_query(array('main_array' => $main_array));
+
+print $string;
+
+header('Location: SNP_page.php?'.$string);

@@ -133,7 +133,7 @@ $manhattan = transpose($rsT_snp);
 						<h4>Gene attributes</h4>
 
 						<p> Location:
-							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT_gene['Chromosome'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" style="color: #000000">chr: <?php print $rsT_gene['Chromosome']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?></a>
+							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" style="color: #000000">chr: <?php print $rsT_gene['Chromosome']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?></a>
 								
 							</p>
 

@@ -29,16 +29,16 @@ session_start();
 
 
 
-$rsT_disease=$_SESSION['snp_page']['rsT_disease'];
-$rsT=$_SESSION['snp_page']['rsT'];
-$rsT_gene=$_SESSION['snp_gene']['rsT_gene'];
+$rsT_disease=$_REQUEST['main_array']['disease'];
+$rsT=$_REQUEST['main_array']['snp'];
+$rsT_gene=$_REQUEST['main_array']['gene'];
 
 ?>
 
 <div class="container" style="padding-top: 25px">
 	<div>
 		<div class="row">
-			<h3 style="margin-right: 10px">SNP: </h3><h3> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['snp_page']['ref'] ?> style="color:#1e1f21"><?php print $_SESSION['snp_page']['ref'] ?></a></h3>
+			<h3 style="margin-right: 10px">SNP: </h3><h3> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['snp_page']['ref'] ?> style="color:#1e1f21"><?php print $rsT['idSNP'] ?></a></h3>
 		</div>
 
 		<div>
