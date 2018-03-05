@@ -45,7 +45,7 @@ var left_limit = Math.min.apply(null, locations) - 500
 var right_limit = Math.max.apply(null, locations) + 500
 var indeces = []
 var debug = document.getElementById("sliderAmount");
-// debug.innerHTML = main_array;
+debug.innerHTML = main_array;
 var color_plot = [];
 var text_plot = [];
 

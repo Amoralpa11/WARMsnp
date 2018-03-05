@@ -20,16 +20,29 @@
 
 	<link rel="icon" href="Home_images/flame.png">
 	<title>SNP results</title>
+
+	 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    .slider {
+      width: 2px;
+      height: 5px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+
+}
+  </style>
+
 </head>
 <?php
 
-
+include 'databasecon.php';
 include "navbar.html";				#incluimos la barra de navegación y el head de la pagina
 
 
 session_start();
 
-
+// print_r($_SESSION['snp_page']);
 
 $rsT_disease=$_SESSION['snp_page']['rsT_disease'];
 $rsT=$_SESSION['snp_page']['rsT'];
@@ -85,37 +98,6 @@ $rsT_gene=$_SESSION['snp_gene']['rsT_gene'];
 			</div>
 		</div>
   </div>
-    <div class="container-fluid" style="margin-top:5%; margin-bottom:5%">
-      <div class="row">
-        <div class="col-md-11">
-        <div class="row" style="margin-left:5%">
-          <div class="col-md-3" style="background-color:#F0F0F0;">
-            <form id="frm1">
-              <h4 style="margin-bottom:5%; text-align:center"> Advanced search </h4>
-              <b>Filter by P-value</b> <br>
-              <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" class="slider" step=0.01 id="pvalue" onchange="updateSlider()" style="width:85%; height:5px; background-color:#d3d3d3; outline:none; opacity:0.7; margin-bottom:5%">
-              <br>
-              <div id="sliderAmount"></div>
-
-              <b>Filter by the effect of the SNP:</b></p>
-              <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
-              <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging
-              <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br
-              <br>
-
-              <b>Enter a new gene or SNP:</b></br>
-              <input type="text" name="snp">
-              <input type="submit" value="Submit">
-            </form>
-          </div>
-          <div class="col-md-9">
-            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
-            <script src="./manhattan4.js"></script>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 <!--
 si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
@@ -127,7 +109,7 @@ si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
  #DATOS PARA RAMON
 
 $sql_plot1 = "select pos, beta, v.p_value, s.idSNP
-from 	SNP as s, Variants as v, Gene_has_SNP as gs, Gene as g
+from 	SNP as s, Variants as v
 where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
 and chr = ".$rsT['chr']."  and s.idSNP = v.idSNP;";
 
@@ -137,13 +119,22 @@ where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
 and Chromosome = ".$rsT['chr']." and s.idSNP = v.idSNP and
 s.idSNP = gs.SNP_idSNP and g.Gene_id = gs.Gene_Gene_id;";
 
+// print $sql_plot1;
+
+// print $sql_plot2;
+
 
 $rs_plot1 = mysqli_query($mysqli, $sql_plot1) or print mysqli_error($mysqli);
 $rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
 
-$rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
+$rsT_plot1 = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 
-$rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
+$rsT_plot2 = mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
+
+
+
+$rsT_plot = $rsT_plot1 + $rsT_plot2;
+
 
 
 function cmp($a, $b)
@@ -157,19 +148,65 @@ function cmp($a, $b)
 
 usort($rsT_plot,"cmp");
 
-function transpose($array) {
-    return array_map(null, ...$array);
+function transpose($data)
+{
+	$retData = array();
+	foreach ($data as $row => $columns) {
+		foreach ($columns as $row2 => $column2) {
+			$retData[$row2][$row] = $column2;
+		}
+	}
+	return $retData;
 }
 
 $rsT_plot = transpose($rsT_plot);
 
-include "footer.html";
 
-var_dump($rsT_plot);
+$locations = $rsT_plot['pos'];
+$beta = $rsT_plot['beta'];
+$snps = $rsT_plot['idSNP'];
+$pvalues = $rsT_plot['p_value'];
+$log10_p_values = [];
+// var_dump($pvalues);
+foreach ($pvalues as &$p) {
+  array_push($log10_p_values, floatval(log10(floatval($p))));
+};
 
-foreach($rsT_plot as $row){
-
-}
+var_dump($log10_p_values);
 ?>
 
+<div class="container-fluid" style="margin-top:5%; margin-bottom:5%">
+  <div class="row">
+    <div class="col-md-11">
+    <div class="row" style="margin-left:5%">
+      <div class="col-md-3" style="background-color:#F0F0F0;">
+        <form id="frm1">
+          <h4 style="margin-bottom:5%; text-align:center"> Advanced search </h4>
+          <b>Filter by P-value</b> <br>
+          <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" class="slider" step=0.01 id="pvalue" onchange="updateSlider()" style="width:85%; height:5px; background-color:#d3d3d3; outline:none; opacity:0.7; margin-bottom:5%">
+          <br>
+          <div id="sliderAmount"></div>
+
+          <b>Filter by the effect of the SNP:</b></p>
+          <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
+          <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging
+          <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br
+          <br>
+
+          <b>Enter a new gene or SNP:</b></br>
+          <input type="text" name="snp">
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+      <div class="col-md-9">
+        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+        <script src="./manhattan4.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<?php include "footer.html"; ?>
 </html>

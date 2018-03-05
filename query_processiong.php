@@ -175,6 +175,7 @@ foreach ($rst_gene as $row) {
 $_SESSION['SNP_out'] = $rst;
 
 
+
 ?>
 <script>
 $(window).load(function() {      //Do the code in the {}s when the window has loaded
@@ -182,7 +183,10 @@ $(window).load(function() {      //Do the code in the {}s when the window has lo
 });
 </script>
 
+<<<<<<< HEAD
 <?php
 header('Location: SNP_out.php');
 
 ?>
+=======
+>>>>>>> origin/plot2

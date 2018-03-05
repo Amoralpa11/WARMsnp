@@ -24,6 +24,7 @@
 </head>
 
 
+
 <html>
 <link rel="stylesheet" type="text/css" href="scss/loading_page.css">
 
@@ -42,12 +43,13 @@
 </head>
 
 <body>
-
+  
   <?php
   session_start();
   $rst = $_SESSION['SNP_out'];
   include "navbar.html";
   ?>
+
 
   <div id="loader" class="loader" style="width:100%; height:100%; background-color:white; margin:0; text-align: center; position: fixed; top: 0px;">
     <!-- <div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;position:fixed;text-align: center;vertical-align: middle;position: relative;top: 50%;"> -->
@@ -100,7 +102,9 @@
               <td> <?php print $position ?> </td>
               <?php
               if (count($gene) == 1 ){
+
                 print "<td><a target='_blank' href='gene_page_processing.php?ref=$gene'>$gene</a></td>";
+
               } elseif (count($gene) > 1) {
                 print "<td><a target='_blank' href='SNP_page_processing.php?ref=$SNP_id'>".count($rsF['Gene_id'])."</a></td>";
               }else{
@@ -123,13 +127,15 @@
       <p><input id="csv_text" type="button" value="Export to CSV" onclick="getCSVData()" /></p>
     </div>
 
+
 <script>
       $(document).ready(function () {
         $('#Table').DataTable();
       });
 </script>
 
-<script>
+
+    <script>
 $(window).load(function() {      //Do the code in the {}s when the window has loaded
   $("#loader").fadeOut("fast");
 });
