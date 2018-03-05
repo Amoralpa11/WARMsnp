@@ -167,6 +167,7 @@ s.idSNP = gs.SNP_idSNP and g.Gene_id = gs.Gene_Gene_id;";
 // print $sql_plot2 ;
 
 $rs_plot1 = mysqli_query($mysqli, $sql_plot1) or print mysqli_error($mysqli);
+
 $rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
 
 $rsT_plot1 = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
@@ -174,6 +175,7 @@ $rsT_plot1 = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 $rsT_plot2 = mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
 
 $rsT_plot = $rsT_plot1 + $rsT_plot2;
+
 
 function cmp($a, $b)
 {
@@ -187,17 +189,33 @@ usort($rsT_plot,"cmp");
 
 $rsT_plot = transpose($rsT_plot);
 
-$locations = $rsT_plot['pos'];
-$beta = $rsT_plot['beta'];
-$snps = $rsT_plot['idSNP'];
-$pvalues = $rsT_plot['p_value'];
-$log10_p_values = [];
-// var_dump($pvalues);
-foreach ($pvalues as &$p) {
-  array_push($log10_p_values, floatval(log10(floatval($p))));
-};
 
-// var_dump($log10_p_values);
+$locations_pre = $rsT_plot['pos'];
+$locations = [];
+foreach ($locations_pre as &$pos){
+  array_push($locations, floatval($pos));
+}
+
+$beta_pre = $rsT_plot['beta'];
+$beta = [];
+foreach ($beta_pre as &$i){
+  array_push($beta, floatval($i));
+}
+$snps_pre = $rsT_plot['idSNP'];
+$snps = [];
+foreach ($snps_pre as &$i){
+  array_push($snps, $i);
+}
+
+$pvalues_pre = $rsT_plot['p_value'];
+$pvalues = [];
+foreach ($pvalues_pre as &$p){
+  array_push($pvalues, floatval($p));
+}
+// var_dump($beta);
+// var_dump($locations);
+
+
 ?>
 
 
@@ -225,6 +243,38 @@ foreach ($pvalues as &$p) {
         </form>
       </div>
       <div class="col-md-9">
+        <div id="location">
+          <script type="text/javascript">
+            var location = <?php echo '["'. implode('", "', $location) . '"]'?>;
+            // document.write(tissue);
+           </script>
+        </div>
+        <div id="beta">
+          <script type="text/javascript">
+            var beta = <?php echo '["'. implode('", "', $beta) . '"]'?>;
+            // document.write(tissue);
+           </script>
+        </div>
+        <div id="snps">
+          <script type="text/javascript">
+            var snps = <?php echo '["'. implode('", "', $snps) . '"]'?>;
+           </script>
+        </div>
+        <div id="pvalues">
+          <script type="text/javascript">
+            var pvalues = <?php echo '["'. implode('", "', $pvalues) . '"]'?>;
+           </script>
+        </div>
+        <div id="snp_id">
+          <script type="text/javascript">
+            var current_snp = <?php echo $_SESSION['SNP_page']['ref'] ?>;
+           </script>
+        </div>
+        <!-- <div id="chr">
+          <script type="text/javascript">
+            var chr = <*?php echo XXXXXXXXXXX ?>;
+           </script>
+        </div> -->
         <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
         <script src="./manhattan4.js"></script>
       </div>
