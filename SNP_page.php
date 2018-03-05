@@ -34,13 +34,13 @@
 </head>
 <?php
 
-
+include 'databasecon.php';
 include "navbar.html";				#incluimos la barra de navegación y el head de la pagina
 
 
 session_start();
 
-
+// print_r($_SESSION['snp_page']);
 
 $rsT_disease=$_SESSION['snp_page']['rsT_disease'];
 $rsT=$_SESSION['snp_page']['rsT'];
@@ -107,7 +107,7 @@ si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
  #DATOS PARA RAMON
 
 $sql_plot1 = "select pos, beta, v.p_value, s.idSNP
-from 	SNP as s, Variants as v, Gene_has_SNP as gs, Gene as g
+from 	SNP as s, Variants as v
 where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
 and chr = ".$rsT['chr']."  and s.idSNP = v.idSNP;";
 
@@ -117,13 +117,26 @@ where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
 and Chromosome = ".$rsT['chr']." and s.idSNP = v.idSNP and
 s.idSNP = gs.SNP_idSNP and g.Gene_id = gs.Gene_Gene_id;";
 
+// print $sql_plot1;
+
+// print $sql_plot2;
+
 
 $rs_plot1 = mysqli_query($mysqli, $sql_plot1) or print mysqli_error($mysqli);
 $rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
 
-$rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
+print_r($rs_plot2);
 
-$rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
+$rsT_plot1 = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
+
+$rsT_plot2 = mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
+
+// print "<br><br> rsT_plot2: <br><br>";
+// print_r($rsT_plot2);
+// print "<br><br>";
+
+$rsT_plot = $rsT_plot1 + $rsT_plot2;
+
 
 function cmp($a, $b)
 {
@@ -148,7 +161,7 @@ function transpose($data)
 
 $rsT_plot = transpose($rsT_plot);
 
-print_r($rsT_plot);
+// print_r($rsT_plot);
 
 
 ?>
