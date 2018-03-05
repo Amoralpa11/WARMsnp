@@ -58,7 +58,7 @@ function size_beta(x) {
     return 20;
   } else {
     return 25;
-  } 
+  }
 }
 
 
@@ -175,11 +175,11 @@ myPlot.on('plotly_click', function(data){
 
 
 
-var thresh = document.getElementById("pvalue").value; 
+var thresh = document.getElementById("pvalue").value;
 
 
 function updateSlider() {
-  thresh = document.getElementById("pvalue").value; 
+  thresh = document.getElementById("pvalue").value;
   log10_thresh = -1 * Math.log10(thresh);
   var data = {
   x: locations,
@@ -213,17 +213,17 @@ function SNPeffect(effect) {
   var indices = [];
 
   if (effect == "protective"){
-    for (i = 0; i < beta.length; i++) { 
+    for (i = 0; i < beta.length; i++) {
       if (beta[i] < 0){
         indices.push(i);
       }
     }
   } else if (effect == "damaging") {
-    for (i = 0; i < beta.length; i++) { 
+    for (i = 0; i < beta.length; i++) {
       if (beta[i] > 0){
         indices.push(i);
       }
-    } 
+    }
   };
   var p_values_selected = indices.map(function(ind) {
     return log10_p_values[ind];
@@ -244,7 +244,7 @@ function SNPeffect(effect) {
   var text_selected = indices.map(function(ind){
     return text_plot[ind];
   });
- 
+
   var data = {
   x: locations_selected,
   y: p_values_selected,
@@ -270,6 +270,3 @@ myPlot.on('plotly_click', function(data){
   window.location = link.concat(snps[data.points[0].pointNumber])
   });
 };
-
-
-

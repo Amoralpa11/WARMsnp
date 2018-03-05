@@ -163,13 +163,16 @@ where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
 and Chromosome = ".$rsT['chr']." and s.idSNP = v.idSNP and
 s.idSNP = gs.SNP_idSNP and g.Gene_id = gs.Gene_Gene_id;";
 
+include "footer.html";
 
 $rs_plot1 = mysqli_query($mysqli, $sql_plot1) or print mysqli_error($mysqli);
+
 $rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
 
 $rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 
 $rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
+
 
 
 
@@ -190,12 +193,9 @@ $beta = $rsT_plot['beta'];
 $snps = $rsT_plot['idSNP'];
 $pvalues = $rsT_plot['p_value'];
 $log10_p_values = [];
-// var_dump($pvalues);
-foreach ($pvalues as &$p) {
-  array_push($log10_p_values, floatval(log10(floatval($p))));
-};
 
-var_dump($log10_p_values);
+var_dump($pvalues);
+
 ?>
 
 
@@ -223,6 +223,38 @@ var_dump($log10_p_values);
         </form>
       </div>
       <div class="col-md-9">
+        <div id="location">
+          <script type="text/javascript">
+            var location = <?php echo '["'. implode('", "', $location) . '"]'?>;
+            // document.write(tissue);
+           </script>
+        </div>
+        <div id="beta">
+          <script type="text/javascript">
+            var beta = <?php echo '["'. implode('", "', $beta) . '"]'?>;
+            // document.write(tissue);
+           </script>
+        </div>
+        <div id="snps">
+          <script type="text/javascript">
+            var snps = <?php echo '["'. implode('", "', $snps) . '"]'?>;
+           </script>
+        </div>
+        <div id="pvalues">
+          <script type="text/javascript">
+            var pvalues = <?php echo '["'. implode('", "', $pvalues) . '"]'?>;
+           </script>
+        </div>
+        <div id="snp_id">
+          <script type="text/javascript">
+            var current_snp = <?php echo $_SESSION['SNP_page']['ref'] ?>;
+           </script>
+        </div>
+        <div id="chr">
+          <script type="text/javascript">
+            var chr = <?php echo XXXXXXXXXXX ?>;
+           </script>
+        </div>
         <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
         <script src="./manhattan4.js"></script>
       </div>
