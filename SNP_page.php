@@ -126,5 +126,5 @@ usort($rsT_plot,"cmp");
 
 $rsT_plot = transpose($rsT_plot);
 
-
+include "footer.html";
 ?>
