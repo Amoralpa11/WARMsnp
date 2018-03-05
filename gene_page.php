@@ -111,7 +111,7 @@ $manhattan = transpose($rsT_snp);
 
 		</div>
 
-		<h3 style="margin-left: 7%; margin-top:20px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
+		<h3 style="margin-left: 7%; margin-top:20px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT_gene['Chromosome'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
 
 
 		<div class="row" style="">
@@ -133,8 +133,8 @@ $manhattan = transpose($rsT_snp);
 						<h4>Gene attributes</h4>
 
 						<p> Location:
-							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" style="color: #000000"></a>
-								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
+							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT_gene['Chromosome'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" style="color: #000000">chr: <?php print $rsT_gene['Chromosome']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?></a>
+								
 							</p>
 
 
@@ -182,7 +182,7 @@ $manhattan = transpose($rsT_snp);
 
 										?>
 										<tr>
-											<?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
+											<?php  print "<td><a target='_blank' href='SNP_page_processing.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
 											<td> <?php print $position ?> </td>
 											<td> <?php print $Main_allele ?> </td>
 											<td> <?php print $variant_allele ?> </td>
