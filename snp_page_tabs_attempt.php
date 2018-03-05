@@ -177,6 +177,7 @@ $chr =  $rsT['chr'];
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
 	body {font-family: Arial;}
 
@@ -230,9 +231,9 @@ $chr =  $rsT['chr'];
 			<div id="counter" style="position:absolute;top:60%; left:50%; transform: translate(-50%, -50%);">The page is loading, please wait...</div>
 
 		</div>
-
-		<h3 style="margin-right: 10px">SNP: </h3><h3> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['SNP_page']['ref'] ?> style="color:#1e1f21"><?php print $_SESSION['SNP_page']['ref'] ?></a></h3>
-		<div class="row" style="margin-top:4%">
+		<br>
+		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> SNP: <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['SNP_page']['ref'] ?> style="color:#1e1f21"><?php print $_SESSION['SNP_page']['ref'] ?></a></h3>
+		<div class="row" style="margin-top:2%">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
@@ -247,34 +248,38 @@ $chr =  $rsT['chr'];
 			<div class="col-md-10">
 				<div class="tab">
 					<div id="attributes" class="tabcontent">
-						<h4>SNP attributes</h4>
+						<header class="w3-container" style="padding-top: 22px;"><h4><b><i class="fa fa-eye"></i> SNP attributes</h4></b>
 						<div class="row">
-						<div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2; margin-right:5%">
-							<h5 style="margin-top:5%; text-align: center">Genomic attributes:</h5>
-							<p>Location: chr: <?php print $rsT['chr']." : ".$rsT['pos']?></p>
-							<p>Gene: <?php
+						<div class="col-md-5" style="border: 2px solid; border-radius:25px; border-color:#343a3f; background-color:#ffab63; margin-right:5%; margin-left: 5%">
+							<header class="w3-container"><h5 style="margin-top:5%; text-align: center"><b>Genomic attributes:</h5></b></header>
+							<hr>
+							<p style="text-align: left; margin-left: 5%; margin-right: 5%"><b>Location: </b><span style="float: right;"> chr- <?php print $rsT['chr']." : ".$rsT['pos']?></span></p>
+							<p style="text-align: left; margin-left: 5%; margin-right: 5%"><b>Gene: </b><span style="float: right;"> <?php
 							$link_array = [];
 							foreach ($rsT_gene['Gene_id'] as $gene){
 							$link_array[] = "<a href ='gene_page.php?ref=$gene'>$gene</a>";
 							}
 							print implode(", ", $link_array);
-							?></p>
+							?></p></span>
 						</div>
-						<div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2; margin-right:5%; ">
-							<h5 style="margin-top:5%; text-align: center">SNP attributes:</h5>
-							<p>Main allele: <?php print " ".$rsT['Main_allele']?></p>
-							<p>Variant: <?php print $rsT['Sequence']?></p>
-							<p>Main allele frequency: <?php print $rsT['Frequency']?></p>
+						<div class="col-md-5" style="border: 2px solid; border-radius:25px; border-color:#343a3f; background-color:#ffab63; margin-right:5%; ">
+							<header class="w3-container"><h5 style="margin-top:5%; text-align: center"><b>SNP attributes:</b></h5></header>
+							<hr>
+							<p style="text-align: left; margin-left: 5%; margin-right: 5%"><b>Main allele: </b><span style="float: right;"><?php print " ".$rsT['Main_allele']?></p></span>
+							<p style="text-align: left; margin-left: 5%; margin-right: 5%"><b>Variant: </b><span style="float: right;"><?php print $rsT['Sequence']?></p></span>
+							<p style="text-align: left; margin-left: 5%; margin-right: 5%"><b>Main allele frequency: </b><span style="float: right;"><?php print $rsT['Frequency']?></p></span>
 						</div>
 						</div>
 						<div class="row">
-						<div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2; margin-right:5%">
-							<h5 style="margin-top:5%; text-align: center">CAD & MI association:</h5>
-							<p>p-value: <?php print $rsT['p_value']?></p>
-							<p>beta: <?php print $rsT['beta']?></p>
+						<div class="col-md-5" style="border: 2px solid; border-radius:25px; border-color:#343a3f; background-color:#ffab63; margin-right:5%; margin-left: 5%; margin-top: 5%; margin-bottom: 5%">
+							<header class="w3-container"><h5 style="margin-top:5%; text-align: center"><b>CAD & MI association:</b></h5></header>
+							<hr>
+							<p style="text-align: left; margin-left: 5%; margin-right: 5%"><b>p-value: </b><span style="float: right;"><?php print $rsT['p_value']?></p></span>
+							<p style="text-align: left; margin-left: 5%; margin-right: 5%"><b>beta: </b><span style="float: right;"><?php print $rsT['beta']?></p></span>
 						</div>
-							<div class="col-md-3" style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2">
-								<h5 style="margin-top:5%; text-align: center">Other related disease:</h5>
+							<div class="col-md-5" style="border: 2px solid; border-radius:25px; border-color:#343a3f; background-color:#ffab63; margin-top: 5%; margin-bottom: 5%">
+								<header class="w3-container"><h5 style="margin-top:5%; text-align: center"><b>Other related disease:</b></h5></header>
+								<hr>
 								<?php
 
 								if (count($rsT_disease) != 0) {
