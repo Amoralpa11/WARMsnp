@@ -10,8 +10,9 @@
 	<link rel="stylesheet" type="text/css" href="scss/custom.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+  <link rel="icon" href="Home_images/flame.png">
 	<title>WARMsnp Home</title>
 </head>
 
