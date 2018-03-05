@@ -43,8 +43,15 @@ $query_array = preg_split("/\s+/", $_REQUEST['query']);
 foreach ($query_array as $ref){
   if (strtoupper(substr( $ref, 0, 2 )) === "RS"){
     $SNP_array[] = $ref;
+    if (count($query_array) == 1) {
+      header("Location: SNP_page.php?ref=$ref");
+    }
   }else if (strtoupper(substr( $ref, 0, 3 )) === "ENS" ){
     $Gene_array[] = $ref;
+
+    if (count($query_array) == 1) {
+      header("Location: gene_page.php?ref=$ref");
+    }
   }
 }
 include 'databasecon.php';

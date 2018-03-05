@@ -96,11 +96,11 @@ if (is_null($rsT['chr'])){
 
 // Aqui van los datos para ramón 
 
-$array_manhattan = mysqli_fetch_all($rs_snp,MYSQLI_ASSOC);
+$rsT_snp = mysqli_fetch_all($rs_snp,MYSQLI_ASSOC);
 
-$array_manhattan = transpose($array_manhattan);
+$array_manhattan = transpose($rsT_snp);
 
- print_r($array_manhattan);
+ // print_r($array_manhattan);
 
 
 ?>
@@ -222,7 +222,9 @@ $array_manhattan = transpose($array_manhattan);
 								</thead>
 								<tbody>
 
-									<?php while ($rsF = mysqli_fetch_assoc($rs_snp)) {
+									<?php 
+
+									foreach ($rsT_snp as $rsF){
 
 										$SNP_id =  $rsF['idSNP'];
 										$Main_allele =  $rsF['Main_allele'];
