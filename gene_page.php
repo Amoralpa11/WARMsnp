@@ -39,7 +39,7 @@ if ($_REQUEST) {
 
 $sql_GO = "select GO.GO_name, GO.GO_id
 from GO, Gene_Go as gg, Gene as g
-where gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and 
+where gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and
 g.Gene_id like '".$_REQUEST['ref']."'";
 
 
@@ -94,7 +94,7 @@ if (is_null($rsT['chr'])){
 	$rsT['chr'] = $rsT_gene['Chromosome'][0];
 }
 
-// Aqui van los datos para ramón 
+// Aqui van los datos para ramón
 
 $array_manhattan = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
 
@@ -169,9 +169,9 @@ $array_manhattan = transpose($array_manhattan);
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
-					<button class="tablinks" onclick="gene_tabs(event, 'London')" id="defaultOpen">Gene attributes</button>
-					<button class="tablinks" onclick="gene_tabs(event, 'Paris')">SNPs</button>
-					<button class="tablinks" onclick="gene_tabs(event, 'Tokyo')">Tissue expression</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'GO')" id="defaultOpen">Gene attributes</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'SNP')">SNPs</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'Tissue">Tissue expression</button>
 				</div>
 			</div>
 		</div>
@@ -180,10 +180,10 @@ $array_manhattan = transpose($array_manhattan);
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
-					<div id="London" class="tabcontent">
+					<div id="GO" class="tabcontent">
 						<h4>Gene attributes</h4>
 
-						<p> Location: 
+						<p> Location:
 							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
 								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
 
@@ -191,7 +191,7 @@ $array_manhattan = transpose($array_manhattan);
 
 
 							<div>
-								<p>GO: <?php 
+								<p>GO: <?php
 								$link_array = [];
 								while ($rsT_Go = mysqli_fetch_assoc($rs_GO)){
 									$link_array[] = "<a href ='http://amigo.geneontology.org/amigo/term/".$rsT_Go['GO_id']."'>".$rsT_Go['GO_name']."</a>";
@@ -204,7 +204,7 @@ $array_manhattan = transpose($array_manhattan);
 
 						</div>
 
-						<div id="Paris" class="tabcontent">
+						<div id="SNP" class="tabcontent">
 							<h4>SNPs</h4>
 							<table border="0" cellspacing="2" cellpadding="4" id="snpTable">
 								<thead>
@@ -248,7 +248,7 @@ $array_manhattan = transpose($array_manhattan);
 							</table>
 						</div>
 
-						<div id="Tokyo" class="tabcontent">
+						<div id="Tissue" class="tabcontent">
 							<h4>Tissue expression</h4>
 							<div id="tissue">
 								<script type="text/javascript">

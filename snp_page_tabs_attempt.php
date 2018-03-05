@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
 	<script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
-		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 
 	<link rel="icon" href="Home_images/flame.png">
@@ -95,6 +95,81 @@ if (is_null($rsT['chr'])){
 	$rsT['chr'] = $rsT_gene['Chromosome'][0];
 }
 
+#DATOS PARA RAMON
+
+$sql_plot1 = "select pos, beta, v.p_value, s.idSNP
+from 	SNP as s, Variants as v
+where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
+and chr = ".$rsT['chr']."  and s.idSNP = v.idSNP;";
+
+$sql_plot2 = "select pos, beta, p_value, s.idSNP
+from 	SNP as s, Variants as v, Gene_has_SNP as gs, Gene as g
+where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
+and Chromosome = ".$rsT['chr']." and s.idSNP = v.idSNP and
+s.idSNP = gs.SNP_idSNP and g.Gene_id = gs.Gene_Gene_id;";
+
+// print $sql_plot1 ;
+// print $sql_plot2 ;
+// print "<br><br>";
+
+$rs_plot1 = mysqli_query($mysqli, $sql_plot1) or print mysqli_error($mysqli);
+
+$rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
+
+$rsT_plot1 = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
+
+var_dump($rsT_plot1);
+print "<br><br>";
+
+$rsT_plot2 = mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
+
+var_dump($rsT_plot2);
+print "<br><br>";
+
+$rsT_plot = array_merge($rsT_plot1,$rsT_plot2);
+
+var_dump($rsT_plot);
+print "<br><br>";
+
+function cmp($a, $b)
+{
+	 if ($a["pos"] == $b["pos"]) {
+			 return 0;
+	 }
+	 return ($a["pos"] < $b["pos"]) ? -1 : 1;
+}
+
+usort($rsT_plot,"cmp");
+
+$rsT_plot = transpose($rsT_plot);
+
+$locations_pre = $rsT_plot['pos'];
+$locations = [];
+foreach ($locations_pre as &$pos){
+ array_push($locations, intval($pos));
+}
+
+$beta_pre = $rsT_plot['beta'];
+$beta = [];
+foreach ($beta_pre as &$i){
+ array_push($beta, floatval($i));
+}
+
+$snps_pre = $rsT_plot['idSNP'];
+$snps = [];
+foreach ($snps_pre as &$i){
+ array_push($snps, $i);
+}
+
+$pvalues_pre = $rsT_plot['p_value'];
+$pvalues = [];
+foreach ($pvalues_pre as &$p){
+ array_push($pvalues, floatval($p));
+}
+
+var_dump($pvalues);
+$current_snp = $_SESSION['SNP_page']['ref'];
+$chr =  $rsT['chr'];
 ?>
 
 
@@ -216,71 +291,74 @@ if (is_null($rsT['chr'])){
 						</div>
 
 						<div id="plot" class="tabcontent">
-							<h4>SNPs</h4>
-							<table border="0" cellspacing="2" cellpadding="4" id="snpTable">
-								<thead>
-									<tr>
-										<th>SNP Id</th>
-										<th>Position</th>
-										<th>Main allele</th>
-										<th>Mutation</th>
-										<th>Frequency</th>
-										<th>Beta</th>
-										<th>p value</th>
-									</tr>
-								</thead>
-								<tbody>
+							<h4>Manhattan plot</h4>
+							<div class="container-fluid">
+							<div class="col-md-13">
+								<div class="row">
+						     <div class="col-md-4" style="background-color:#F0F0F0;">
+						      <form id="frm1">
+						        <b>Filter by P-value</b> <br>
+										<div class="row">
+							        <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" step=0.01 id="pvalue" onchange="updateSlider()">
+							        <br>
+							        <div id="sliderAmount"></div>
+										</div>
 
-									<?php while ($rsF = mysqli_fetch_assoc($rs_snp)) {
+						        <b>Filter by the effect of the SNP:</b></p>
+						        <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
+						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging
+						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br
+						        <br>
 
-										$SNP_id =  $rsF['idSNP'];
-										$Main_allele =  $rsF['Main_allele'];
-										$variant_allele =  $rsF['Sequence'];
-										$position = $rsF['pos'];
-										$frequency = $rsF['Frequency'];
-										$beta = $rsF['beta'];
-										$pval = $rsF['p_value'];
-
-										?>
-										<tr>
-											<?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
-											<td> <?php print $position ?> </td>
-											<td> <?php print $Main_allele ?> </td>
-											<td> <?php print $variant_allele ?> </td>
-											<td> <?php print $frequency ?> </td>
-											<td> <?php print $beta ?> </td>
-											<td> <?php print $pval ?> </td>
-										</tr>
-										<?php
-									}
-
-									?>
-								</tbody>
-							</table>
+						        <b>Enter a new gene or SNP:</b></br>
+						        <input type="text" name="snp">
+						        <input type="submit" value="Submit">
+						      </form>
+						    </div>
+						      <div class="col-md-8">
+										<div id="location">
+											<script type="text/javascript">
+												var locations = <?php echo '["'. implode('", "', $locations) . '"]'?>;
+											 </script>
+										</div>
+										<div id="beta">
+											<script type="text/javascript">
+												var beta = <?php echo '["'. implode('", "', $beta) . '"]'?>;
+												// var debug = document.getElementById("sliderAmount");
+												// debug.innerHTML = beta;
+											 </script>
+										</div>
+										<div id="snps">
+											<script type="text/javascript">
+												var snps = <?php echo '["'. implode('", "', $snps) . '"]'?>;
+											 </script>
+										</div>
+										<div id="pvalues">
+											<script type="text/javascript">
+												var pvalues = <?php echo '["'. implode('", "', $pvalues) . '"]'?>;
+											 </script>
+										</div>
+										<div id="current_snp">
+											<script type="text/javascript">
+												var current_snp = <?php echo json_encode($current_snp); ?>;
+											 </script>
+										</div>
+										<div id="chr">
+											<script type="text/javascript">
+												var chr = <?php echo json_encode($chr);  ?>;
+											 </script>
+										</div>
+						        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV -->
+						          <script src="./manhattan4.js"> </script>
+										</div>
+						      </div>
+						    </div>
+							</div>
 						</div>
-
-						<div id="Tokyo" class="tabcontent">
-							<h4>Tissue expression</h4>
-							<div id="tissue">
-								<script type="text/javascript">
-									var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
-									// document.write(tissue);
-								 </script>
-							</div>
-							<div id="expression">
-								<script type="text/javascript">
-									var expression = <?php echo '["'. implode('", "', $tissue_expression) . '"]'?>;
-									// document.write(expression);
-								 </script>
-							</div>
-							<div id="myDiv">
-								<script src="./bar_plot.js"> </script>
-							</div>
-
 						</div>
-					</div>
 					</div>
 				</div>
+			</div>
 
 
 
