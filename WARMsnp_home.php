@@ -300,7 +300,6 @@ function AS(){
     $("#maxpval").val(<?php print $_SESSION['queryData']['maxpval'] ?>);
     $("#minfreq").val(<?php print $_SESSION['queryData']['minfreq'] ?>);
     $("#maxfreq").val(<?php print $_SESSION['queryData']['maxfreq'] ?>);
-
   }
 }
 </script>
