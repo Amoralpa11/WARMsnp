@@ -20,6 +20,7 @@
 </head>
 
 
+<<<<<<< HEAD
 <?php
 #start Session to hold input data
 session_start();
@@ -192,6 +193,8 @@ foreach ($rst_gene as $row) {
 
 
 ?>
+=======
+>>>>>>> quick_refresh
 <html>
 <link rel="stylesheet" type="text/css" href="scss/loading_page.css">
 
@@ -204,6 +207,15 @@ foreach ($rst_gene as $row) {
 
 <body>
 
+<<<<<<< HEAD
+=======
+  <?php
+  session_start();
+  $rst = $_SESSION['SNP_out'];
+  include "navbar.html";
+  ?>
+
+>>>>>>> quick_refresh
   <div id="loader" class="loader" style="width:100%; height:100%; background-color:white; margin:0; text-align: center; position: fixed; top: 0px;">
     <!-- <div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;position:fixed;text-align: center;vertical-align: middle;position: relative;top: 50%;"> -->
       <div style="position:absolute;top:50%; left:50%; transform: translate(-50%, -50%);">
@@ -255,9 +267,13 @@ foreach ($rst_gene as $row) {
               <td> <?php print $position ?> </td>
               <?php
               if (count($gene) == 1 ){
+<<<<<<< HEAD
                 print "<td><a target='_blank' href='gene_page.php?ref=$gene'>$gene</a></td>";
+=======
+                print "<td><a target='_blank' href='gene_page_processing.php?ref=$gene'>$gene</a></td>";
+>>>>>>> quick_refresh
               } elseif (count($gene) > 1) {
-                print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>".count($rsF['Gene_id'])."</a></td>";
+                print "<td><a target='_blank' href='SNP_page_processing.php?ref=$SNP_id'>".count($rsF['Gene_id'])."</a></td>";
               }else{
                 print "<td></td>";
               }
@@ -277,11 +293,19 @@ foreach ($rst_gene as $row) {
       </table>
     </div>
 
+<<<<<<< HEAD
     <script>
       $(document).ready(function () {
         $('#Table').DataTable();
       });
     </script>
+=======
+<script>
+      $(document).ready(function () {
+        $('#Table').DataTable();
+      });
+</script>
+>>>>>>> quick_refresh
 
     <script>
 $(window).load(function() {      //Do the code in the {}s when the window has loaded
