@@ -12,9 +12,11 @@
 
 <body>
 
-  
+
     </div>
       <div class="col-md-11">
+        <div id="tissue"> var tissue = <?php json_encode($tissue_name); ?>; </div>
+        <div id="expression"> var tissue = <?php json_encode($tissue_name); ?>; </div>
         <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
         <script src="./bar_plot.js"> </script>
       </div>

@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
 	<script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 	<link rel="icon" href="Home_images/flame.png">
 
@@ -36,6 +37,14 @@ $rsT_GO = $_SESSION['gene_page']['rsT_GO'];
 $rsT_tissue = $_SESSION['gene_page']['rsT_tissue'];
 $rsT_gene = $_SESSION['gene_page']['rsT_gene'];
 $rsT_snp = $_SESSION['gene_page']['rsT_snp'];
+
+
+$tissue_name = [];
+$tissue_expression = [];
+foreach ($rsT_tissue as &$valor) {
+    array_push($tissue_name, $valor['name']);
+		array_push($tissue_expression, floatval($valor['expression_level']));
+}
 
 function transpose($data)
 {
@@ -111,16 +120,16 @@ $manhattan = transpose($rsT_snp);
 
 		</div>
 
-		<h3 style="margin-left: 7%; margin-top:20px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
+		<h3 style="margin-left: 7%; margin-top:20px; color:#000000">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a style="color:#000000"href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
 
 
 		<div class="row" style="">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
-					<button class="tablinks" onclick="gene_tabs(event, 'London')" id="defaultOpen">Gene attributes</button>
-					<button class="tablinks" onclick="gene_tabs(event, 'Paris')">SNPs</button>
-					<button class="tablinks" onclick="gene_tabs(event, 'Tokyo')">Tissue expression</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'Attr')" id="defaultOpen">Gene attributes</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'SNP')">SNPs</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'Tissue')">Tissue expression</button>
 				</div>
 			</div>
 		</div>
@@ -129,7 +138,7 @@ $manhattan = transpose($rsT_snp);
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
-					<div id="London" class="tabcontent">
+					<div id="Attr" class="tabcontent">
 						<h4>Gene attributes</h4>
 
 						<p> Location:
@@ -152,7 +161,7 @@ $manhattan = transpose($rsT_snp);
 
 						</div>
 
-						<div id="Paris" class="tabcontent">
+						<div id="SNP" class="tabcontent">
 							<h4>SNPs</h4>
 							<table border="0" cellspacing="2" cellpadding="4" id="snpTable">
 								<thead>
@@ -198,44 +207,27 @@ $manhattan = transpose($rsT_snp);
 							</table>
 						</div>
 
-						<div id="Tokyo" class="tabcontent">
+						<div id="Tissue" class="tabcontent">
 							<h4>Tissue expression</h4>
-							<table border="0" cellspacing="2" cellpadding="4" id="tissueTable">
-								<thead>
-									<tr>
-										<th>Tissue</th>
-										<th>Expression level (tpm)</th>
-									</tr>
-								</thead>
-								<tbody>
-
-									<?php
-
-									foreach ($rsT_tissue as $row){
-
-										?><tr><?php
-										foreach ($row as $field) {
-
-											?>
-
-											<td><?php print $field ?></td>
-
-											<?php
-										}
-										?><tr><?php
-									}
-
-									?>
-
-								</tbody>
-							</table>
-
-						</div></div>
+							<div id="tissue">
+								<script type="text/javascript">
+									var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
+									// document.write(tissue);
+								 </script>
+							</div>
+							<div id="expression">
+								<script type="text/javascript">
+									var expression = <?php echo '["'. implode('", "', $tissue_expression) . '"]'?>;
+									// document.write(expression);
+								 </script>
+							</div>
+							<div id="myDiv">
+								<script src="./bar_plot.js"> </script>
+							</div>
+						</div>
+					</div>
 					</div>
 				</div>
-
-
-
 				<script>
 					function gene_tabs(evt, cityName) {
 						var i, tabcontent, tablinks;
