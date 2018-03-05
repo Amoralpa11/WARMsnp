@@ -40,7 +40,7 @@ include "navbar.html";				#incluimos la barra de navegación y el head de la pag
 
 session_start();
 
-print_r($_SESSION['snp_page']);
+
 
 $rsT_disease=$_SESSION['snp_page']['rsT_disease'];
 $rsT=$_SESSION['snp_page']['rsT'];

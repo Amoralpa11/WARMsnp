@@ -56,3 +56,5 @@ if (is_null($rsT['chr'])){
 $_SESSION['snp_page']['rsT_disease'] = $rsT_disease;
 $_SESSION['snp_page']['rsT'] = $rsT;
 $_SESSION['snp_gene']['rsT_gene'] = $rsT_gene;
+
+header('Location: SNP_page.php');
