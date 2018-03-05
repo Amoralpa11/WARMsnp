@@ -153,7 +153,7 @@ si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
  #DATOS PARA RAMON
 
 $sql_plot1 = "select pos, beta, v.p_value, s.idSNP
-from 	SNP as s, Variants as v, Gene_has_SNP as gs, Gene as g
+from 	SNP as s, Variants as v
 where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
 and chr = ".$rsT['chr']."  and s.idSNP = v.idSNP;";
 
@@ -163,15 +163,17 @@ where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
 and Chromosome = ".$rsT['chr']." and s.idSNP = v.idSNP and
 s.idSNP = gs.SNP_idSNP and g.Gene_id = gs.Gene_Gene_id;";
 
+// print $sql_plot1 ;
+// print $sql_plot2 ;
 
 $rs_plot1 = mysqli_query($mysqli, $sql_plot1) or print mysqli_error($mysqli);
 $rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
 
-$rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
+$rsT_plot1 = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 
-$rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
+$rsT_plot2 = mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
 
-
+$rsT_plot = $rsT_plot1 + $rsT_plot2;
 
 function cmp($a, $b)
 {
@@ -190,12 +192,12 @@ $beta = $rsT_plot['beta'];
 $snps = $rsT_plot['idSNP'];
 $pvalues = $rsT_plot['p_value'];
 $log10_p_values = [];
-// var_dump($pvalues);
+var_dump($pvalues);
 foreach ($pvalues as &$p) {
   array_push($log10_p_values, floatval(log10(floatval($p))));
 };
 
-var_dump($log10_p_values);
+// var_dump($log10_p_values);
 ?>
 
 
