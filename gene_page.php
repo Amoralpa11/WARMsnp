@@ -186,23 +186,83 @@ $array_manhattan = transpose($array_manhattan);
 						<p> Location:
 							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
 								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
-
 							</a></p>
-
-
 							<div>
 								<p>GO: <?php
 								$link_array = [];
 								while ($rsT_Go = mysqli_fetch_assoc($rs_GO)){
 									$link_array[] = "<a href ='http://amigo.geneontology.org/amigo/term/".$rsT_Go['GO_id']."'>".$rsT_Go['GO_name']."</a>";
 								}
-
 								print implode(", ", $link_array);
 								?></p>
-
 							</div>
+							<div id="plot" class="tabcontent">
+							<h4>Manhattan plot</h4>
+							<div class="container-fluid">
+								<div class="col-md-13">
+									<div class="row">
+									 <div class="col-md-4" style="background-color:#F0F0F0;">
+										<form id="frm1">
+											<b>Filter by P-value</b> <br>
+											<div class="row">
+												<input type="range" name="pvalue" min="0" max="1" value="1" class="slider" step=0.01 id="pvalue" onchange="updateSlider()">
+												<br>
+												<div id="sliderAmount"></div>
+											</div>
 
+											<b>Filter by the effect of the SNP:</b></p>
+											<input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
+											<input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging
+											<input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br
+											<br>
+
+											<b>Enter a new gene or SNP:</b></br>
+											<input type="text" name="snp">
+											<input type="submit" value="Submit">
+										</form>
+									</div>
+										<div class="col-md-8">
+											<div id="location">
+												<script type="text/javascript">
+													var locations = <?php echo '["'. implode('", "', $locations) . '"]'?>;
+												 </script>
+											</div>
+											<div id="beta">
+												<script type="text/javascript">
+													var beta = <?php echo '["'. implode('", "', $beta) . '"]'?>;
+													// var debug = document.getElementById("sliderAmount");
+													// debug.innerHTML = beta;
+												 </script>
+											</div>
+											<div id="snps">
+												<script type="text/javascript">
+													var snps = <?php echo '["'. implode('", "', $snps) . '"]'?>;
+												 </script>
+											</div>
+											<div id="pvalues">
+												<script type="text/javascript">
+													var pvalues = <?php echo '["'. implode('", "', $pvalues) . '"]'?>;
+												 </script>
+											</div>
+											<div id="current_snp">
+												<script type="text/javascript">
+													var current_snp = <?php echo json_encode($current_snp); ?>;
+												 </script>
+											</div>
+											<div id="chr">
+												<script type="text/javascript">
+													var chr = <?php echo json_encode($chr);  ?>;
+												 </script>
+											</div>
+											<div id="myDiv"><!-- Plotly chart will be drawn inside this DIV -->
+												<script src="./manhattan4.js"> </script>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
+					</div>
 
 						<div id="SNP" class="tabcontent">
 							<h4>SNPs</h4>
