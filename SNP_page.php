@@ -18,6 +18,19 @@
 
 	<link rel="icon" href="Home_images/flame.png">
 	<title>SNP results</title>
+
+	 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    .slider {
+      width: 2px;
+      height: 5px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+     
+}
+  </style>
+
 </head>
 <?php
 
@@ -147,6 +160,33 @@ si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
 3 arrays asociativos en el que la clave sea el id del snp
  -->
 
+ <div class="container-fluid">
+    <div class="row">
+      
+      <div class="col-md-4" style="background-color:#F0F0F0;">
+      <form id="frm1">
+
+        <b>Filter by P-value</b> <br>
+        <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" class="slider" step=0.01 id="pvalue" onchange="updateSlider()">
+        <br>
+        <div id="sliderAmount"></div>
+
+        <b>Filter by the effect of the SNP:</b></p>
+        <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
+        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging<br></br>
+        <b>Enter a new gene or SNP:</b></br>
+        <input type="text" name="snp">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+      <div class="col-md-7">
+        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+        <script src="./manhattan4.js"> </script>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
+
  <?php
 
  #DATOS PARA RAMON
@@ -170,8 +210,6 @@ $rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 
 $rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
 
-
-
 function cmp($a, $b)
 {
     if ($a["pos"] == $b["pos"]) {
@@ -186,3 +224,4 @@ $rsT_plot = transpose($rsT_plot);
 
 
 ?>
+
