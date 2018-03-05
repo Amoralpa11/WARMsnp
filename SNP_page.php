@@ -153,7 +153,7 @@ si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
  #DATOS PARA RAMON
 
 $sql_plot1 = "select pos, beta, v.p_value, s.idSNP
-from 	SNP as s, Variants as v, Gene_has_SNP as gs, Gene as g
+from 	SNP as s, Variants as v
 where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
 and chr = ".$rsT['chr']."  and s.idSNP = v.idSNP;";
 
@@ -163,17 +163,18 @@ where	s.pos between ".$rsT['pos']."-40000 and ".$rsT['pos']."+40000
 and Chromosome = ".$rsT['chr']." and s.idSNP = v.idSNP and
 s.idSNP = gs.SNP_idSNP and g.Gene_id = gs.Gene_Gene_id;";
 
-include "footer.html";
+// print $sql_plot1 ;
+// print $sql_plot2 ;
 
 $rs_plot1 = mysqli_query($mysqli, $sql_plot1) or print mysqli_error($mysqli);
 
 $rs_plot2 = mysqli_query($mysqli, $sql_plot2) or print mysqli_error($mysqli);
 
-$rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
+$rsT_plot1 = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 
-$rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
+$rsT_plot2 = mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
 
-
+$rsT_plot = $rsT_plot1 + $rsT_plot2;
 
 
 function cmp($a, $b)
@@ -188,13 +189,30 @@ usort($rsT_plot,"cmp");
 
 $rsT_plot = transpose($rsT_plot);
 
-$locations = $rsT_plot['pos'];
-$beta = $rsT_plot['beta'];
-$snps = $rsT_plot['idSNP'];
-$pvalues = $rsT_plot['p_value'];
-$log10_p_values = [];
+$locations_pre = $rsT_plot['pos'];
+$locations = [];
+foreach ($locations_pre as &$pos){
+  array_push($locations, floatval($pos));
+}
 
-var_dump($pvalues);
+$beta_pre = $rsT_plot['beta'];
+$beta = [];
+foreach ($beta_pre as &$i){
+  array_push($beta, floatval($i));
+}
+$snps_pre = $rsT_plot['idSNP'];
+$snps = [];
+foreach ($snps_pre as &$i){
+  array_push($snps, $i);
+}
+
+$pvalues_pre = $rsT_plot['p_value'];
+$pvalues = [];
+foreach ($pvalues_pre as &$p){
+  array_push($pvalues, floatval($p));
+}
+// var_dump($beta);
+// var_dump($locations);
 
 ?>
 
@@ -250,11 +268,11 @@ var_dump($pvalues);
             var current_snp = <?php echo $_SESSION['SNP_page']['ref'] ?>;
            </script>
         </div>
-        <div id="chr">
+        <!-- <div id="chr">
           <script type="text/javascript">
-            var chr = <?php echo XXXXXXXXXXX ?>;
+            var chr = <*?php echo XXXXXXXXXXX ?>;
            </script>
-        </div>
+        </div> -->
         <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
         <script src="./manhattan4.js"></script>
       </div>
