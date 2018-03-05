@@ -117,14 +117,12 @@ $rsT_gene=$_SESSION['snp_gene']['rsT_gene'];
     </div>
   </div>
 
-  <?php include "footer.html"?>
-
 <!--
 si seleccionamso snp 40000 arrgiba y abajo con p-value beta value, posiciones.
 3 arrays asociativos en el que la clave sea el id del snp
  -->
 
- <?php
+<?php
 
  #DATOS PARA RAMON
 
@@ -148,7 +146,6 @@ $rsT_plot = mysqli_fetch_all($rs_plot1,MYSQLI_ASSOC);
 $rsT_plot += mysqli_fetch_all($rs_plot2,MYSQLI_ASSOC);
 
 
-
 function cmp($a, $b)
 {
     if ($a["pos"] == $b["pos"]) {
@@ -157,7 +154,22 @@ function cmp($a, $b)
     return ($a["pos"] < $b["pos"]) ? -1 : 1;
 }
 
+
 usort($rsT_plot,"cmp");
 
+function transpose($array) {
+    return array_map(null, ...$array);
+}
+
 $rsT_plot = transpose($rsT_plot);
+
+include "footer.html";
+
+var_dump($rsT_plot);
+
+foreach($rsT_plot as $row){
+
+}
 ?>
+
+</html>
