@@ -96,9 +96,11 @@ if (is_null($rsT['chr'])){
 
 // Aqui van los datos para ramón 
 
-$array_manhattan = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
+$array_manhattan = mysqli_fetch_all($rs_snp,MYSQLI_ASSOC);
 
 $array_manhattan = transpose($array_manhattan);
+
+ print_r($array_manhattan);
 
 
 ?>
@@ -267,6 +269,8 @@ $array_manhattan = transpose($array_manhattan);
 							</div>
 
 						</div>
+
+
 					</div>
 					</div>
 				</div>

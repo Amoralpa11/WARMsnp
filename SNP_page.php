@@ -192,7 +192,7 @@ $beta = $rsT_plot['beta'];
 $snps = $rsT_plot['idSNP'];
 $pvalues = $rsT_plot['p_value'];
 $log10_p_values = [];
-var_dump($pvalues);
+// var_dump($pvalues);
 foreach ($pvalues as &$p) {
   array_push($log10_p_values, floatval(log10(floatval($p))));
 };
