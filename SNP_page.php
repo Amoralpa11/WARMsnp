@@ -51,7 +51,7 @@ $rsT_gene=$_SESSION['snp_gene']['rsT_gene'];
 <div class="container" style="padding-top: 25px">
 	<div>
 		<div class="row">
-			<h3 style="margin-right: 10px">SNP: </h3><h3> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['SNP_page']['ref'] ?> style="color:#1e1f21"><?php print $_SESSION['SNP_page']['ref'] ?></a></h3>
+			<h3 style="margin-right: 10px">SNP: </h3><h3> <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['snp_page']['ref'] ?> style="color:#1e1f21"><?php print $_SESSION['snp_page']['ref'] ?></a></h3>
 		</div>
 
 		<div>
@@ -135,7 +135,21 @@ function cmp($a, $b)
 
 usort($rsT_plot,"cmp");
 
+function transpose($data)
+{
+	$retData = array();
+	foreach ($data as $row => $columns) {
+		foreach ($columns as $row2 => $column2) {
+			$retData[$row2][$row] = $column2;
+		}
+	}
+	return $retData;
+}
+
 $rsT_plot = transpose($rsT_plot);
+
+print_r($rsT_plot);
+
 
 ?>
 
@@ -171,7 +185,6 @@ $rsT_plot = transpose($rsT_plot);
     </div>
   </div>
 
-</div>
-</div>
+
 </body>
 </html>

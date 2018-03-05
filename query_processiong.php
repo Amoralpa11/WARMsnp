@@ -106,11 +106,7 @@ if ($snps_without_gene) {
   where
   v.idSNP = s.idSNP and
   ". join(" AND ", $nogene_ANDconds);
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> quick_refresh
   $rs_no_genes = mysqli_query($mysqli, $sql_with_no_genes) or "rs_no_genesprint". mysqli_error($mysqli)."<br>";
 
 }
@@ -172,8 +168,7 @@ $_SESSION['SNP_out'] = $rst;
 
 header('Location: SNP_out.php');
 
-<<<<<<< HEAD
-=======
+
 ?>
 
 <div id="loader" class="loader" style="width:100%; height:100%; background-color:white; margin:0; text-align: center; position: fixed; top: 0px;">
@@ -191,4 +186,4 @@ $(window).load(function() {      //Do the code in the {}s when the window has lo
   $("#loader").fadeOut("fast");
 });
 </script>
->>>>>>> quick_refresh
+
