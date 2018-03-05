@@ -113,7 +113,7 @@
               if (count($gene) == 1 ){
                 print "<td><a target='_blank' href='gene_page_processing.php?ref=$gene'>$gene</a></td>";
               } elseif (count($gene) > 1) {
-                print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>".count($rsF['Gene_id'])."</a></td>";
+                print "<td><a target='_blank' href='SNP_page_processing.php?ref=$SNP_id'>".count($rsF['Gene_id'])."</a></td>";
               }else{
                 print "<td></td>";
               }
