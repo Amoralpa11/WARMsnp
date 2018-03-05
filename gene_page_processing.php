@@ -2,11 +2,6 @@
 session_start();
 include 'databasecon.php';
 
-if ($_REQUEST) {
-	$_SESSION['gene_page'] = $_REQUEST;
-}
-
-
 $sql_GO = "select GO.GO_name, GO.GO_id
 from GO, Gene_Go as gg, Gene as g
 where gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and 
@@ -39,22 +34,24 @@ $rs_snp = mysqli_query($mysqli, $sql_snp) or print "SNP: ".mysqli_error($mysqli)
 
 $rsT_GO = mysqli_fetch_all($rs_GO,MYSQLI_ASSOC);
 
-$_SESSION['gene_page']['rsT_GO'] = $rsT_GO;
+$main_array['rsT_GO'] = $rsT_GO;
 
 $rsT_tissue = mysqli_fetch_all($rs_tissue,MYSQLI_ASSOC);
-$_SESSION['gene_page']['rsT_tissue'] = $rsT_tissue;
+$main_array['rsT_tissue'] = $rsT_tissue;
 
 
 
 $rsT_gene = mysqli_fetch_assoc($rs_gene);
 
 
-$_SESSION['gene_page']['rsT_gene'] = $rsT_gene;
+$main_array['rsT_gene'] = $rsT_gene;
 
 // Aqui van los datos para ramón 
 
 $rsT_snp = mysqli_fetch_all($rs_snp,MYSQLI_ASSOC);
 
-$_SESSION['gene_page']['rsT_snp'] = $rsT_snp;
+$main_array['rsT_snp'] = $rsT_snp;
 
-header('Location: gene_page.php');
+$string = http_build_query(array('main_array' => $main_array));
+
+header('Location: gene_page.php?'.$string);

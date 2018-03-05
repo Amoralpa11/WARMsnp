@@ -33,10 +33,10 @@ session_start();
 
 // print_r($_SESSION['gene_page']);
 
-$rsT_GO = $_SESSION['gene_page']['rsT_GO'];
-$rsT_tissue = $_SESSION['gene_page']['rsT_tissue'];
-$rsT_gene = $_SESSION['gene_page']['rsT_gene'];
-$rsT_snp = $_SESSION['gene_page']['rsT_snp'];
+$rsT_GO = $_REQUEST['main_array']['rsT_GO'];
+$rsT_tissue = $_REQUEST['main_array']['rsT_tissue'];
+$rsT_gene = $_REQUEST['main_array']['rsT_gene'];
+$rsT_snp = $_REQUEST['main_array']['rsT_snp'];
 
 
 $tissue_name = [];
