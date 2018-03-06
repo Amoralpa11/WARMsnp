@@ -24,6 +24,7 @@ var layout = {
       family: 'Arial, sans-serif',
       size: 24
     },
+  // autosize: true,
   height: 800,
   width:1000,
   yaxis: {

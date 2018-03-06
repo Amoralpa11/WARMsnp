@@ -20,7 +20,7 @@
 
 	<link rel="icon" href="Home_images/flame.png">
 
-	<title>SNP results</title>
+	<title>Gene results</title>
 </head>
 
 <?php
@@ -196,7 +196,7 @@ $chr =  $rsT['chr'];
       <div class="col-md-1"></div>
 		</div>
 
-		<div class="row" style="min-height:62%; margin-bottom:20px">
+		<div class="row" style="min-height:40%; margin-bottom:20px">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
@@ -323,7 +323,6 @@ $chr =  $rsT['chr'];
 						<div id="Tissue" class="tabcontent">
 						  <h4>Tissue expression</h4>
 						  <div class="container-fluid">
-						  <div class="col-md-5">
 						      <div id="tissue">
 						        <script type="text/javascript">
 						          var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
@@ -335,9 +334,9 @@ $chr =  $rsT['chr'];
 						         </script>
 						        </div>
 						        <div id="myBar"><!-- Plotly chart will be drawn inside this DIV --></div>
-						          <script src="./bar_plot.js"> </script>
+						          <script src="./bar_plot_resize.js"> </script>
 						    </div>
-						  </div>
+							</div>
 						</div>
 
 
