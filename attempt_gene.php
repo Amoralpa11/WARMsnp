@@ -339,8 +339,6 @@ $chr =  $rsT['chr'];
 						    </div>
 						  </div>
 						</div>
-
-
 					</div>
 				</div>
 			</div>
