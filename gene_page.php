@@ -170,6 +170,15 @@ $chr =  $rsT['chr'];
 		border: 1px solid #ccc;
 		border-top: none;
 	}
+	.slider {
+		width: 75%;
+		height: 10px;
+		background-color: #3d3d3d;
+		outline: none;
+		opacity: 0.7;
+		margin-left: 5%;
+}
+
 </style>
 </head>
 
@@ -208,7 +217,7 @@ $chr =  $rsT['chr'];
 						<header class="w3-container" style="padding-top: 22px;"><h4><b><i class="fa fa-eye"></i> Gene attributes</h4></b>
 							<p> Location:
 							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
-								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
+								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." - ".$rsT_gene['End_position']?>
 							</a></p>
 							<div>
 								<p>GO: <?php
@@ -241,8 +250,8 @@ $chr =  $rsT['chr'];
 						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br>
 						        <br>
 						        <b>Enter a new gene or SNP:</b></br>
-						        <input type="text" name="snp">
-						        <input type="submit" value="Submit">
+						        <input type="text" name="snp" style="margin-bottom:5px">
+						        <input type="submit" value="Submit" style="border-radius: 12px;background-color: #e9e9e6">
 						      </form>
 						    </div>
 						      <div>

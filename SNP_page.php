@@ -197,6 +197,14 @@ $chr =  $rsT['chr'];
 		border: 1px solid #ccc;
 		border-top: none;
 	}
+  .slider {
+    width: 75%;
+    height: 5px;
+    background-color: #3d3d3d;
+    outline: none;
+    opacity: 0.7;
+		margin-left: 5%;
+}
 </style>
 </head>
 
@@ -299,7 +307,7 @@ $chr =  $rsT['chr'];
 
 						        <b>Enter a new gene or SNP:</b></br>
 						        <input type="text" name="snp">
-						        <input type="submit" value="Submit">
+						        <input type="submit" value="Submit" style="border-radius: 12px;background-color: #e9e9e6">
 						      </form>
 						    </div>
 						      <div>
