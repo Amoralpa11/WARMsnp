@@ -182,7 +182,7 @@ $chr =  $rsT['chr'];
 		</div>
 
 		<br>
-		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> SNP: <a href= "<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?>" </a> </h3>
+		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> Gene: <a href= "<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?>" </a> </h3>
 		<div class="row" style="margin-top:2%">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
@@ -218,12 +218,13 @@ $chr =  $rsT['chr'];
 						</div>
 
 						<div id="plot" class="tabcontent">
-							<h4>Manhattan plot</h4>
+							<h4>Manhattan plot</h4><br>
 							<div class="container-fluid">
 							<div class="col-md-10">
 								<div class="row">
 						     <div class="col-md-4" style="background-color:#F0F0F0;">
 						      <form id="frm1">
+										<h5>Advanced search:</h5>
 						        <b>Filter by P-value</b> <br>
 										<div class="row">
 							        <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" step=0.01 id="pvalue" onchange="updateSlider()">
@@ -270,7 +271,7 @@ $chr =  $rsT['chr'];
 												var chr = <?php echo json_encode($chr);  ?>;
 											 </script>
 										</div>
-						        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+						        <div id="myMan"><!-- Plotly chart will be drawn inside this DIV --></div>
 						          <script src="./manhattan4_gene.js"> </script>
 						      </div>
 						    </div>
@@ -335,7 +336,7 @@ $chr =  $rsT['chr'];
 						          var expression = <?php echo '["'. implode('", "', $tissue_expression) . '"]'?>;
 						         </script>
 						        </div>
-						        <div id="myDiv3"></div>
+						        <div id="myBar"><!-- Plotly chart will be drawn inside this DIV --></div>
 						          <script src="./bar_plot.js"> </script>
 						    </div>
 						  </div>

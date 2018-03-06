@@ -135,7 +135,7 @@ var layout = {
 };
 
 
-var myPlot = document.getElementById('myDiv');
+var myPlot = document.getElementById('myMan');
 Plotly.newPlot(myPlot, [data], layout);
 
 myPlot.on('plotly_click', function(data){
@@ -172,7 +172,7 @@ function updateSlider() {
   value: log10_thresh
   }]
 };
-  var myPlot = document.getElementById('myDiv');
+  var myPlot = document.getElementById('myMan');
   Plotly.newPlot(myPlot, [data], layout);
   myPlot.on('plotly_click', function(data){
     var link = "SNP_page.php?ref=" ;
@@ -241,7 +241,7 @@ function SNPeffect(effect) {
   value: log10_thresh
   }]
 };
-var myPlot = document.getElementById('myDiv');
+var myPlot = document.getElementById('myMan');
 Plotly.newPlot(myPlot, [data], layout);
 myPlot.on('plotly_click', function(data){
   var link = "SNP_page.php?ref=" ;
