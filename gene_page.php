@@ -170,6 +170,15 @@ $chr =  $rsT['chr'];
 		border: 1px solid #ccc;
 		border-top: none;
 	}
+	.slider {
+		width: 75%;
+		height: 10px;
+		background-color: #3d3d3d;
+		outline: none;
+		opacity: 0.7;
+		margin-left: 5%;
+}
+
 </style>
 </head>
 
@@ -186,7 +195,7 @@ $chr =  $rsT['chr'];
 		</div>
 
 		<br>
-		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> Gene: <a href= "<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?>" </a> </h3>
+		<h3 style="margin-left: 7%"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> Gene: <a href= "<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?>" </a> </h3>
 		<div class="row" style="margin-top:2%">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
@@ -200,7 +209,7 @@ $chr =  $rsT['chr'];
       <div class="col-md-1"></div>
 		</div>
 
-		<div class="row" style="min-height:40%; margin-bottom:20px">
+		<div class="row" style="min-height:62%; margin-bottom:10%">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
@@ -208,7 +217,7 @@ $chr =  $rsT['chr'];
 						<header class="w3-container" style="padding-top: 22px;"><h4><b><i class="fa fa-eye"></i> Gene attributes</h4></b>
 							<p> Location:
 							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
-								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
+								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." - ".$rsT_gene['End_position']?>
 							</a></p>
 							<div>
 								<p>GO: <?php
@@ -228,6 +237,10 @@ $chr =  $rsT['chr'];
 								<div class="row">
 						     <div class="col-md-3" style="background-color:#F0F0F0;">
 						      <form id="frm1">
+										<div align="right"style="margin-bottom:5%;">
+											<img src="images/legend_2_dots.png" alt="dot_col" style="height:7%; width:49%"><br>
+											<img src="images/legend_size_dots.png" alt="dot_col" style="height:3.5%; width:49%">
+										</div>
 										<h5>Advanced search:</h5>
 						        <b>Filter by P-value</b> <br>
 										<div class="row">
@@ -241,8 +254,8 @@ $chr =  $rsT['chr'];
 						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br>
 						        <br>
 						        <b>Enter a new gene or SNP:</b></br>
-						        <input type="text" name="snp">
-						        <input type="submit" value="Submit">
+						        <input type="text" name="snp" style="margin-bottom:5px">
+						        <input type="submit" value="Submit" style="border-radius: 12px;background-color: #e9e9e6">
 						      </form>
 						    </div>
 						      <div>

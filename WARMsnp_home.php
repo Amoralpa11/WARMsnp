@@ -36,7 +36,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
     <title>WARMsnp</title>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style="margin-bottom:5%">
   <!-- <div class="se-pre-con"></div> -->
   <br>
 <div class="container">
