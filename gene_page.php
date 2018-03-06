@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
 	<script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 	<link rel="icon" href="Home_images/flame.png">
 
@@ -30,40 +31,20 @@ include 'databasecon.php';			#incluimos la página en la que nos conectamos con 
 
 session_start();
 
-if ($_REQUEST) {
-	$_SESSION['gene_page'] = $_REQUEST;
+// print_r($_SESSION['gene_page']);
+
+$rsT_GO = $_SESSION['gene_page']['rsT_GO'];
+$rsT_tissue = $_SESSION['gene_page']['rsT_tissue'];
+$rsT_gene = $_SESSION['gene_page']['rsT_gene'];
+$rsT_snp = $_SESSION['gene_page']['rsT_snp'];
+
+
+$tissue_name = [];
+$tissue_expression = [];
+foreach ($rsT_tissue as &$valor) {
+    array_push($tissue_name, $valor['name']);
+		array_push($tissue_expression, floatval($valor['expression_level']));
 }
-
-
-$sql_GO = "select GO.GO_name, GO.GO_id
-from GO, Gene_Go as gg, Gene as g
-where gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and 
-g.Gene_id like '".$_REQUEST['ref']."'";
-
-
-$sql_tissue = "select t.name, gt.expression_level
-from tissue as t, Gene_Tissue as gt, Gene as g
-where  g.Gene_id = gt.idGene and expression_level > 0 and t.Tissue_id = gt.Tissue_id
-and g.Gene_id like '".$_REQUEST['ref']."'
-order by gt.expression_level desc";
-
-
-$sql_gene = "select g.Gene_id, Chromosome, Start_position, End_position,
-hgnc_name
-from 	Gene as g
-where	g.Gene_id like '".$_REQUEST['ref']."'";
-
-$sql_snp = "select s.idSNP, pos, Main_allele,
-Frequency, Sequence, p_value, beta, predicted_consequences
-from 	SNP as s, Variants as v, Gene as g, Gene_has_SNP as gs
-where	v.idSNP = s.idSNP and g.Gene_id = gs.Gene_Gene_id and
-s.idSNP = gs.SNP_idSNP and g.Gene_id like '".$_REQUEST['ref']."'";
-
-
-$rs_GO = mysqli_query($mysqli, $sql_GO) or print "GO: ".mysqli_error($mysqli);
-$rs_tissue = mysqli_query($mysqli, $sql_tissue) or print "Tissue: ".mysqli_error($mysqli);
-$rs_gene = mysqli_query($mysqli, $sql_gene) or print "Gene: ".mysqli_error($mysqli);
-$rs_snp = mysqli_query($mysqli, $sql_snp) or print "SNP: ".mysqli_error($mysqli);
 
 function transpose($data)
 {
@@ -76,18 +57,7 @@ function transpose($data)
 	return $retData;
 }
 
-$rsT_gene = mysqli_fetch_assoc($rs_gene);
-
-if (is_null($rsT['chr'])){
-	$rsT['chr'] = $rsT_gene['Chromosome'][0];
-}
-
-// Aqui van los datos para ramón 
-
-$array_manhattan = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
-
-$array_manhattan = transpose($array_manhattan);
-
+$manhattan = transpose($rsT_snp);
 
 ?>
 
@@ -150,16 +120,16 @@ $array_manhattan = transpose($array_manhattan);
 
 		</div>
 
-		<h3 style="margin-right: 10px">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
+		<h3 style="margin-left: 7%; margin-top:20px;">Gene: <?php print $rsT_gene['hgnc_name'] ?><span class=""> <a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" ><?php print $_SESSION['gene_page']['ref'] ?></a></span> </h3>
 
 
-		<div class="row" style="margin-top:4%">
+		<div class="row" style="">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
-					<button class="tablinks" onclick="gene_tabs(event, 'London')" id="defaultOpen">Gene attributes</button>
-					<button class="tablinks" onclick="gene_tabs(event, 'Paris')">SNPs</button>
-					<button class="tablinks" onclick="gene_tabs(event, 'Tokyo')">Tissue expression</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'Attr')" id="defaultOpen">Gene attributes</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'SNP')">SNPs</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'Tissue')">Tissue expression</button>
 				</div>
 			</div>
 		</div>
@@ -168,21 +138,20 @@ $array_manhattan = transpose($array_manhattan);
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
-					<div id="London" class="tabcontent">
+					<div id="Attr" class="tabcontent">
 						<h4>Gene attributes</h4>
 
-						<p> Location: 
-							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
-								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
+						<p> Location:
+							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT_gene['Chromosome'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" style="color: #000000">chr: <?php print $rsT_gene['Chromosome']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?></a>
 
-							</a></p>
+							</p>
 
 
 							<div>
-								<p>GO: <?php 
+								<p style="color: #000000">GO: <?php
 								$link_array = [];
-								while ($rsT_Go = mysqli_fetch_assoc($rs_GO)){
-									$link_array[] = "<a href ='http://amigo.geneontology.org/amigo/term/".$rsT_Go['GO_id']."'>".$rsT_Go['GO_name']."</a>";
+								foreach($rsT_GO as $row){
+									$link_array[] = "<a href ='http://amigo.geneontology.org/amigo/term/".$row['GO_id']."'>".$row['GO_name']."</a>";
 								}
 
 								print implode(", ", $link_array);
@@ -192,7 +161,7 @@ $array_manhattan = transpose($array_manhattan);
 
 						</div>
 
-						<div id="Paris" class="tabcontent">
+						<div id="SNP" class="tabcontent">
 							<h4>SNPs</h4>
 							<table border="0" cellspacing="2" cellpadding="4" id="snpTable">
 								<thead>
@@ -208,7 +177,9 @@ $array_manhattan = transpose($array_manhattan);
 								</thead>
 								<tbody>
 
-									<?php while ($rsF = mysqli_fetch_assoc($rs_snp)) {
+									<?php
+
+									foreach ($rsT_snp as $rsF){
 
 										$SNP_id =  $rsF['idSNP'];
 										$Main_allele =  $rsF['Main_allele'];
@@ -220,11 +191,11 @@ $array_manhattan = transpose($array_manhattan);
 
 										?>
 										<tr>
-											<?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
+											<?php  print "<td><a target='_blank' href='SNP_page_processing.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
 											<td> <?php print $position ?> </td>
 											<td> <?php print $Main_allele ?> </td>
 											<td> <?php print $variant_allele ?> </td>
-											<td> <?php print $frequency ?> </td>
+											<td> <?php print 1 - $frequency ?> </td>
 											<td> <?php print $beta ?> </td>
 											<td> <?php print $pval ?> </td>
 										</tr>
@@ -236,44 +207,27 @@ $array_manhattan = transpose($array_manhattan);
 							</table>
 						</div>
 
-						<div id="Tokyo" class="tabcontent">
+						<div id="Tissue" class="tabcontent">
 							<h4>Tissue expression</h4>
-							<table border="0" cellspacing="2" cellpadding="4" id="tissueTable">
-								<thead>
-									<tr>
-										<th>Tissue</th>
-										<th>Expression level (tpm)</th>
-									</tr>
-								</thead>
-								<tbody>
-
-									<?php
-
-									while ($rsT_tissue = mysqli_fetch_assoc($rs_tissue)) {
-
-										?><tr><?php
-										foreach ($rsT_tissue as $field) {
-
-											?>
-
-											<td><?php print $field ?></td>
-
-											<?php
-										}
-										?><tr><?php
-									}
-
-									?>
-
-								</tbody>
-							</table>
-
-						</div></div>
+							<div id="tissue">
+								<script type="text/javascript">
+									var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
+									// document.write(tissue);
+								 </script>
+							</div>
+							<div id="expression">
+								<script type="text/javascript">
+									var expression = <?php echo '["'. implode('", "', $tissue_expression) . '"]'?>;
+									// document.write(expression);
+								 </script>
+							</div>
+							<div id="myDiv">
+								<script src="./bar_plot.js"> </script>
+							</div>
+						</div>
+					</div>
 					</div>
 				</div>
-
-
-
 				<script>
 					function gene_tabs(evt, cityName) {
 						var i, tabcontent, tablinks;
