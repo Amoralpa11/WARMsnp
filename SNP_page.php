@@ -12,10 +12,12 @@
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
 
+
 	<link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
 	<script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 
 
 	<link rel="icon" href="Home_images/flame.png">
