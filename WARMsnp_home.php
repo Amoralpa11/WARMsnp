@@ -10,8 +10,9 @@
 	<link rel="stylesheet" type="text/css" href="scss/custom.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+  <link rel="icon" href="Home_images/flame.png">
 	<title>WARMsnp Home</title>
 </head>
 
@@ -141,27 +142,19 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
         </li>
         <hr>
         <li>
-            Here is a side column where we can write interesting facts:
-          Which is the gene with the most snps,
-          which is the snp with the highest beta,
-          Which is disease with the most snps,
+          On average, one out of 180 children is born with a chromosomal abnormality. The result of the most frequent abnormality is Down's syndrome.
+        <hr>
+        <li>
+          The great majority of cancers, some 90-95% of cases, are due to environmental factors. The remaining 5-10% are due to inherited genetics.
         </li>
         <hr>
         <li>
-            Here is a side column where we can write interesting facts:
-          Which is the gene with the most snps,
-          which is the snp with the highest beta,
-          Which is disease with the most snps,
+          Some women can have a genetic mutation that makes them tetrachromatic, which causes their eyes to have four different types of cone cells, enabling them to see 100 million different colors compared to the roughly one million colors most of us can see.
         </li>
         <hr>
         <li>
-            Here is a side column where we can write interesting facts:
-          Which is the gene with the most snps,
-          which is the snp with the highest beta,
-          Which is disease with the most snps,
+          There is a genetic disease called the Laron syndrome that results in short stature, longer life expectancy, and near immunity to cancer and diabetes.
         </li>
-        <hr>
-        <li>Tea</li>
         <hr>
         <li>Here is a cat:</li>
         <img src="images/cat.png", style="max-width:90%;max-height:100%;">
@@ -247,6 +240,7 @@ function check() {
 
     if ( $("#file_in").val() ) {
       $("#query_not_type_message").hide();
+			okay = 0;
     }
 
     if ( $.isNumeric( $("#minbeta").val() ) || !$("#minbeta").val() ) {
@@ -268,10 +262,6 @@ function check() {
       okay = 1;
     } else {
       $("#perc_doll").hide();
-    }
-
-    if (okay == 0) {
-      $("#input_form").submit();
     }
 
     if ( /(\$|%)/.test( $("#minbeta").val() ) || /(\$|%)/.test( $("#maxpval").val() ) || /(\$|%)/.test( $("#maxfreq").val() ) || /(\$|%)/.test( $("#minfreq").val() ) ) {
