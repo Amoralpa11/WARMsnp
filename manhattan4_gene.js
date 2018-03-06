@@ -1,5 +1,5 @@
 var debug = document.getElementById("sliderAmount");
-// debug.innerHTML = chr;
+debug.innerHTML = locations;
 
 
 function log10_p(x){
@@ -11,7 +11,6 @@ var abs_beta = beta.map(Math.abs)
 var upper_limit = Math.max.apply(null, log10_p_values2) + 2
 var left_limit = Math.min.apply(null, locations) - 500
 var right_limit = Math.max.apply(null, locations) + 500
-var index_current_snp = snps.indexOf(current_snp);
 var indeces = []
 var color_plot = [];
 var text_plot = [];
@@ -43,7 +42,6 @@ for (i in log10_p_values2) {
   }
 }
 
-color_plot[index_current_snp] = '#0066ff';
 
 for (i = 0; i < locations.length; i++){
   text_plot.push("SNP: " + snps[i] + "<br>" + "p-value: " + pvalues[i] + "<br>" + "Beta Value: " + beta[i] + "<br>");

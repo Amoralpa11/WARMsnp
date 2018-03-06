@@ -232,6 +232,7 @@ $chr =  $rsT['chr'];
 					<button class="tablinks" onclick="gene_tabs(event, 'plot')">Manhattan plot</button>
 				</div>
 			</div>
+      <div class="col-md-1"></div>
 		</div>
 
 		<div class="row" style="min-height:62%; margin-bottom:20px">
@@ -303,7 +304,7 @@ $chr =  $rsT['chr'];
 						        <b>Filter by the effect of the SNP:</b></p>
 						        <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
 						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging
-						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br
+						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br>
 						        <br>
 
 						        <b>Enter a new gene or SNP:</b></br>

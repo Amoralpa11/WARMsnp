@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
 	<!-- Required meta tags -->
@@ -16,88 +15,16 @@
 	<link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
 	<script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
-		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 
 	<link rel="icon" href="Home_images/flame.png">
 
-	<title>Gene results</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-	/*body {font-family: Arial;}*/
-
-	/* Style the tab */
-	.tab {
-		overflow: hidden;
-		border: 1px solid #ccc;
-		background-color: #f1f1f1;
-	}
-
-	/* Style the buttons inside the tab */
-	.tab button {
-		background-color: inherit;
-		float: left;
-		border: none;
-		outline: none;
-		cursor: pointer;
-		padding: 14px 16px;
-		transition: 0.3s;
-		font-size: 17px;
-	}
-
-	/* Change background color of buttons on hover */
-	.tab button:hover {
-		background-color: #ddd;
-	}
-
-	/* Create an active/current tablink class */
-	.tab button.active {
-		background-color: #ccc;
-	}
-
-	/* Style the tab content */
-	.tabcontent {
-		display: none;
-		padding: 6px 12px;
-		border: 1px solid #ccc;
-		border-top: none;
-	}
-</style>
+	<title>SNP results</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
-	<div class="container">
-		<a class="navbar-brand" href="WARMsnp_home.php">
-			<img src="Home_images/flame.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-			WARMsnp
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<a class="nav-link" href="#">About<span class="sr-only">(About)</span></a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">FAQ</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="WARMsnp_index.php">Contact</a>
-				</li>
-			</ul>
-			<span class="navbar-text">
-  			We do the search for you!
-  		</span>
-		</div>
-	</div>
-
-</nav>
 
 <?php
-// include "navbar.html";				#incluimos la barra de navegación y el head de la pagina
+include "navbar.html";				#incluimos la barra de navegación y el head de la pagina
 include 'databasecon.php';			#incluimos la página en la que nos conectamos con la base de datos
 
 session_start();
@@ -194,33 +121,88 @@ foreach ($pvalues_pre as &$p){
 $chr =  $rsT['chr'];
 ?>
 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+	body {font-family: Arial;}
+
+	/* Style the tab */
+	.tab {
+		overflow: hidden;
+		border: 1px solid #ccc;
+		background-color: #f1f1f1;
+	}
+
+	/* Style the buttons inside the tab */
+	.tab button {
+		background-color: inherit;
+		float: left;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		padding: 14px 16px;
+		transition: 0.3s;
+		font-size: 17px;
+	}
+
+	/* Change background color of buttons on hover */
+	.tab button:hover {
+		background-color: #ddd;
+	}
+
+	/* Create an active/current tablink class */
+	.tab button.active {
+		background-color: #ccc;
+	}
+
+	/* Style the tab content */
+	.tabcontent {
+		display: none;
+		padding: 6px 12px;
+		border: 1px solid #ccc;
+		border-top: none;
+	}
+</style>
+</head>
+
+
+<body>
 	<div id="loader" class="loader" style="width:100%; height:100%; background-color:white; margin:0; text-align: center; position: fixed; top: 0px;">
-		<div style="position:absolute;top:50%; left:50%; transform: translate(-50%, -50%);">
-			<img src="images/ajax-loader.gif" alt="Be patient..." style="vertical-align: middle">
-		</div>
-		<div style="position:absolute;top:55%; left:50%; transform: translate(-50%, -50%);">Hey there, we are processing you request, the results will be displayed soon.</div>
-		<div id="counter" style="position:absolute;top:60%; left:50%; transform: translate(-50%, -50%);">The page is loading, please wait...</div>
-	</div>
-
-	<h3 style="margin-right: 10px">Gene:</h3> <h3> <?php print $rsT_gene['hgnc_name'] ?> <a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?> </a> </h3>
-
-	<div class="row" style="margin-top:4%">
-		<div class="col-md-1"></div>
-		<div class="col-md-10">
-			<div class="tab">
-				<button class="tablinks" onclick="gene_tabs(event, 'Attribute')" id="defaultOpen">Gene attributes</button>
-				<button class="tablinks" onclick="gene_tabs(event, 'SNP')">SNPs</button>
-				<button class="tablinks" onclick="gene_tabs(event, 'Tissue')">Tissue expression</button>
+		<!-- <div id="loader" class="loader" style="width:100%;height:100%;background-color:white;margin:0;position:fixed;text-align: center;vertical-align: middle;position: relative;top: 50%;"> -->
+			<div style="position:absolute;top:50%; left:50%; transform: translate(-50%, -50%);">
+				<img src="images/ajax-loader.gif" alt="Be patient..." style="vertical-align: middle">
 			</div>
+			<div style="position:absolute;top:55%; left:50%; transform: translate(-50%, -50%);">Hey there, we are processing you request, the results will be displayed soon.</div>
+			<div id="counter" style="position:absolute;top:60%; left:50%; transform: translate(-50%, -50%);">The page is loading, please wait...</div>
+
 		</div>
-	<div class="col-md-1"></div>
-	</div>
-	<div class="row" style="min-height:62%; margin-bottom:20px">
+
+		<br>
+		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> SNP: <a href= "<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?> </a> </h3>
+		<div class="row" style="margin-top:2%">
 			<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<div class="tab">
-						<div id="Attribute" class="tabcontent">
-							<h4>Gene attributes</h4>
+			<div class="col-md-10">
+				<div class="tab">
+					<button class="tablinks" onclick="gene_tabs(event, 'Attribute')" id="defaultOpen">Gene attributes</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'plot')">Manhattan plot</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'SNP')">SNPs</button>
+					<button class="tablinks" onclick="gene_tabs(event, 'Tissue')">Tissue expression</button>
+				</div>
+			</div>
+      <div class="col-md-1"></div>
+		</div>
+
+		<div class="row" style="min-height:62%; margin-bottom:20px">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<div class="tab">
+					<div id="Attribute" class="tabcontent">
+						<header class="w3-container" style="padding-top: 22px;"><h4><b><i class="fa fa-eye"></i> Gene attributes</h4></b>
+						</div>
 							<p> Location:
 							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
 								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
@@ -234,6 +216,8 @@ $chr =  $rsT['chr'];
 								print implode(", ", $link_array);
 								?></p>
 							</div>
+						<div id="plot" class="tabcontent">
+							<h4>Manhattan plot</h4>
 							<div class="container-fluid">
 							<div class="col-md-10">
 								<div class="row">
@@ -257,7 +241,7 @@ $chr =  $rsT['chr'];
 						        <input type="submit" value="Submit">
 						      </form>
 						    </div>
-						      <div class="col-md-6">
+						      <div class="col-md-5">
 										<div id="location">
 											<script type="text/javascript">
 												var locations = <?php echo '["'. implode('", "', $locations) . '"]'?>;
@@ -292,89 +276,86 @@ $chr =  $rsT['chr'];
 						    </div>
 							</div>
 						</div>
-					</div>
-					<div id="SNP" class="tabcontent">
-						<h4>SNPs</h4>
-						<table border="0" cellspacing="2" cellpadding="4" id="snpTable">
-							<thead>
-								<tr>
-									<th>SNP Id</th>
-									<th>Position</th>
-									<th>Main allele</th>
-									<th>Mutation</th>
-									<th>Frequency</th>
-									<th>Beta</th>
-									<th>p value</th>
-								</tr>
-							</thead>
-							<tbody>
-
-								<?php
-
-								foreach ($rsT_snp as $rsF){
-
-									$SNP_id =  $rsF['idSNP'];
-									$Main_allele =  $rsF['Main_allele'];
-									$variant_allele =  $rsF['Sequence'];
-									$position = $rsF['pos'];
-									$frequency = $rsF['Frequency'];
-									$beta = $rsF['beta'];
-									$pval = $rsF['p_value'];
-
-									?>
+						</div>
+						<div id="SNP" class="tabcontent">
+							<h4>SNPs</h4>
+							<table border="0" cellspacing="2" cellpadding="4" id="snpTable">
+								<thead>
 									<tr>
-										<?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
-										<td> <?php print $position ?> </td>
-										<td> <?php print $Main_allele ?> </td>
-										<td> <?php print $variant_allele ?> </td>
-										<td> <?php print $frequency ?> </td>
-										<td> <?php print $beta ?> </td>
-										<td> <?php print $pval ?> </td>
+										<th>SNP Id</th>
+										<th>Position</th>
+										<th>Main allele</th>
+										<th>Mutation</th>
+										<th>Frequency</th>
+										<th>Beta</th>
+										<th>p value</th>
 									</tr>
-									<?php
-								}
-								?>
-							</tbody>
-						</table>
-					</div>
+								</thead>
+								<tbody>
 
-					<div id="Tissue" class="tabcontent">
-						<h4>Tissue expression</h4>
-						<div id="tissue">
-							<script type="text/javascript">
-								var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
-							 </script>
+									<?php
+
+									foreach ($rsT_snp as $rsF){
+
+										$SNP_id =  $rsF['idSNP'];
+										$Main_allele =  $rsF['Main_allele'];
+										$variant_allele =  $rsF['Sequence'];
+										$position = $rsF['pos'];
+										$frequency = $rsF['Frequency'];
+										$beta = $rsF['beta'];
+										$pval = $rsF['p_value'];
+
+										?>
+										<tr>
+											<?php  print "<td><a target='_blank' href='SNP_page.php?ref=$SNP_id'>   $SNP_id  </a></td>" ?>
+											<td> <?php print $position ?> </td>
+											<td> <?php print $Main_allele ?> </td>
+											<td> <?php print $variant_allele ?> </td>
+											<td> <?php print $frequency ?> </td>
+											<td> <?php print $beta ?> </td>
+											<td> <?php print $pval ?> </td>
+										</tr>
+										<?php
+									}
+									?>
+								</tbody>
+							</table>
 						</div>
-						<div id="expression">
-							<script type="text/javascript">
-								var expression = <?php echo '["'. implode('", "', $tissue_expression) . '"]'?>;
-							 </script>
-						</div>
-						<div id="myDiv">
-							<script src="./bar_plot.js"> </script>
+						<div id="Tissue" class="tabcontent">
+							<h4>Tissue expression</h4>
+							<div id="tissue">
+								<script type="text/javascript">
+									var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
+								 </script>
+							</div>
+							<div id="expression">
+								<script type="text/javascript">
+									var expression = <?php echo '["'. implode('", "', $tissue_expression) . '"]'?>;
+								 </script>
+							</div>
+							<div id="myDiv">
+								<script src="./bar_plot.js"> </script>
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="col-md-1"></div>
 			</div>
-			<div class="col-md-1"></div>
-		</div>
+				<script>
+					function gene_tabs(evt, cityName) {
+						var i, tabcontent, tablinks;
+						tabcontent = document.getElementsByClassName("tabcontent");
+						for (i = 0; i < tabcontent.length; i++) {
+							tabcontent[i].style.display = "none";
+						}
+						tablinks = document.getElementsByClassName("tablinks");
+						for (i = 0; i < tablinks.length; i++) {
+							tablinks[i].className = tablinks[i].className.replace(" active", "");
+						}
+						document.getElementById(cityName).style.display = "block";
+						evt.currentTarget.className += " active";
+					}
 
-
-
-<script>
-	function gene_tabs(evt, cityName) {
-		var i, tabcontent, tablinks;
-		tabcontent = document.getElementsByClassName("tabcontent");
-		for (i = 0; i < tabcontent.length; i++) {
-			tabcontent[i].style.display = "none";
-		}
-		tablinks = document.getElementsByClassName("tablinks");
-		for (i = 0; i < tablinks.length; i++) {
-			tablinks[i].className = tablinks[i].className.replace(" active", "");
-		}
-		document.getElementById(cityName).style.display = "block";
-		evt.currentTarget.className += " active";
-	}
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 </script>
