@@ -40,7 +40,7 @@ if ($_FILES['uploadFile']['name']) {
 snp ids to process them in a different way*/
 $query_array = preg_split("/[\s]+/", trim($_REQUEST['query']));
 
-print_r($query_array);
+// print_r($query_array);
 
 foreach ($query_array as $ref){
   if (strtoupper(substr( $ref, 0, 2 )) === "RS"){
@@ -136,7 +136,7 @@ if ($snps_without_gene) {
   where
   v.idSNP = s.idSNP and
   ". join(" AND ", $nogene_ANDconds);
-  
+
   $rs_no_genes = mysqli_query($mysqli, $sql_with_no_genes) or "rs_no_genesprint". mysqli_error($mysqli)."<br>";
 
 }
