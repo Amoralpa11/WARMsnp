@@ -192,7 +192,7 @@ foreach ($rst_gene as $row) {
     if (!is_array($rst[$row['idSNP']]['Gene_id'])){
       $rst[$row['idSNP']]['Gene_id'] = [$rst[$row['idSNP']]['Gene_id']];
     }
-    $rst[$row['idSNP']]['Gene_id'][] = $row['idSNP']['Gene_id'];
+    $rst[$row['idSNP']]['Gene_id'][] = $row['Gene_id'];
   }
 
 }
