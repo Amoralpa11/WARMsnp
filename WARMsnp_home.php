@@ -48,7 +48,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
 
     <form id="input_form" name="input" action="SNP_out.php" method="post" enctype="multipart/form-data">
       <div style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2">
-        <h3 style="margin-left:15px; margin-top:5px">Main search</h3>
+        <h3 style="margin-left:15px; margin-top:8px">Main search</h3>
         <p style="margin-left:25px; margin-top:5px">
           <em style="size:59">Enter gene ensembl id or snp id:</em>
         </p>

@@ -51,10 +51,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: #a9c056;
-  text-decoration: none;
-}
 /* -------------------------------- 
 
 Main components 
@@ -65,7 +61,7 @@ header {
   height: 180px;
   line-height: 180px;
   text-align: center;
-  background-color: #3d444f;
+  background-color: #a9c056;
 }
 header h1 {
   color: #ffffff;
@@ -90,14 +86,12 @@ header h1 {
   width: 90%;
   max-width: 1024px;
   margin: 2em auto;
-  margin-top: 20px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 .cd-faq:after {
   content: "";
   display: table;
   clear: both;
-  margin-top: 20px;
 }
 @media only screen and (min-width: 768px) {
   .cd-faq {
@@ -125,7 +119,6 @@ header h1 {
 .cd-faq-categories a::before, .cd-faq-categories a::after {
   /* plus icon on the right */
   position: absolute;
-  margin-top: 10px;
   top: 50%;
   right: 16px;
   display: inline-block;
