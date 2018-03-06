@@ -196,7 +196,7 @@ $chr =  $rsT['chr'];
 		</div>
 
 		<br>
-		<h3 style="margin-left: 7%"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> Gene: <a href= "<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?>" </a> </h3>
+		<h3 style="margin-left: 7%"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> Gene: <a href= "<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?> </a> </h3>
 		<div class="row" style="margin-top:2%">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
