@@ -30,13 +30,14 @@ $ref = $_REQUEST['ref'];
 
  if (strtoupper(substr( $ref, 0, 2 )) === "RS"){
 	$ref_type = "SNP";
-} else if (strtoupper(substr( $ref, 0, 2 )) === "ENS"){
+} else if (strtoupper(substr( $ref, 0, 3 )) === "ENS"){
 	$ref_type = "gene";
 }
 
  ?>
 
-<div style="height: 100%"></div>
+<h1 style="align-self: center; margin-top: 25px"><center><?php print "The $ref_type $ref <br> is not in our database" ?></center></h1>
+
 
 
 <footer 
