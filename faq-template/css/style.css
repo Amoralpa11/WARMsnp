@@ -16,7 +16,7 @@ Primary style
 body {
   font-size: 100%;
   font-family: "Open Sans", sans-serif;
-  color: #4e5359;
+  color: #6a7a32;
   background-color: #f3f3f5;
 }
 body::after {
@@ -47,12 +47,12 @@ body.cd-overlay::after {
 }
 
 a {
-  color: #a9c056;
+  color: #6a7a32;
   text-decoration: none;
 }
 
 a:hover {
-  color: #a9c056;
+  color: #6a7a32;
   text-decoration: none;
 }
 /* -------------------------------- 
@@ -349,7 +349,7 @@ header h1 {
   font-size: 12px;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #bbbbc7;
+  color: #6a7a32;
 }
 .no-js .cd-faq-group {
   display: block;
@@ -444,7 +444,7 @@ header h1 {
   font-size: 14px;
   font-size: 0.875rem;
   line-height: 1.4;
-  color: #6c7d8e;
+  color: #6a7a32;
 }
 @media only screen and (min-width: 768px) {
   .cd-faq-content {
