@@ -43,7 +43,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
   <div class="row">
     <div class="col-md-8">
     <h2>WARMsnp</h2>
-    <p style="text-align: justify; text-justify: inter-word;">WARMsnp is a web app designed by and for researchers. It is aimed to deliver SNP enriched information, it allows you to get SNP related information consolidated from several other web sites.</p>
+    <p style="text-align: justify; text-justify: inter-word;">WARMsnp is a web app designed by and for researchers. It is aimed to deliver SNP enriched information, it allows you to get SNP related information consolidated from several other web sites. The disease-SNP information is provided by the <a href="http://www.cardiogramplusc4d.org/">Cardiogram database</a> which has the association between the SNPs and <abbr title="Myocardial infarction">MI</abbr> and <abbr title="Coronary Artery Disease">CAD</abbr>.</p>
 
     <form id="input_form" name="input" action="SNP_out.php" method="post" enctype="multipart/form-data">
       <div style="border: 1px dashed; border-radius:25px; background-color:#f2f2f2">

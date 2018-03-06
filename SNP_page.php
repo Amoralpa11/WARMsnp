@@ -292,10 +292,9 @@ $chr =  $rsT['chr'];
 						     <div class="col-md-3" style="background-color:#F0F0F0;">
 						      <form id="frm1">
 										<div align="right"style="margin-bottom:5%;">
-											<img src="images/legend_3_dots.png" alt="dot_col" style="height:10%; width:49%"><br>
+											<img src="images/legend_3_dots.png" alt="dot_col" style="height:10%; width:49%">
 											<img src="images/legend_size_dots.png" alt="dot_col" style="height:3.5%; width:49%">
 										</div>
-
                     <h5>Advanced search:</h5>
 						        <b>Filter by P-value</b> <br>
 										<div class="row">
