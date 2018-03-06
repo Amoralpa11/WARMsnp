@@ -84,7 +84,11 @@ function transpose($data)
 	return $retData;
 }
 
-$rsT_gene = mysqli_fetch_assoc($rs_gene);
+
+
+if(!$rsT_gene = mysqli_fetch_assoc($rs_gene)){
+  header('Location: not_found.php?ref='.$_REQUEST['ref']);
+}
 
 if (is_null($rsT['chr'])){
 	$rsT['chr'] = $rsT_gene['Chromosome'][0];

@@ -38,7 +38,9 @@ if ($_FILES['uploadFile']['name']) {
 
 /*We are going to segregate the user's query in gene ids and
 snp ids to process them in a different way*/
-$query_array = explode("/\s+/", $_REQUEST['query']);
+$query_array = preg_split("/[\s]+/", trim($_REQUEST['query']));
+
+print_r($query_array);
 
 foreach ($query_array as $ref){
   if (strtoupper(substr( $ref, 0, 2 )) === "RS"){
