@@ -1,5 +1,5 @@
-var debug = document.getElementById("sliderAmount");
-debug.innerHTML = locations;
+// var debug = document.getElementById("sliderAmount");
+// debug.innerHTML = locations;
 
 
 function log10_p(x){

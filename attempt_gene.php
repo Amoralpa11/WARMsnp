@@ -220,9 +220,9 @@ $chr =  $rsT['chr'];
 						<div id="plot" class="tabcontent">
 							<h4>Manhattan plot</h4><br>
 							<div class="container-fluid">
-							<div class="col-md-10">
+							<div class="col-md-13">
 								<div class="row">
-						     <div class="col-md-4" style="background-color:#F0F0F0;">
+						     <div class="col-md-3" style="background-color:#F0F0F0;">
 						      <form id="frm1">
 										<h5>Advanced search:</h5>
 						        <b>Filter by P-value</b> <br>
@@ -243,7 +243,7 @@ $chr =  $rsT['chr'];
 						        <input type="submit" value="Submit">
 						      </form>
 						    </div>
-						      <div class="col-md-6">
+						      <div class="col-md-9">
 										<div id="location">
 											<script type="text/javascript">
 												var locations = <?php echo '["'. implode('", "', $locations) . '"]'?>;
