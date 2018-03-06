@@ -220,7 +220,7 @@ $chr =  $rsT['chr'];
 						<div id="plot" class="tabcontent">
 							<h4>Manhattan plot</h4><br>
 							<div class="container-fluid">
-							<div class="col-md-13">
+							<div class="col-md-12">
 								<div class="row">
 						     <div class="col-md-3" style="background-color:#F0F0F0;">
 						      <form id="frm1">
@@ -231,19 +231,17 @@ $chr =  $rsT['chr'];
 							        <br>
 							        <div id="sliderAmount"></div>
 										</div>
-
 						        <b>Filter by the effect of the SNP:</b></p>
 						        <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
-						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging
+						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging</br>
 						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br>
 						        <br>
-
 						        <b>Enter a new gene or SNP:</b></br>
 						        <input type="text" name="snp">
 						        <input type="submit" value="Submit">
 						      </form>
 						    </div>
-						      <div class="col-md-9">
+						      <div>
 										<div id="location">
 											<script type="text/javascript">
 												var locations = <?php echo '["'. implode('", "', $locations) . '"]'?>;
@@ -343,7 +341,6 @@ $chr =  $rsT['chr'];
 						</div>
 					</div>
 				</div>
-				<div class="col-md-1"></div>
 			</div>
 
 <script>

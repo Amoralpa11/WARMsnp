@@ -292,8 +292,9 @@ $chr =  $rsT['chr'];
 							<div class="container-fluid">
 							<div class="col-md-13">
 								<div class="row">
-						     <div class="col-md-4" style="background-color:#F0F0F0;">
+						     <div class="col-md-3" style="background-color:#F0F0F0;">
 						      <form id="frm1">
+                    <h5>Advanced search:</h5>
 						        <b>Filter by P-value</b> <br>
 										<div class="row">
 							        <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" step=0.01 id="pvalue" onchange="updateSlider()">
@@ -303,8 +304,8 @@ $chr =  $rsT['chr'];
 
 						        <b>Filter by the effect of the SNP:</b></p>
 						        <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
-						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging
-						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br>
+						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging<br>
+						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br>
 						        <br>
 
 						        <b>Enter a new gene or SNP:</b></br>
@@ -312,7 +313,7 @@ $chr =  $rsT['chr'];
 						        <input type="submit" value="Submit">
 						      </form>
 						    </div>
-						      <div class="col-md-8">
+						      <div>
 										<div id="location">
 											<script type="text/javascript">
 												var locations = <?php echo '["'. implode('", "', $locations) . '"]'?>;
