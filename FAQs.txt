@@ -1,0 +1,16 @@
+- What is an SNP?
+- How to interpret a Manhattan plot? 
+In our Manhattan plot, each dot is an SNP. Its horizontal position represents its position in the chromosome indicated in megabases. The vertical axis 
+- How to use the Manhattan plot.
+- Why does an SNP not have a gene? 
+- Which format must have the input?
+- What is the beta value?
+- What is the p-value?
+- What is the variant frequency? 
+- What format must have the input file? 
+- Why an SNP has more than one gene? 
+- What are the GO attributes? 
+- What are the units of the tissue expression (TPM)?
+- How do I cite WARMsnp?
+- How to get the SNPs inside a gene.
+- Finding Chromosomal coordinates for an SNP.
