@@ -48,7 +48,7 @@ for (i = 0; i < locations.length; i++){
 };
 
 
-var data = {
+var data_man = {
   x: locations,
   y: log10_p_values2,
   mode: 'markers',
@@ -68,7 +68,7 @@ var data = {
 };
 
 
-var layout = {
+var layout_man = {
   hovermode: 'closest',
   xaxis: {
     title: 'Chromosome '.concat(chr,' (Mb)'),
@@ -136,11 +136,11 @@ var layout = {
 
 
 var myPlot = document.getElementById('myMan');
-Plotly.newPlot(myPlot, [data], layout);
+Plotly.newPlot(myPlot, [data_man], layout_man);
 
-myPlot.on('plotly_click', function(data){
+myPlot.on('plotly_click', function(data_man){
   var link = "SNP_page.php?ref="
-  window.open(link.concat(snps[data.points[0].pointNumber]), '_blank');
+  window.open(link.concat(snps[data_man.points[0].pointNumber]), '_blank');
 });
 
 
@@ -154,7 +154,7 @@ function updateSlider() {
   log10_thresh = -1 * Math.log10(thresh);
   var slider_value = document.getElementById("sliderAmount");
   slider_value.innerHTML = thresh
-  var data = {
+  var data_man = {
   x: locations,
   y: log10_p_values2,
   mode: 'markers',
@@ -173,10 +173,10 @@ function updateSlider() {
   }]
 };
   var myPlot = document.getElementById('myMan');
-  Plotly.newPlot(myPlot, [data], layout);
-  myPlot.on('plotly_click', function(data){
+  Plotly.newPlot(myPlot, [data_man], layout_man);
+  myPlot.on('plotly_click', function(data_man){
     var link = "SNP_page.php?ref=" ;
-    window.open(link.concat(snps[data.points[0].pointNumber]), '_blank');
+    window.open(link.concat(snps[data_man.points[0].pointNumber]), '_blank');
   });
 };
 
@@ -223,7 +223,7 @@ function SNPeffect(effect) {
     return text_plot[ind];
   });
 
-  var data = {
+  var data_man = {
   x: locations_selected,
   y: p_values_selected,
   mode: 'markers',
@@ -242,10 +242,10 @@ function SNPeffect(effect) {
   }]
 };
 var myPlot = document.getElementById('myMan');
-Plotly.newPlot(myPlot, [data], layout);
-myPlot.on('plotly_click', function(data){
+Plotly.newPlot(myPlot, [data_man], layout_man);
+myPlot.on('plotly_click', function(data_man){
   var link = "SNP_page.php?ref=" ;
-  window.open(link.concat(snps[data.points[0].pointNumber]), '_blank');
+  window.open(link.concat(snps[data_man.points[0].pointNumber]), '_blank');
   });
 };
 
