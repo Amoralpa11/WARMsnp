@@ -12,12 +12,10 @@
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
 
-
 	<link rel="stylesheet" href="DataTable/jquery.dataTables.min.css"/>
 	<script type="text/javascript" src="DataTable/jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="DataTable/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
 
 
 	<link rel="icon" href="Home_images/flame.png">
@@ -39,6 +37,18 @@ $sql_disease = "select d.Name
 from Disease as d, SNP as s, SNP_disease as sd
 where sd.idDisease = d.idDisease and sd.idSNP = s.idSNP and s.idSNP like '".$_REQUEST['ref']."'";
 
+$sql_GO = "select GO.GO_name
+from GO, Gene_Go as gg, Gene as g, SNP as s, Gene_has_SNP as gs
+where gg.GO_id = GO.GO_id and gg.Gene_id = g.Gene_id and
+g.Gene_id = gs.Gene_Gene_id and s.idSNP = gs.SNP_idSNP and  s.idSNP like '".$_REQUEST['ref']."'";
+
+$sql_tissue = "select t.name, gt.expression_level
+from tissue as t, Gene_Tissue as gt, Gene as g, SNP as s, Gene_has_SNP as gs
+where  g.Gene_id = gt.idGene and t.Tissue_id = gt.Tissue_id and
+g.Gene_id = gs.Gene_Gene_id and s.idSNP = gs.SNP_idSNP and
+s.idSNP like '".$_REQUEST['ref']."'";
+
+
 $sql_gene = "select g.Gene_id, Chromosome, Start_position, End_position,
 			hgnc_name
 from 	Gene as g, Gene_has_SNP as gs,
@@ -51,6 +61,8 @@ from 	SNP as s, Variants as v
 where	v.idSNP = s.idSNP and s.idSNP like '".$_REQUEST['ref']."'";
 
 $rs_disease = mysqli_query($mysqli, $sql_disease) or print mysqli_error($mysqli);
+$rs_GO = mysqli_query($mysqli, $sql_GO) or print mysqli_error($mysqli);
+$rs_tissue = mysqli_query($mysqli, $sql_tissue) or print mysqli_error($mysqli);
 $rs_gene = mysqli_query($mysqli, $sql_gene) or print mysqli_error($mysqli);
 $rs = mysqli_query($mysqli, $sql) or print mysqli_error($mysqli);
 
@@ -70,9 +82,7 @@ function transpose($data)
 $rsT_disease = mysqli_fetch_all($rs_disease,MYSQLI_ASSOC);
 
 
-if(!$rsT = mysqli_fetch_assoc($rs)){
-  header('Location: not_found.php?ref='.$_REQUEST['ref']);
-}
+$rsT = mysqli_fetch_assoc($rs);
 
 $rsT_gene = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
 
@@ -124,7 +134,6 @@ function cmp($a, $b)
 usort($rsT_plot,"cmp");
 
 $rsT_plot = transpose($rsT_plot);
-
 
 $locations_pre = $rsT_plot['pos'];
 $locations = [];
@@ -223,7 +232,6 @@ $chr =  $rsT['chr'];
 					<button class="tablinks" onclick="gene_tabs(event, 'plot')">Manhattan plot</button>
 				</div>
 			</div>
-      <div class="col-md-1"></div>
 		</div>
 
 		<div class="row" style="min-height:62%; margin-bottom:20px">
@@ -283,9 +291,8 @@ $chr =  $rsT['chr'];
 							<div class="container-fluid">
 							<div class="col-md-13">
 								<div class="row">
-						     <div class="col-md-3" style="background-color:#F0F0F0;">
+						     <div class="col-md-4" style="background-color:#F0F0F0;">
 						      <form id="frm1">
-                    <h5>Advanced search:</h5>
 						        <b>Filter by P-value</b> <br>
 										<div class="row">
 							        <input type="range" name="pvalue" min="0" max="1" value="1" class="slider" step=0.01 id="pvalue" onchange="updateSlider()">
@@ -295,8 +302,8 @@ $chr =  $rsT['chr'];
 
 						        <b>Filter by the effect of the SNP:</b></p>
 						        <input type="radio" name="snpeffect" value="protective" onclick='SNPeffect("protective")' id="protective"> Protective
-						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging<br>
-						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br>
+						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("damaging")' id="damaging"> Damaging
+						        <input type="radio" name="snpeffect" value="damaging" onclick='SNPeffect("both")' id="both"> Both<br></br
 						        <br>
 
 						        <b>Enter a new gene or SNP:</b></br>
@@ -304,7 +311,7 @@ $chr =  $rsT['chr'];
 						        <input type="submit" value="Submit">
 						      </form>
 						    </div>
-						      <div>
+						      <div class="col-md-8">
 										<div id="location">
 											<script type="text/javascript">
 												var locations = <?php echo '["'. implode('", "', $locations) . '"]'?>;

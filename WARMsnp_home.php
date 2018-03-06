@@ -52,7 +52,7 @@ if (isset($_REQUEST['new']) or !isset($_SESSION['queryData'])) {
         <p style="margin-left:25px; margin-top:5px">
           <em style="size:59">Enter gene ensembl id or snp id:</em>
         </p>
-        <textarea id="text_in" name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 35px;"><?php print $_SESSION["queryData"]["query"]?></textarea>
+        <textarea id="text_in" name="query" cols="40" rows="3" placeholder="ensemble id or snp id" style="margin-left: 35px;"><?php print $_SESSION["queryData"]["query"]?></textarea><br>
         <span id="query_not_type_message" class="error" style="color:#ff0000; display:none; margin-left: 2%; margin-bottom:30px;">* Input text must be a a gene ensembl id (e.g. ENS0001 or a snp id (e.g. rs0001)</span><br>
         <span id="perc_doll" class="error" style="color:#ff0000; display:none;">* Input text or file can't contain $ or % signs.</span>
         <br><input id="file_in"name="uploadFile" type="file" style="margin-left:35px; margin-bottom:15px">
@@ -234,6 +234,7 @@ function check() {
         $("#query_not_type_message").hide();
       } else {
         $("#query_not_type_message").show();
+				okay = 1;
       }
     }
 

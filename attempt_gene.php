@@ -8,7 +8,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	<link rel="stylesheet" type="text/css" href="scss/custom.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
@@ -21,7 +20,7 @@
 
 	<link rel="icon" href="Home_images/flame.png">
 
-	<title>Gene results</title>
+	<title>SNP results</title>
 </head>
 
 <?php
@@ -85,11 +84,7 @@ function transpose($data)
 	return $retData;
 }
 
-
-
-if(!$rsT_gene = mysqli_fetch_assoc($rs_gene)){
-  header('Location: not_found.php?ref='.$_REQUEST['ref']);
-}
+$rsT_gene = mysqli_fetch_assoc($rs_gene);
 
 if (is_null($rsT['chr'])){
 	$rsT['chr'] = $rsT_gene['Chromosome'][0];
@@ -201,7 +196,7 @@ $chr =  $rsT['chr'];
       <div class="col-md-1"></div>
 		</div>
 
-		<div class="row" style="min-height:40%; margin-bottom:20px">
+		<div class="row" style="min-height:62%; margin-bottom:20px">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
@@ -328,6 +323,7 @@ $chr =  $rsT['chr'];
 						<div id="Tissue" class="tabcontent">
 						  <h4>Tissue expression</h4>
 						  <div class="container-fluid">
+						  <div class="col-md-5">
 						      <div id="tissue">
 						        <script type="text/javascript">
 						          var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
@@ -339,12 +335,10 @@ $chr =  $rsT['chr'];
 						         </script>
 						        </div>
 						        <div id="myBar"><!-- Plotly chart will be drawn inside this DIV --></div>
-						          <script src="./bar_plot_resize.js"> </script>
+						          <script src="./bar_plot.js"> </script>
 						    </div>
-							</div>
+						  </div>
 						</div>
-
-
 					</div>
 				</div>
 			</div>
