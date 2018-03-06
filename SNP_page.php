@@ -68,7 +68,9 @@ function transpose($data)
 $rsT_disease = mysqli_fetch_all($rs_disease,MYSQLI_ASSOC);
 
 
-$rsT = mysqli_fetch_assoc($rs);
+if(!$rsT = mysqli_fetch_assoc($rs)){
+  header('Location: not_found.php?ref='.$_REQUEST['ref']);
+}
 
 $rsT_gene = mysqli_fetch_all($rs_gene,MYSQLI_ASSOC);
 
