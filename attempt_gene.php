@@ -182,7 +182,7 @@ $chr =  $rsT['chr'];
 		</div>
 
 		<br>
-		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> SNP: <a href= "<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?> </a> </h3>
+		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> SNP: <a href= "<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position']; ?>" > <?php print $_SESSION['gene_page']['ref'] ?>" </a> </h3>
 		<div class="row" style="margin-top:2%">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
@@ -202,7 +202,6 @@ $chr =  $rsT['chr'];
 				<div class="tab">
 					<div id="Attribute" class="tabcontent">
 						<header class="w3-container" style="padding-top: 22px;"><h4><b><i class="fa fa-eye"></i> Gene attributes</h4></b>
-						</div>
 							<p> Location:
 							<a href="<?php print "https://www.ensembl.org/Homo_sapiens/Location/View?db=core;g=".$_SESSION['gene_page']['ref'].";r=".$rsT['chr'].":".$rsT_gene['Start_position']."-".$rsT_gene['End_position'] ?>" >
 								chr: <?php print $rsT['chr']." : ".$rsT_gene['Start_position']." : ".$rsT_gene['End_position']?>
@@ -216,6 +215,8 @@ $chr =  $rsT['chr'];
 								print implode(", ", $link_array);
 								?></p>
 							</div>
+						</div>
+
 						<div id="plot" class="tabcontent">
 							<h4>Manhattan plot</h4>
 							<div class="container-fluid">
@@ -241,7 +242,7 @@ $chr =  $rsT['chr'];
 						        <input type="submit" value="Submit">
 						      </form>
 						    </div>
-						      <div class="col-md-5">
+						      <div class="col-md-6">
 										<div id="location">
 											<script type="text/javascript">
 												var locations = <?php echo '["'. implode('", "', $locations) . '"]'?>;
@@ -269,9 +270,8 @@ $chr =  $rsT['chr'];
 												var chr = <?php echo json_encode($chr);  ?>;
 											 </script>
 										</div>
-						        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV -->
+						        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
 						          <script src="./manhattan4_gene.js"> </script>
-										</div>
 						      </div>
 						    </div>
 							</div>
@@ -322,39 +322,43 @@ $chr =  $rsT['chr'];
 							</table>
 						</div>
 						<div id="Tissue" class="tabcontent">
-							<h4>Tissue expression</h4>
-							<div id="tissue">
-								<script type="text/javascript">
-									var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
-								 </script>
-							</div>
-							<div id="expression">
-								<script type="text/javascript">
-									var expression = <?php echo '["'. implode('", "', $tissue_expression) . '"]'?>;
-								 </script>
-							</div>
-							<div id="myDiv">
-								<script src="./bar_plot.js"> </script>
-							</div>
+						  <h4>Tissue expression</h4>
+						  <div class="container-fluid">
+						  <div class="col-md-5">
+						      <div id="tissue">
+						        <script type="text/javascript">
+						          var tissue = <?php echo '["'. implode('", "', $tissue_name) . '"]'?>;
+						         </script>
+						      </div>
+						      <div id="expression">
+						        <script type="text/javascript">
+						          var expression = <?php echo '["'. implode('", "', $tissue_expression) . '"]'?>;
+						         </script>
+						        </div>
+						        <div id="myDiv3"></div>
+						          <script src="./bar_plot.js"> </script>
+						    </div>
+						  </div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-1"></div>
 			</div>
-				<script>
-					function gene_tabs(evt, cityName) {
-						var i, tabcontent, tablinks;
-						tabcontent = document.getElementsByClassName("tabcontent");
-						for (i = 0; i < tabcontent.length; i++) {
-							tabcontent[i].style.display = "none";
-						}
-						tablinks = document.getElementsByClassName("tablinks");
-						for (i = 0; i < tablinks.length; i++) {
-							tablinks[i].className = tablinks[i].className.replace(" active", "");
-						}
-						document.getElementById(cityName).style.display = "block";
-						evt.currentTarget.className += " active";
-					}
+
+<script>
+	function gene_tabs(evt, cityName) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName("tablinks");
+		for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(cityName).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
 
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();

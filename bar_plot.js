@@ -41,4 +41,4 @@ var layout = {
    }
 };
 
-Plotly.newPlot('myDiv', data, layout);
+Plotly.newPlot("myDiv3", data, layout);
