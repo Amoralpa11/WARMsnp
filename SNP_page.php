@@ -199,6 +199,14 @@ $chr =  $rsT['chr'];
 		border: 1px solid #ccc;
 		border-top: none;
 	}
+  .slider {
+    width: 75%;
+    height: 5px;
+    background-color: #3d3d3d;
+    outline: none;
+    opacity: 0.7;
+		margin-left: 5%;
+}
 </style>
 </head>
 
@@ -214,7 +222,7 @@ $chr =  $rsT['chr'];
 
 		</div>
 		<br>
-		<h3 style="margin-left: 10px"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> SNP: <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['SNP_page']['ref'] ?>><?php print $_SESSION['SNP_page']['ref'] ?></a></h3>
+		<h3 style="margin-left: 7%"><img src="Home_images/dna.svg" alt="dna icon" width="30" height="30"> SNP: <a href=<?php print "https://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?searchType=adhoc_search&type=rs&rs=".$_SESSION['SNP_page']['ref'] ?>><?php print $_SESSION['SNP_page']['ref'] ?></a></h3>
 		<div class="row" style="margin-top:2%">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
@@ -226,7 +234,7 @@ $chr =  $rsT['chr'];
       <div class="col-md-1"></div>
 		</div>
 
-		<div class="row" style="min-height:62%; margin-bottom:20px">
+		<div class="row" style="min-height:62%; margin-bottom:10%">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="tab">
@@ -285,6 +293,11 @@ $chr =  $rsT['chr'];
 								<div class="row">
 						     <div class="col-md-3" style="background-color:#F0F0F0;">
 						      <form id="frm1">
+										<div align="right"style="margin-bottom:5%;">
+											<img src="images/legend_3_dots.png" alt="dot_col" style="height:10%; width:49%"><br>
+											<img src="images/legend_size_dots.png" alt="dot_col" style="height:3.5%; width:49%">
+										</div>
+
                     <h5>Advanced search:</h5>
 						        <b>Filter by P-value</b> <br>
 										<div class="row">
@@ -301,7 +314,7 @@ $chr =  $rsT['chr'];
 
 						        <b>Enter a new gene or SNP:</b></br>
 						        <input type="text" name="snp">
-						        <input type="submit" value="Submit">
+						        <input type="submit" value="Submit" style="border-radius: 12px;background-color: #e9e9e6; margin-top:5%">
 						      </form>
 						    </div>
 						      <div>

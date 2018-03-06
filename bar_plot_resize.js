@@ -1,8 +1,8 @@
 (function() {
 var d3 = Plotly.d3;
 
-var WIDTH_IN_PERCENT_OF_PARENT = 100,
-    HEIGHT_IN_PERCENT_OF_PARENT = 100;
+var WIDTH_IN_PERCENT_OF_PARENT = 0,
+    HEIGHT_IN_PERCENT_OF_PARENT = 0;
 
 var gd3 = d3.select('body')
     .append('div')
@@ -49,8 +49,8 @@ var layout = {
   margin: {
      r: 10,
      t: 100,
-     b: 300,
-     l: 100
+     b: 275,
+     l: 100,
    }
 };
 
